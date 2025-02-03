@@ -1,100 +1,71 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import {
-  Dashboard as DashboardIcon,
-  Hotel as RoomIcon,
-  Book as ReservationIcon,
-  Payment as BillingIcon,
-  People as GuestIcon,
-  CleaningServices as HousekeepingIcon,
-  Analytics as ReportingIcon,
-  Notifications as NotificationsIcon,
-} from '@mui/icons-material';
+  LayoutDashboard,
+  Hotel,
+  BookOpen,
+  CreditCard,
+  Users,
+  ScrollText,
+  BarChart3,
+  Bell
+} from 'lucide-react';
 
-const drawerWidth = 240;
+const Sidebar = () => {
+  const [activePath, setActivePath] = useState('/dashboard');
 
-const Sidebar: React.FC = () => {
+  const menuItems = [
+    { text: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+    { text: 'Room Management', icon: Hotel, path: '/room-management' },
+    { text: 'Reservation', icon: BookOpen, path: '/reservation' },
+    { text: 'Billing', icon: CreditCard, path: '/billing' },
+    { text: 'Guest Management', icon: Users, path: '/guest-management' },
+    { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
+    { text: 'Reporting', icon: BarChart3, path: '/reporting' },
+    { text: 'Payment', icon: Bell, path: '/payment' }
+  ];
+
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-      }}
-    >
-      <Toolbar>
-        <Typography variant="h6" noWrap component="div">
+    <div className="w-60 min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 text-white flex flex-col">
+      <div className="h-16 flex items-center px-4 border-b border-white/10 bg-gradient-to-r from-blue-900 to-blue-800">
+        <h1 className="text-lg font-semibold tracking-wide text-white">
           Hotel Management
-        </Typography>
-      </Toolbar>
-      <List>
-        {/* Dashboard */}
-        <ListItem button component={Link} to="/dashboard">
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
+        </h1>
+      </div>
 
-        {/* Room Management */}
-        <ListItem button component={Link} to="/room-management">
-          <ListItemIcon>
-            <RoomIcon />
-          </ListItemIcon>
-          <ListItemText primary="Room Management" />
-        </ListItem>
-
-        {/* Reservation and Booking */}
-        <ListItem button component={Link} to="/reservation">
-          <ListItemIcon>
-            <ReservationIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reservation" />
-        </ListItem>
-
-        {/* Billing and Payments */}
-        <ListItem button component={Link} to="/billing">
-          <ListItemIcon>
-            <BillingIcon />
-          </ListItemIcon>
-          <ListItemText primary="Billing" />
-        </ListItem>
-
-        {/* Guest Management */}
-        <ListItem button component={Link} to="/guest-management">
-          <ListItemIcon>
-            <GuestIcon />
-          </ListItemIcon>
-          <ListItemText primary="Guest Management" />
-        </ListItem>
-
-        {/* Housekeeping and Maintenance */}
-        <ListItem button component={Link} to="/housekeeping">
-          <ListItemIcon>
-            <HousekeepingIcon />
-          </ListItemIcon>
-          <ListItemText primary="Housekeeping" />
-        </ListItem>
-
-        {/* Reporting and Analytics */}
-        <ListItem button component={Link} to="/reporting">
-          <ListItemIcon>
-            <ReportingIcon />
-          </ListItemIcon>
-          <ListItemText primary="Reporting" />
-        </ListItem>
-
-        {/* Notifications and Alerts */}
-        <ListItem button component={Link} to="/payment">
-          <ListItemIcon>
-            <NotificationsIcon />
-          </ListItemIcon>
-          <ListItemText primary="payment" />
-        </ListItem>
-      </List>
-    </Drawer>
+      <nav className="flex-1 pt-4">
+        <ul className="space-y-1 px-2">
+          {menuItems.map(({ text, icon: Icon, path }) => (
+            <li key={path}>
+              <button
+                onClick={() => setActivePath(path)}
+                className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative
+                  ${activePath === path 
+                    ? 'bg-white/20 font-semibold' 
+                    : 'hover:bg-white/10 hover:translate-x-1'
+                  }`}
+              >
+                {activePath === path && (
+                  <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-white rounded-r" />
+                )}
+                <Icon 
+                  size={20} 
+                  className={`mr-3 ${activePath === path 
+                    ? 'text-white' 
+                    : 'text-white/70 group-hover:text-white'
+                  }`}
+                />
+                <span className={`${activePath === path 
+                  ? 'text-white' 
+                  : 'text-white/70 group-hover:text-white'
+                }`}>
+                  {text}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
   );
 };
 
