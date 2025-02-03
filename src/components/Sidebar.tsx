@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Hotel,
@@ -7,12 +8,14 @@ import {
   Users,
   ScrollText,
   BarChart3,
-  Bell
+  DollarSign,
+  Coins
 } from 'lucide-react';
 
 const Sidebar = () => {
-  const [activePath, setActivePath] = useState('/dashboard');
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const menuItems = [
     { text: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { text: 'Room Management', icon: Hotel, path: '/room-management' },
@@ -21,7 +24,7 @@ const Sidebar = () => {
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
     { text: 'Reporting', icon: BarChart3, path: '/reporting' },
-    { text: 'Payment', icon: Bell, path: '/payment' }
+    { text: 'Payment', icon: DollarSign, path: '/payment' }
   ];
 
   return (
@@ -37,24 +40,24 @@ const Sidebar = () => {
           {menuItems.map(({ text, icon: Icon, path }) => (
             <li key={path}>
               <button
-                onClick={() => setActivePath(path)}
+                onClick={() => navigate(path)}
                 className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative
-                  ${activePath === path 
+                  ${location.pathname === path 
                     ? 'bg-white/20 font-semibold' 
                     : 'hover:bg-white/10 hover:translate-x-1'
                   }`}
               >
-                {activePath === path && (
+                {location.pathname === path && (
                   <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-white rounded-r" />
                 )}
                 <Icon 
                   size={20} 
-                  className={`mr-3 ${activePath === path 
+                  className={`mr-3 ${location.pathname === path 
                     ? 'text-white' 
                     : 'text-white/70 group-hover:text-white'
                   }`}
                 />
-                <span className={`${activePath === path 
+                <span className={`${location.pathname === path 
                   ? 'text-white' 
                   : 'text-white/70 group-hover:text-white'
                 }`}>
