@@ -9,7 +9,7 @@ type Room = {
   status: string;
 };
 
-const Room: React.FC = () => {
+const RoomAddForm: React.FC = () => {
   const [roomNumber, setRoomNumber] = useState('');
   const [roomType, setRoomType] = useState('Single');
   const [acType, setAcType] = useState('AC');
@@ -147,4 +147,4 @@ const Room: React.FC = () => {
   );
 };
 
-export default RoomManagement;
+export default RoomAddForm;
