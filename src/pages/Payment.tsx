@@ -5,6 +5,7 @@ const Payment: React.FC = () => {
   const [amount, setAmount] = useState(0);
   const [custId, setCustId] = useState('');
   const [cash, setChash] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [paymentList, setPaymentList] = useState<any[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,6 +24,7 @@ const Payment: React.FC = () => {
     setPaymentMethod('Credit Card');
     setAmount(0);
     setChash(0);
+    setBalance(0);
     setCustId('');
   };
 
@@ -75,6 +77,16 @@ const Payment: React.FC = () => {
               type="number"
               value={cash}
               onChange={(e) => setChash(parseFloat(e.target.value))}
+              className="w-full p-2 border rounded-lg"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Balance</label>
+            <input
+              type="number"
+              value={balance}
+              onChange={(e) => setBalance(parseFloat(e.target.value))}
               className="w-full p-2 border rounded-lg"
               required
             />

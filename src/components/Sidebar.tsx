@@ -20,7 +20,6 @@ const Sidebar = () => {
     { text: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { text: 'Room Management', icon: Hotel, path: '/room-management' },
     { text: 'Reservation', icon: BookOpen, path: '/reservation' },
-    { text: 'Billing', icon: CreditCard, path: '/billing' },
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
     { text: 'Accusation', icon: BarChart3, path: '/accusation' },
