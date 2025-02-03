@@ -28,7 +28,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-60 min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 text-white flex flex-col">
+    <div className="w-70 min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 text-white flex flex-col">
       <div className="h-16 flex items-center px-4 border-b border-white/10 bg-gradient-to-r from-blue-900 to-blue-800">
         <h1 className="text-lg font-semibold tracking-wide text-white">
           Hotel Management
@@ -36,7 +36,7 @@ const Sidebar = () => {
       </div>
 
       <nav className="flex-1 pt-4">
-        <ul className="space-y-1 px-2">
+        <ul className="space-y-1 px-4">
           {menuItems.map(({ text, icon: Icon, path }) => (
             <li key={path}>
               <button

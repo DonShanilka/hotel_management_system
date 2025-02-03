@@ -17,8 +17,8 @@ const App: React.FC = () => {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Toolbar /> {/* This is needed to push content below the AppBar */}
+        <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+          
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/room-management" element={<RoomManagement />} />
