@@ -4,12 +4,10 @@ import {
   LayoutDashboard,
   Hotel,
   BookOpen,
-  CreditCard,
   Users,
   ScrollText,
   BarChart3,
   DollarSign,
-  Coins
 } from 'lucide-react';
 
 const Sidebar = () => {
