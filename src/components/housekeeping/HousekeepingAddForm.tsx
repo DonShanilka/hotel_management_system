@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HousekeepingTable from './HousekeepingTable';
 
 const HousekeepingAddForm: React.FC = () => {
   const [roomNumber, setRoomNumber] = useState('');
@@ -17,13 +18,24 @@ const HousekeepingAddForm: React.FC = () => {
       specialTasks,
     };
 
-    setHousekeepingList([...housekeepingList, newHousekeeping]);
-
     // Reset form after submission
     setRoomNumber('');
     setCleaningDate('');
     setStatus('Not Cleaned');
     setSpecialTasks('');
+  };
+
+  const handleDelete = (index: number) => {
+    setHousekeepingList(housekeepingList.filter((_, i) => i !== index));
+  };
+
+  const handleUpdate = (index: number) => {
+    const entry = housekeepingList[index];
+    setRoomNumber(entry.roomNumber);
+    setCleaningDate(entry.cleaningDate);
+    setStatus(entry.status);
+    setSpecialTasks(entry.specialTasks);
+    handleDelete(index);
   };
 
   return (
@@ -87,20 +99,11 @@ const HousekeepingAddForm: React.FC = () => {
         </button>
       </form>
 
-      {/* Display Housekeeping List */}
-      <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Housekeeping Status</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {housekeepingList.map((entry, index) => (
-            <div key={index} className="border p-4 rounded-lg">
-              <p><strong>Room Number:</strong> {entry.roomNumber}</p>
-              <p><strong>Cleaning Date:</strong> {entry.cleaningDate}</p>
-              <p><strong>Status:</strong> {entry.status}</p>
-              <p><strong>Special Tasks:</strong> {entry.specialTasks || 'None'}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <HousekeepingTable
+        housekeepingList={housekeepingList}
+        onDelete={handleDelete}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 };
