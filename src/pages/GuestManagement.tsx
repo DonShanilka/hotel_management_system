@@ -43,7 +43,7 @@ const GuestManagement: React.FC = () => {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-            <label className="block text-gray-700 font-medium mb-1">Customer NIC/Passport ID</label>
+            <label className="block text-gray-700 font-medium mb-1">Guest NIC/Passport ID</label>
             <input
               type="text"
               value={guestName}

@@ -33,7 +33,7 @@ const Payment: React.FC = () => {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-            <label className="block text-gray-700 font-medium mb-1">Customer ID</label>
+            <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
             <input
               type="text"
               value={custId}
@@ -70,7 +70,7 @@ const Payment: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Payment Date</label>
+            <label className="block text-gray-700 font-medium mb-1">Cash</label>
             <input
               type="number"
               value={cash}
