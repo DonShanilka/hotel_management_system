@@ -23,7 +23,7 @@ const Sidebar = () => {
     { text: 'Billing', icon: CreditCard, path: '/billing' },
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
-    { text: 'Reporting', icon: BarChart3, path: '/reporting' },
+    { text: 'Accusation', icon: BarChart3, path: '/accusation' },
     { text: 'Payment', icon: DollarSign, path: '/payment' }
   ];
 

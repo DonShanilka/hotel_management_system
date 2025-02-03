@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-const Reporting: React.FC = () => {
+const Accusation: React.FC = () => {
   const [reportType, setReportType] = useState('Housekeeping');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [guestId, setGuestId] = useState('');
   const [description, setDescription] = useState('');
   const [reportList, setReportList] = useState<any[]>([]);
 
@@ -12,8 +11,7 @@ const Reporting: React.FC = () => {
 
     const newReport = {
       reportType,
-      startDate,
-      endDate,
+      guestId,
       description,
     };
 
@@ -21,8 +19,7 @@ const Reporting: React.FC = () => {
 
     // Reset form after submission
     setReportType('Housekeeping');
-    setStartDate('');
-    setEndDate('');
+    setGuestId('');
     setDescription('');
   };
 
@@ -32,6 +29,16 @@ const Reporting: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
+            <input
+              type="text"
+              value={guestId}
+              onChange={(e) => setGuestId(e.target.value)}
+              className="w-full p-2 border rounded-lg"
+              required
+            />
+          </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Report Type</label>
             <select
@@ -46,39 +53,17 @@ const Reporting: React.FC = () => {
               <option value="Room Availability">Room Availability</option>
             </select>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Start Date</label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">End Date</label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-
-          <div>
+        <div className='mt-4'>
             <label className="block text-gray-700 font-medium mb-1">Description / Notes</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full h-32 p-2 border rounded-lg"
               placeholder="Enter additional information or notes"
             />
           </div>
-        </div>
 
         <button
           type="submit"
@@ -91,7 +76,7 @@ const Reporting: React.FC = () => {
       {/* Display Reports */}
       <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Generated Reports</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           {reportList.map((report, index) => (
             <div key={index} className="border p-4 rounded-lg">
               <p><strong>Report Type:</strong> {report.reportType}</p>
@@ -106,4 +91,4 @@ const Reporting: React.FC = () => {
   );
 };
 
-export default Reporting;
+export default Accusation;
