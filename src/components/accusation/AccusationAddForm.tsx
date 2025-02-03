@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import AccusationTable from "./AccusationTable";
 
 const AccusationAddForm: React.FC = () => {
-  const [reportType, setReportType] = useState('Housekeeping');
-  const [guestId, setGuestId] = useState('');
-  const [description, setDescription] = useState('');
-  const [reportList, setReportList] = useState<any[]>([]);
+  const [reportType, setReportType] = useState("Housekeeping");
+  const [guestId, setGuestId] = useState("");
+  const [description, setDescription] = useState("");
+  const [reportList, setReportList] = useState<{ reportType: string; guestId: string; description: string }[]>([]);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newReport = {
-      reportType,
-      guestId,
-      description,
-    };
+    const newReport = { reportType, guestId, description };
 
-    setReportList([...reportList, newReport]);
+    if (editIndex !== null) {
+      // Update existing report
+      const updatedList = [...reportList];
+      updatedList[editIndex] = newReport;
+      setReportList(updatedList);
+      setEditIndex(null);
+    } else {
+      // Add new report
+      setReportList([...reportList, newReport]);
+    }
 
     // Reset form after submission
-    setReportType('Housekeeping');
-    setGuestId('');
-    setDescription('');
+    setReportType("Housekeeping");
+    setGuestId("");
+    setDescription("");
+  };
+
+  const handleDelete = (index: number) => {
+    const updatedList = reportList.filter((_, i) => i !== index);
+    setReportList(updatedList);
+  };
+
+  const handleUpdate = (index: number) => {
+    const report = reportList[index];
+    setReportType(report.reportType);
+    setGuestId(report.guestId);
+    setDescription(report.description);
+    setEditIndex(index);
   };
 
   return (
@@ -29,7 +49,7 @@ const AccusationAddForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+          <div>
             <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
             <input
               type="text"
@@ -48,45 +68,35 @@ const AccusationAddForm: React.FC = () => {
               required
             >
               <option value="Housekeeping">Housekeeping</option>
-              <option value="Billing">Foods</option>
-              <option value="Guest">Employee</option>
-              <option value="Room Availability">Rooms</option>
+              <option value="Foods">Foods</option>
+              <option value="Employee">Employee</option>
+              <option value="Room">Rooms</option>
             </select>
           </div>
         </div>
 
-        <div className='mt-4'>
-            <label className="block text-gray-700 font-medium mb-1">Description / Notes</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full h-32 p-2 border rounded-lg"
-              placeholder="Enter additional information or notes"
-            />
-          </div>
+        <div className="mt-4">
+          <label className="block text-gray-700 font-medium mb-1">Description / Notes</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full h-32 p-2 border rounded-lg"
+            placeholder="Enter additional information or notes"
+          />
+        </div>
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`mt-4 w-full py-2 rounded-lg text-white transition ${
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Generate Report
+          {editIndex !== null ? "Update Report" : "Add Accusation"}
         </button>
       </form>
 
-      {/* Display Reports */}
-      <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Generated Reports</h2>
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-          {reportList.map((report, index) => (
-            <div key={index} className="border p-4 rounded-lg">
-              <p><strong>Report Type:</strong> {report.reportType}</p>
-              <p><strong>Start Date:</strong> {report.startDate}</p>
-              <p><strong>End Date:</strong> {report.endDate}</p>
-              <p><strong>Description:</strong> {report.description || 'No description'}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Pass the reportList data to the Table Component */}
+      <AccusationTable reports={reportList} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };
