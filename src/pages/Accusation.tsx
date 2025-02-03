@@ -48,9 +48,9 @@ const Accusation: React.FC = () => {
               required
             >
               <option value="Housekeeping">Housekeeping</option>
-              <option value="Billing">Billing</option>
-              <option value="Guest">Guest Information</option>
-              <option value="Room Availability">Room Availability</option>
+              <option value="Billing">Foods</option>
+              <option value="Guest">Employee</option>
+              <option value="Room Availability">Rooms</option>
             </select>
           </div>
         </div>
