@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AddAccusation from '../components/accusation/AddAccusation';
+import AddAccusation from '../components/accusation/AccusationAddForm';
 
 const Accusation: React.FC = () => {
   

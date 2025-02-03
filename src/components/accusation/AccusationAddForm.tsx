@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddAccusation: React.FC = () => {
+const AccusationAddForm: React.FC = () => {
   const [reportType, setReportType] = useState('Housekeeping');
   const [guestId, setGuestId] = useState('');
   const [description, setDescription] = useState('');
@@ -91,4 +91,4 @@ const AddAccusation: React.FC = () => {
   );
 };
 
-export default AddAccusation;
+export default AccusationAddForm;

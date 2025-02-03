@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const GuestManagement: React.FC = () => {
+const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
   const [guestName, setGuestName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -161,4 +161,4 @@ const GuestManagement: React.FC = () => {
   );
 };
 
-export default GuestManagement;
+export default GuestAddForm;

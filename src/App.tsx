@@ -4,7 +4,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import RoomManagement from './pages/RoomManagement';
 import Reservation from './pages/Reservation';
-import GuestManagement from './pages/GuestManagement';
+import GuestManagement from './pages/Guest';
 import Housekeeping from './pages/Housekeeping';
 import Reporting from './pages/Accusation';
 import Payment from './pages/Payment';
