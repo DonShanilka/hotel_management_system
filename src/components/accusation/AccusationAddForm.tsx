@@ -91,7 +91,7 @@ const AccusationAddForm: React.FC = () => {
             editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          {editIndex !== null ? "Update Report" : "Add Accusation"}
+          {editIndex !== null ? "Update Accusation" : "Add Accusation"}
         </button>
       </form>
 

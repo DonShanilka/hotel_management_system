@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GuestTable from './GuestTable';
 
 const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
@@ -9,7 +10,8 @@ const GuestAddForm: React.FC = () => {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [guestList, setGuestList] = useState<any[]>([]);
-  const [nation, setNation] = useState('Local');
+  const [nation, setNation] = useState("Local");
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,9 +24,19 @@ const GuestAddForm: React.FC = () => {
       roomNumber,
       checkInDate,
       checkOutDate,
+      nation
     };
 
-    setGuestList([...guestList, newGuest]);
+    if (editIndex !== null) {
+      const updatedList = [...guestList];
+      updatedList[editIndex] = newGuest;
+      setGuestList(updatedList);
+      setEditIndex(null);
+    } else {
+      setGuestList([...guestList, newGuest]);
+    }
+
+    // setGuestList([...guestList, newGuest]);
 
     setGuestId('');
     setGuestName('');
@@ -33,7 +45,25 @@ const GuestAddForm: React.FC = () => {
     setRoomNumber('');
     setCheckInDate('');
     setCheckOutDate('');
-    setNation('Local');
+    setNation("Local");
+  };
+
+  const handleDelete = (index: number) => {
+    setGuestList(guestList.filter((_, i) => i !== index));
+  };
+
+  const handleUpdate = (index: number) => {
+    const guestToUpdate = guestList[index];
+    setGuestId(guestToUpdate.guestId);
+    setGuestName(guestToUpdate.guestName);
+    setContactNumber(guestToUpdate.contactNumber);
+    setEmail(guestToUpdate.email);
+    setRoomNumber(guestToUpdate.roomNumber);
+    setCheckInDate(guestToUpdate.checkInDate);
+    setCheckOutDate(guestToUpdate.checkOutDate);
+    setNation(guestToUpdate.nation);
+
+    setEditIndex(index);
   };
 
   return (
@@ -46,7 +76,7 @@ const GuestAddForm: React.FC = () => {
             <label className="block text-gray-700 font-medium mb-1">Guest NIC/Passport ID</label>
             <input
               type="text"
-              value={guestName}
+              value={guestId}
               onChange={(e) => setGuestId(e.target.value)}
               className="w-full p-2 border rounded-lg"
               required
@@ -127,36 +157,22 @@ const GuestAddForm: React.FC = () => {
               className="w-full p-2 border rounded-lg"
               required
             >
-              <option value="Credit Card">Local</option>
-              <option value="Debit Card">Foreign</option>
+              <option value="Local">Local</option>
+              <option value="Foreign">Foreign</option>
             </select>
           </div>
         </div>
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ${
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Add Guest
+          {editIndex !== null ? "Update Guest" : "Add Guest"}
         </button>
       </form>
-
-      {/* Display Guest List */}
-      <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Guest List</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {guestList.map((guest, index) => (
-            <div key={index} className="border p-4 rounded-lg">
-              <p><strong>Name:</strong> {guest.guestName}</p>
-              <p><strong>Contact:</strong> {guest.contactNumber}</p>
-              <p><strong>Email:</strong> {guest.email}</p>
-              <p><strong>Room Number:</strong> {guest.roomNumber}</p>
-              <p><strong>Check-in Date:</strong> {guest.checkInDate}</p>
-              <p><strong>Check-out Date:</strong> {guest.checkOutDate}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <GuestTable guests={guestList} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };

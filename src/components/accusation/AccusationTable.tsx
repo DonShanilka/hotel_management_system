@@ -5,7 +5,7 @@ type Report = {
   guestId: string;
   description: string;
 };
-GuestTable
+
 interface ReportTableProps {
   reports: Report[];
   onDelete: (index: number) => void;
