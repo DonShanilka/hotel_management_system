@@ -87,11 +87,11 @@ const Sidebar: React.FC = () => {
         </ListItem>
 
         {/* Notifications and Alerts */}
-        <ListItem button component={Link} to="/notifications">
+        <ListItem button component={Link} to="/payment">
           <ListItemIcon>
             <NotificationsIcon />
           </ListItemIcon>
-          <ListItemText primary="Notifications" />
+          <ListItemText primary="payment" />
         </ListItem>
       </List>
     </Drawer>

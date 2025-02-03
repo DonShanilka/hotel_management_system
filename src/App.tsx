@@ -8,7 +8,7 @@ import Billing from './pages/Billing';
 import GuestManagement from './pages/GuestManagement';
 import Housekeeping from './pages/Housekeeping';
 import Reporting from './pages/Reporting';
-import Notifications from './pages/Notifications';
+import Payment from './pages/Payment';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
 
 const App: React.FC = () => {
@@ -27,7 +27,7 @@ const App: React.FC = () => {
             <Route path="/guest-management" element={<GuestManagement />} />
             <Route path="/housekeeping" element={<Housekeeping />} />
             <Route path="/reporting" element={<Reporting />} />
-            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </Box>
