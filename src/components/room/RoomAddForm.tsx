@@ -18,6 +18,7 @@ const RoomAddForm: React.FC = () => {
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('Available');
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +32,17 @@ const RoomAddForm: React.FC = () => {
       status,
     };
 
-    setRooms([...rooms, newRoom]);
+    if (editIndex !== null) {
+      // Update existing report
+      const updatedList = [...rooms];
+      updatedList[editIndex] = newRoom;
+      setRooms(updatedList);
+      setEditIndex(null);
+    } else {
+      // Add new report
+      setRooms([...rooms, newRoom]);
+    }
 
-    // Reset Form
     setRoomNumber('');
     setRoomType('Single');
     setHallFloor('');
@@ -51,6 +60,11 @@ const RoomAddForm: React.FC = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleDelete = (index: number) => {
+    const updatedList = rooms.filter((_, i) => i !== index);
+    setRooms(updatedList);
   };
 
   return (
