@@ -1,10 +1,45 @@
 import React, { useState } from 'react';
+import PaymentTable from './PaymentTable';
 
 const PaymentAddForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [paymentDetails, setPaymentDetails] = useState({
+    roomNumber: '',
+    guestName: '',
+    checkInDate: '',
+    checkOutDate: '',
+    totalNight: '',
+    roomPerNight: '',
+    additionalCharges: '',
+    paymentMethod: '',
+    cashReceived: ''
+  });
+  
+  // Function to update state dynamically
+  const handleChange = (e : any) => {
+    const { name, value } = e.target;
+    setPaymentDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value
+    }));
+  };
+
+  const handleDelete = (index: number) => {
+    // setPaymentDetails(housekeepingList.filter((_, i) => i !== index));
+  };
+
+  const handleUpdate = (index: number) => {
+    // const entry = housekeepingList[index];
+    // setRoomNumber(entry.roomNumber);
+    // setCleaningDate(entry.cleaningDate);
+    // setStatus(entry.status);
+    // setSpecialTasks(entry.specialTasks);
+    // handleDelete(index);
+  };
+
   return (
-    <div className='w-full bg-white p-6'>
+    <div className='w-full bg-amber-200 p-6'>
       <h1 className='text-2xl font-bold text-center mb-4'>Bill Payment</h1>
       <div className="flex justify-end">
         <button
@@ -13,6 +48,7 @@ const PaymentAddForm: React.FC = () => {
         >
           Open Payment Form
         </button>
+        {/* <PaymentTable/> */}
       </div>
 
 
@@ -24,37 +60,37 @@ const PaymentAddForm: React.FC = () => {
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium'>Room Number</label>
-                  <input type='text' name="roomNumber" className='w-full p-2 border rounded' />
+                  <input type='text' name="roomNumber" className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Guest Name</label>
-                  <input type='text' name='guestName' className='w-full p-2 border rounded'/>
+                  <input type='text' name='guestName' className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Check-In Date</label>
-                  <input type='date' name='checkInDate' required className='w-full p-2 border rounded'/>
+                  <input type='date' name='checkInDate' required className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Check-Out Date</label>
-                  <input type="date" name='checkOutDate' required className='w-full p-2 border rounded'/>
+                  <input type="date" name='checkOutDate' required className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Total Nights</label>
-                  <input type="number" name='totalNights' required className='w-full p-2 border rounded'/>
+                  <input type="number" name='totalNights' required className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Room Per Night</label>
-                  <input type="number" name='roomPerNight' required className='w-full p-2 border rounded'/>
+                  <input type="number" name='roomPerNight' required className='w-full p-2 border rounded' onChange={handleChange}/>
                 </div>
               </div>
               <div>
                 <label className='block text-sm font-medium'>Additional Charges</label>
-                <input type="number" name='additionalCharges' required className='w-full p-2 border rounded'/>
+                <input type="number" name='additionalCharges' required className='w-full p-2 border rounded' onChange={handleChange}/>
               </div>
 
               <div>
                 <label className='block text-sm font-medium'>Payment Method</label>
-                <select name="paymentMethod" className='w-full p-2 border rounded'>
+                <select name="paymentMethod" className='w-full p-2 border rounded' onChange={handleChange}>
                   <option value="">Select Payment Method</option>
                   <option value="credit">Credit Card</option>
                   <option value="debit">Debit Card</option>
@@ -65,7 +101,7 @@ const PaymentAddForm: React.FC = () => {
 
               <div>
                 <label className='block text-sm font-medium'>Cash Received</label>
-                <input type="number" name='cashReceived' required className='w-full p-2 border rounded'/>
+                <input type="number" name='cashReceived' required className='w-full p-2 border rounded' onChange={handleChange}/>
               </div>
               
                 <div className='text-left text-lg font-bold'>Total: $</div>
@@ -90,6 +126,7 @@ const PaymentAddForm: React.FC = () => {
           </div>
         </div>
       )}
+      <PaymentTable paymentList={paymentDetails} onUpdate={handleUpdate} onDelete={handleDelete}/>
     </div>
   );
 };
