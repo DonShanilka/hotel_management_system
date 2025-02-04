@@ -63,7 +63,13 @@ const PaymentAddForm: React.FC = () => {
                 </select>
               </div>
 
+              <div>
+                <label className='block text-sm font-medium'>Cash Received</label>
+                <input type="number" name='cashReceived' required className='w-full p-2 border rounded'/>
+              </div>
               
+                <div className='text-left text-lg font-bold'>Total: $</div>
+                <div className='text-left text-lg font-bold'>Balance: $</div>
 
               <div className="flex justify-end gap-2">
                 <button
