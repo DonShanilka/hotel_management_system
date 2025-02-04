@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import RoomCard from './RoomCard';
 
 type Room = {
   roomNumber: string;
   roomType: string;
-  acType: string;
+  selectedImage: string | null; // Fixed: Added selectedImage in Room type
   hallFloor: string;
   price: number;
   status: string;
@@ -12,7 +13,7 @@ type Room = {
 const RoomAddForm: React.FC = () => {
   const [roomNumber, setRoomNumber] = useState('');
   const [roomType, setRoomType] = useState('Single');
-  const [acType, setAcType] = useState('AC');
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [hallFloor, setHallFloor] = useState('');
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('Available');
@@ -24,7 +25,7 @@ const RoomAddForm: React.FC = () => {
     const newRoom: Room = {
       roomNumber,
       roomType,
-      acType,
+      selectedImage, // Fixed: Store selected image properly
       hallFloor,
       price,
       status,
@@ -32,16 +33,28 @@ const RoomAddForm: React.FC = () => {
 
     setRooms([...rooms, newRoom]);
 
+    // Reset Form
     setRoomNumber('');
     setRoomType('Single');
-    setAcType('AC');
     setHallFloor('');
     setPrice(0);
     setStatus('Available');
+    setSelectedImage(null); // Reset image selection
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Fixed: Added optional chaining to prevent errors
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen max-h-screen overflow-hidden">
+    <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Room Management</h1>
 
       {/* Room Form */}
@@ -72,17 +85,15 @@ const RoomAddForm: React.FC = () => {
             </select>
           </div>
 
+          {/* Image Chooser */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">AC Type</label>
-            <select
-              value={acType}
-              onChange={(e) => setAcType(e.target.value)}
+            <label className="block text-gray-700 font-medium mb-1">Room Image</label>
+            <input
               className="w-full p-2 border rounded-lg"
-              required
-            >
-              <option value="AC">AC</option>
-              <option value="Non-AC">Non-AC</option>
-            </select>
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
           </div>
 
           <div>
@@ -129,20 +140,7 @@ const RoomAddForm: React.FC = () => {
           Add Room
         </button>
       </form>
-
-      {/* Display Room Cards */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto">
-        {rooms.map((room, index) => (
-          <div key={index} className="bg-white p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold text-gray-800">Room {room.roomNumber}</h2>
-            <p className="text-gray-600"><strong>Type:</strong> {room.roomType}</p>
-            <p className="text-gray-600"><strong>AC:</strong> {room.acType}</p>
-            <p className="text-gray-600"><strong>Hall Floor:</strong> {room.hallFloor}</p>
-            <p className="text-gray-600"><strong>Price:</strong> ${room.price}</p>
-            <p className="text-gray-600"><strong>Status:</strong> {room.status}</p>
-          </div>
-        ))}
-      </div>
+      <RoomCard rooms= {rooms}/>
     </div>
   );
 };
