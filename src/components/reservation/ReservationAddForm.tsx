@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import ReservationTable from './ReservationTable';
 
 const ReservationAddForm: React.FC = () => {
   const [guestName, setGuestName] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
+  const [mobile, setMobile] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [reservationList, setReservationList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -18,6 +20,7 @@ const ReservationAddForm: React.FC = () => {
       checkInDate,
       checkOutDate,
       paymentMethod,
+      mobile,
     };
 
     if (editIndex !== null) {
@@ -35,34 +38,24 @@ const ReservationAddForm: React.FC = () => {
     setCheckInDate('');
     setCheckOutDate('');
     setPaymentMethod('Credit Card');
+    setMobile('');
   };
 
   const handleDelete = (index: number) => {
     setReservationList(reservationList.filter((_, i) => i !== index));
   };
 
-  const updateReservation = () => {
-    if (editIndex === null) return;
+  const updateReservation = (index: number) => {
   
-    const updatedReservation = {
-      guestName,
-      roomNumber,
-      checkInDate,
-      checkOutDate,
-      paymentMethod,
-    };
+    const updatedList = reservationList[index];
   
-    const updatedList = [...reservationList];
-    updatedList[editIndex] = updatedReservation;
-    setReservationList(updatedList);
-  
-    // Reset form fields after update
-    setGuestName('');
-    setRoomNumber('');
-    setCheckInDate('');
-    setCheckOutDate('');
-    setPaymentMethod('Credit Card');
-    setEditIndex(null);
+    setGuestName(updatedList.guestName);
+    setRoomNumber(updatedList.roomNumber);
+    setCheckInDate(updatedList.checkInDate);
+    setCheckOutDate(updatedList.checkOutDate);
+    setPaymentMethod(updatedList.paymentMethod);
+    setMobile(updatedList.mobile);
+    setEditIndex(index);
   };
   
 
@@ -129,15 +122,29 @@ const ReservationAddForm: React.FC = () => {
               <option value="Cash">Cash</option>
             </select>
           </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Mobile Number</label>
+            <input
+              type="text"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="w-full p-2 border rounded-lg"
+              required
+            />
+          </div>
         </div>
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ${
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Submit Reservation
+          {editIndex !== null ? "Update Reservations" : "Add Reservations"}
         </button>
       </form>
+      <ReservationTable reservations={reservationList} onDelete={handleDelete} onUpdate={updateReservation}/>
     </div>
   );
 };
