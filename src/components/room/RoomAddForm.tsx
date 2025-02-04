@@ -17,7 +17,7 @@ const RoomAddForm: React.FC = () => {
   const [hallFloor, setHallFloor] = useState('');
   const [price, setPrice] = useState(0);
   const [status, setStatus] = useState('Available');
-  const [rooms, setRooms] = useState<Room[]>([]);
+  const [roomList, setRoomList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,7 +26,7 @@ const RoomAddForm: React.FC = () => {
     const newRoom: Room = {
       roomNumber,
       roomType,
-      selectedImage, // Fixed: Store selected image properly
+      selectedImage, 
       hallFloor,
       price,
       status,
@@ -34,13 +34,13 @@ const RoomAddForm: React.FC = () => {
 
     if (editIndex !== null) {
       // Update existing report
-      const updatedList = [...rooms];
+      const updatedList = [...roomList];
       updatedList[editIndex] = newRoom;
-      setRooms(updatedList);
+      setRoomList(updatedList);
       setEditIndex(null);
     } else {
       // Add new report
-      setRooms([...rooms, newRoom]);
+      setRoomList([...roomList, newRoom]);
     }
 
     setRoomNumber('');
@@ -63,8 +63,19 @@ const RoomAddForm: React.FC = () => {
   };
 
   const handleDelete = (index: number) => {
-    const updatedList = rooms.filter((_, i) => i !== index);
-    setRooms(updatedList);
+    const updatedList = roomList.filter((_, i) => i !== index);
+    setRoomList(updatedList);
+  };
+
+  const handleUpdate = (index: number) => {
+    const room = roomList[index];
+    setRoomNumber(room.roomNumber);
+    setRoomType(room.roomType);
+    setSelectedImage(room.selectedImage);
+    setHallFloor(room.hallFloor);
+    setPrice(room.price);
+    setStatus(room.status);
+    setEditIndex(index);
   };
 
   return (
@@ -149,12 +160,14 @@ const RoomAddForm: React.FC = () => {
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`mt-4 w-full py-2 rounded-lg text-white transition ${
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Add Room
+          {editIndex !== null ? "Update Room" : "Add Room"}
         </button>
       </form>
-      <RoomCard rooms= {rooms}/>
+      <RoomCard rooms = {roomList} onUpdate={handleUpdate} onDelete={handleDelete}/>
     </div>
   );
 };

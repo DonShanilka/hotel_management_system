@@ -1,6 +1,21 @@
 import React from 'react';
 
-function RoomCard({ rooms }) {
+type Room = {
+  roomNumber: string;
+  roomType: string;
+  selectedImage: string;
+  hallFloor: string;
+  price: string;
+  status: string;
+}
+
+interface RoomCardProps {
+  rooms : Room[];
+  onUpdate : (index: number) => void;
+  onDelete: (index: number) => void;
+}
+
+const RoomCard: React.FC<RoomCardProps> = ({ rooms,onUpdate,onDelete }) => {
   return (
     <div
       className="mt-8 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-white p-4 rounded-lg"
@@ -30,10 +45,14 @@ function RoomCard({ rooms }) {
 
             {/* Buttons aligned to the right */}
             <div className="flex space-x-2 mt-4">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
+              <button
+              onClick={() => onUpdate(index)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
                 Update
               </button>
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+              <button
+              onClick={() => onDelete(index)}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
                 Delete
               </button>
             </div>
