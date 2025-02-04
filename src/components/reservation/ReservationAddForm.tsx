@@ -6,11 +6,13 @@ const ReservationAddForm: React.FC = () => {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
+  const [reservationList, setReservationList] = useState<any[]>([]);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const reservationData = {
+    const newReservation = {
       guestName,
       roomNumber,
       checkInDate,
@@ -18,7 +20,14 @@ const ReservationAddForm: React.FC = () => {
       paymentMethod,
     };
 
-    console.log('Reservation Created:', reservationData);
+    if (editIndex !== null) {
+      const updatedList = [...reservationList];
+      updatedList[editIndex] = newReservation;
+      setReservationList(updatedList);
+      setEditIndex(null);
+    } else {
+      setReservationList([...reservationList, newReservation]);
+    }
 
     // Reset form
     setGuestName('');
@@ -26,6 +35,10 @@ const ReservationAddForm: React.FC = () => {
     setCheckInDate('');
     setCheckOutDate('');
     setPaymentMethod('Credit Card');
+  };
+
+  const handleDelete = (index: number) => {
+    setReservationList(reservationList.filter((_, i) => i !== index));
   };
 
   return (
