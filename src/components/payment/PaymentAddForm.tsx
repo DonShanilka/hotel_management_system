@@ -1,120 +1,89 @@
 import React, { useState } from 'react';
 
 const PaymentAddForm: React.FC = () => {
-  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [amount, setAmount] = useState(0);
-  const [custId, setCustId] = useState('');
-  const [cash, setChash] = useState(0);
-  const [balance, setBalance] = useState(0);
-  const [paymentList, setPaymentList] = useState<any[]>([]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const newPayment = {
-      paymentMethod,
-      amount,
-      custId,
-      cash
-    };
-
-    setPaymentList([...paymentList, newPayment]);
-
-    // Reset form after submission
-    setPaymentMethod('Credit Card');
-    setAmount(0);
-    setChash(0);
-    setBalance(0);
-    setCustId('');
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Payment</h1>
-
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-            <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
-            <input
-              type="text"
-              value={custId}
-              onChange={(e) => setCustId(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Payment Method</label>
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            >
-              <option value="Credit Card">Credit Card</option>
-              <option value="Debit Card">Debit Card</option>
-              {/* <option value="PayPal">PayPal</option> */}
-              <option value="Bank Transfer">Bank Transfer</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Amount</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Cash</label>
-            <input
-              type="number"
-              value={cash}
-              onChange={(e) => setChash(parseFloat(e.target.value))}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Balance</label>
-            <input
-              type="number"
-              value={balance}
-              onChange={(e) => setBalance(parseFloat(e.target.value))}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div>
-        </div>
-
+    <div className='w-full bg-white p-6'>
+      <h1 className='text-2xl font-bold text-center mb-4'>Bill Payment</h1>
+      <div className="flex justify-end">
         <button
-          type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={() => setIsModalOpen(true)}
         >
-          Process Payment
+          Open Payment Form
         </button>
-      </form>
-
-      {/* Display Processed Payments */}
-      <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Processed Payments</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {paymentList.map((payment, index) => (
-            <div key={index} className="border p-4 rounded-lg">
-              <p><strong>Payment Method:</strong> {payment.paymentMethod}</p>
-              <p><strong>Amount:</strong> ${payment.amount}</p>
-              <p><strong>Payment Date:</strong> {payment.paymentDate}</p>
-              {/* <p><strong>Notification:</strong> {payment.notification || 'No notification'}</p> */}
-            </div>
-          ))}
-        </div>
       </div>
+
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-2xl">
+            <h2 className="text-xl font-bold mb-4">Bill Payment Form</h2>
+            <form className='space-y-4'>
+              <div className='grid grid-cols-2 gap-4'>
+                <div>
+                  <label className='block text-sm font-medium'>Room Number</label>
+                  <input type='text' name="roomNumber" className='w-full p-2 border rounded' />
+                </div>
+                <div>
+                  <label className='block text-sm font-medium'>Guest Name</label>
+                  <input type='text' name='guestName' className='w-full p-2 border rounded'/>
+                </div>
+                <div>
+                  <label className='block text-sm font-medium'>Check-In Date</label>
+                  <input type='date' name='checkInDate' required className='w-full p-2 border rounded'/>
+                </div>
+                <div>
+                  <label className='block text-sm font-medium'>Check-Out Date</label>
+                  <input type="date" name='checkOutDate' required className='w-full p-2 border rounded'/>
+                </div>
+                <div>
+                  <label className='block text-sm font-medium'>Total Nights</label>
+                  <input type="number" name='totalNights' required className='w-full p-2 border rounded'/>
+                </div>
+                <div>
+                  <label className='block text-sm font-medium'>Room Per Night</label>
+                  <input type="number" name='roomPerNight' required className='w-full p-2 border rounded'/>
+                </div>
+              </div>
+              <div>
+                <label className='block text-sm font-medium'>Additional Charges</label>
+                <input type="number" name='additionalCharges' required className='w-full p-2 border rounded'/>
+              </div>
+
+              <div>
+                <label className='block text-sm font-medium'>Payment Method</label>
+                <select name="paymentMethod" className='w-full p-2 border rounded'>
+                  <option value="">Select Payment Method</option>
+                  <option value="credit">Credit Card</option>
+                  <option value="debit">Debit Card</option>
+                  <option value="cash">Cash</option>
+                  <option value="bank">Bank Transfer</option>
+                </select>
+              </div>
+
+              
+
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  Submit Payment
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
