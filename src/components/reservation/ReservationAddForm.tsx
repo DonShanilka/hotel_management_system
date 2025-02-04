@@ -41,6 +41,31 @@ const ReservationAddForm: React.FC = () => {
     setReservationList(reservationList.filter((_, i) => i !== index));
   };
 
+  const updateReservation = () => {
+    if (editIndex === null) return;
+  
+    const updatedReservation = {
+      guestName,
+      roomNumber,
+      checkInDate,
+      checkOutDate,
+      paymentMethod,
+    };
+  
+    const updatedList = [...reservationList];
+    updatedList[editIndex] = updatedReservation;
+    setReservationList(updatedList);
+  
+    // Reset form fields after update
+    setGuestName('');
+    setRoomNumber('');
+    setCheckInDate('');
+    setCheckOutDate('');
+    setPaymentMethod('Credit Card');
+    setEditIndex(null);
+  };
+  
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Reservation Form</h1>
