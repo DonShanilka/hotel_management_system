@@ -17,12 +17,33 @@ const PaymentAddForm: React.FC = () => {
   });
   
   // Function to update state dynamically
-  const handleChange = (e : any) => {
-    const { name, value } = e.target;
-    setPaymentDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value
-    }));
+  const handleSave = () => {
+    if (
+      paymentDetails.roomNumber &&
+      paymentDetails.guestName &&
+      paymentDetails.checkInDate &&
+      paymentDetails.checkOutDate &&
+      paymentDetails.totalNight &&
+      paymentDetails.roomNumber &&
+      paymentDetails.additionalCharges &&
+      paymentDetails.paymentMethod &&
+      paymentDetails.cashReceived
+    ) {
+      const newFormData = {...paymentDetails};
+      setPaymentDetails({
+        roomNumber: '',
+        guestName: '',
+        checkInDate: '',
+        checkOutDate: '',
+        totalNight: '',
+        roomPerNight: '',
+        additionalCharges: '',
+        paymentMethod: '',
+        cashReceived: ''
+      });
+    } else {
+      alert("Please Fill in All Fields")
+    }
   };
 
   const handleDelete = (index: number) => {
@@ -60,37 +81,37 @@ const PaymentAddForm: React.FC = () => {
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='block text-sm font-medium'>Room Number</label>
-                  <input type='text' name="roomNumber" className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type='text' name="roomNumber" className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, roomNumber: val.target.value})}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Guest Name</label>
-                  <input type='text' name='guestName' className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type='text' name='guestName' className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, guestName: val.target.value})}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Check-In Date</label>
-                  <input type='date' name='checkInDate' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type='date' name='checkInDate' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, checkInDate: val.target.value})}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Check-Out Date</label>
-                  <input type="date" name='checkOutDate' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type="date" name='checkOutDate' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, checkOutDate: val.target.value})}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Total Nights</label>
-                  <input type="number" name='totalNights' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type="number" name='totalNights' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, totalNight: val.target.value})}/>
                 </div>
                 <div>
                   <label className='block text-sm font-medium'>Room Per Night</label>
-                  <input type="number" name='roomPerNight' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                  <input type="number" name='roomPerNight' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, roomPerNight: val.target.value})}/>
                 </div>
               </div>
               <div>
                 <label className='block text-sm font-medium'>Additional Charges</label>
-                <input type="number" name='additionalCharges' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                <input type="number" name='additionalCharges' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, additionalCharges: val.target.value})}/>
               </div>
 
               <div>
                 <label className='block text-sm font-medium'>Payment Method</label>
-                <select name="paymentMethod" className='w-full p-2 border rounded' onChange={handleChange}>
+                <select name="paymentMethod" className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, paymentMethod: val.target.value})}>
                   <option value="">Select Payment Method</option>
                   <option value="credit">Credit Card</option>
                   <option value="debit">Debit Card</option>
@@ -101,7 +122,7 @@ const PaymentAddForm: React.FC = () => {
 
               <div>
                 <label className='block text-sm font-medium'>Cash Received</label>
-                <input type="number" name='cashReceived' required className='w-full p-2 border rounded' onChange={handleChange}/>
+                <input type="number" name='cashReceived' required className='w-full p-2 border rounded' onChange={(val) => setPaymentDetails({...paymentDetails, cashReceived: val.target.value})}/>
               </div>
               
                 <div className='text-left text-lg font-bold'>Total: $</div>
@@ -118,6 +139,7 @@ const PaymentAddForm: React.FC = () => {
                 <button
                   type="submit"
                   className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  onClick={handleSave}
                 >
                   Submit Payment
                 </button>
