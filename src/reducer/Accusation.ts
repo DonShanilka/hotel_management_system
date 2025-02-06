@@ -23,3 +23,7 @@ const accusationSlice = createSlice({
     },
   },
 });
+
+export const { addAccusation, updateAccusation, deleteAccusation } =
+  accusationSlice.actions;
+export default accusationSlice.reducer;
