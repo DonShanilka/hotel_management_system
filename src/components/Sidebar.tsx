@@ -1,16 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Hotel,
-  BookOpen,
-  Users,
-  ScrollText,
-  BarChart3,
-  DollarSign,
-  ServerIcon,
-  
-} from 'lucide-react';
+import { LayoutDashboard, Hotel, BookOpen, Users, ScrollText, BarChart3, User, Briefcase, ClipboardList, DollarSign } from 'lucide-react';
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -23,11 +13,11 @@ const Sidebar = () => {
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
     { text: 'Accusation', icon: BarChart3, path: '/accusation' },
-    { text: 'Employee', icon: Users, path: '/payment' },
-    { text: 'Service', icon: ServerIcon, path: '/payment' },
-    { text: 'ServiceUsage', icon: DollarSign, path: '/payment' },
+    { text: 'Employee', icon: User, path: '/employee' },  // Changed to 'User' for employees
+    { text: 'Service', icon: Briefcase, path: '/service' }, // 'Briefcase' for services
+    { text: 'Service Usage', icon: ClipboardList, path: '/serviceUsage' }, // 'ClipboardList' for usage tracking
     { text: 'Payment', icon: DollarSign, path: '/payment' }
-  ];
+];
 
   return (
     <div className="w-70 min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 text-white flex flex-col">
