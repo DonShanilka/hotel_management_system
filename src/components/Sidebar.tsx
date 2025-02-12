@@ -8,6 +8,8 @@ import {
   ScrollText,
   BarChart3,
   DollarSign,
+  ServerIcon,
+  
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -21,6 +23,9 @@ const Sidebar = () => {
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
     { text: 'Accusation', icon: BarChart3, path: '/accusation' },
+    { text: 'Employee', icon: Users, path: '/payment' },
+    { text: 'Service', icon: ServerIcon, path: '/payment' },
+    { text: 'ServiceUsage', icon: DollarSign, path: '/payment' },
     { text: 'Payment', icon: DollarSign, path: '/payment' }
   ];
 

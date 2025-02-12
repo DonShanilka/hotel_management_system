@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import RoomCard from './RoomCard';
+import axios from "axios";
 
 type Room = {
   roomNumber: string;
@@ -20,10 +21,10 @@ const RoomAddForm: React.FC = () => {
   const [roomList, setRoomList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newRoom: Room = {
+    const newRoom : Room = {
       roomNumber,
       roomType,
       selectedImage, 
@@ -32,15 +33,31 @@ const RoomAddForm: React.FC = () => {
       status,
     };
 
-    if (editIndex !== null) {
-      // Update existing report
-      const updatedList = [...roomList];
-      updatedList[editIndex] = newRoom;
-      setRoomList(updatedList);
-      setEditIndex(null);
-    } else {
-      // Add new report
-      setRoomList([...roomList, newRoom]);
+    // if (editIndex !== null) {
+    //   // Update existing report
+    //   const updatedList = [...roomList];
+    //   updatedList[editIndex] = newRoom;
+    //   setRoomList(updatedList);
+    //   setEditIndex(null);
+    // } else {
+    //   // Add new report
+    //   setRoomList([...roomList, newRoom]);
+    // }
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/saveRoom", {
+        roomNumber: newRoom.roomNumber,
+        roomType: newRoom.roomType,
+        selectedImage: newRoom.selectedImage,
+        hallFloor: newRoom.hallFloor,
+        price: newRoom.price,
+        status: newRoom.status
+      });
+      alert("Data Save successful: " + response.data.message);
+      // navigate('/login')
+    } catch (error : any) {
+      console.error("Error during registration:", error);
+      alert("Save failed: " + (error.response?.data?.error || "Unknown error"));
     }
 
     setRoomNumber('');
