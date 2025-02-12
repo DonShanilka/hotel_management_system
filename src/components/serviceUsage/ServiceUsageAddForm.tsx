@@ -67,7 +67,7 @@ const ServiceUsageAddForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          {/* <div>
             <label className="block text-gray-700 font-medium mb-1">Usage ID</label>
             <input
               type="text"
@@ -76,7 +76,7 @@ const ServiceUsageAddForm: React.FC = () => {
               className="w-full p-2 border rounded-lg"
               required
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-gray-700 font-medium mb-1">Booking ID</label>
