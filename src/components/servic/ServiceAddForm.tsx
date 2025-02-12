@@ -56,7 +56,7 @@ const ServiceAddForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          {/* <div>
             <label className="block text-gray-700 font-medium mb-1">Service ID</label>
             <input
               type="text"
@@ -65,7 +65,7 @@ const ServiceAddForm: React.FC = () => {
               className="w-full p-2 border rounded-lg"
               required
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-gray-700 font-medium mb-1">Service Name</label>
@@ -94,7 +94,7 @@ const ServiceAddForm: React.FC = () => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full h-28 p-2 border rounded-lg"
               required
             />
           </div>
