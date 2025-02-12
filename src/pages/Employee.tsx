@@ -1,9 +1,10 @@
 import React from 'react'
+import EmployeeAddForm from '../components/employee/EmployeeAddForm'
 
 function Employee() {
   return (
     <div>
-      Employee
+      <EmployeeAddForm/>
     </div>
   )
 }
