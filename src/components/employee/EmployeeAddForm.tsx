@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import EmployeeTable from './EmployeeTable';
+import EmployeeTable from './EmployeeTable';
 
 const EmployeeAddForm: React.FC = () => {
   const [employeeID, setEmployeeID] = useState('');
