@@ -33,17 +33,6 @@ const RoomAddForm: React.FC = () => {
       status,
     };
 
-    // if (editIndex !== null) {
-    //   // Update existing report
-    //   const updatedList = [...roomList];
-    //   updatedList[editIndex] = newRoom;
-    //   setRoomList(updatedList);
-    //   setEditIndex(null);
-    // } else {
-    //   // Add new report
-    //   setRoomList([...roomList, newRoom]);
-    // }
-
     try {
       const response = await axios.post("http://localhost:3000/api/saveRoom", {
         roomNumber: newRoom.roomNumber,

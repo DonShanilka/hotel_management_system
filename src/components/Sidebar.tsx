@@ -20,8 +20,8 @@ const Sidebar = () => {
 ];
 
   return (
-    <div className="w-70 min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 text-white flex flex-col">
-      <div className="h-16 flex items-center px-4 border-b border-white/10 bg-gradient-to-r from-blue-900 to-blue-800">
+    <div className="w-70 min-h-screen bg-blue-950 text-white flex flex-col">
+      <div className="h-16 flex items-center px-4">
         <h1 className="text-lg font-semibold tracking-wide text-white">
           Hotel Management
         </h1>
@@ -40,17 +40,17 @@ const Sidebar = () => {
                   }`}
               >
                 {location.pathname === path && (
-                  <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-white rounded-r" />
+                  <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-orange-600 rounded-r" />
                 )}
                 <Icon 
                   size={20} 
                   className={`mr-3 ${location.pathname === path 
-                    ? 'text-white' 
+                    ? 'text-orange-600' 
                     : 'text-white/70 group-hover:text-white'
                   }`}
                 />
                 <span className={`${location.pathname === path 
-                  ? 'text-white' 
+                  ? 'text-orange-600' 
                   : 'text-white/70 group-hover:text-white'
                 }`}>
                   {text}
