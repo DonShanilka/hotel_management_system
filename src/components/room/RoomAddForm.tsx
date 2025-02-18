@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import RoomCard from './RoomCard';
+import axios from "axios";
 
 type Room = {
   roomNumber: string;
@@ -20,7 +21,7 @@ const RoomAddForm: React.FC = () => {
   const [roomList, setRoomList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newRoom: Room = {
@@ -32,16 +33,26 @@ const RoomAddForm: React.FC = () => {
       status,
     };
 
-    if (editIndex !== null) {
-      // Update existing report
-      const updatedList = [...roomList];
-      updatedList[editIndex] = newRoom;
-      setRoomList(updatedList);
-      setEditIndex(null);
-    } else {
-      // Add new report
-      setRoomList([...roomList, newRoom]);
-    }
+    // if (editIndex !== null) {
+    //   // Update existing report
+    //   const updatedList = [...roomList];
+    //   updatedList[editIndex] = newRoom;
+    //   setRoomList(updatedList);
+    //   setEditIndex(null);
+    // } else {
+    //   // Add new report
+    //   setRoomList([...roomList, newRoom]);
+    // }
+
+    const response = await axios.post("http://localhost:3000/api/saveRoom", {
+      roomNumber : roomNumber,
+      roomType : roomType,
+      selectedImage : selectedImage, 
+      hallFloor : hallFloor,
+      price : price,
+      status : status,
+    });
+    alert("Data Save successful: " + response.data.message);
 
     setRoomNumber('');
     setRoomType('Single');
