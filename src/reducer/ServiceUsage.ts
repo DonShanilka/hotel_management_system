@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Employee } from "../model/Employee.ts";
+import { ServiceUsage } from "../model/ServiceUsage.ts";
 
-const initialState:Employee[] = [];
+const initialState:ServiceUsage[] = [];
 
 const serviceUsageSlice = createSlice({
-  name: "employyes",
+  name: "serviceUsages",
   initialState: initialState,
   reducers: {
     // addAccusation(state, action) {
