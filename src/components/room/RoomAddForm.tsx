@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RoomCard from './RoomCard';
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {saveRooms} from "../../reducer/RoomSlice.ts";
+import {deleteRoom, getAllRoom, saveRooms, updateRoom} from "../../reducer/RoomSlice.ts";
 
 const RoomAddForm: React.FC = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -18,6 +18,9 @@ const RoomAddForm: React.FC = () => {
     status: "",
   });
 
+  useEffect(()=>{
+    dispatch(getAllRoom())
+  },[dispatch])
   const handleSubmit =  (e : any) => {
     e.preventDefault();
 
@@ -60,19 +63,40 @@ const RoomAddForm: React.FC = () => {
     }
   };
 
-  const handleDelete = (index: number) => {
-    // const updatedList = roomList.filter((_, i) => i !== index);
-    // setRoomList(updatedList);
+  const handleDelete = (index: number,roomNumber:string) => {
+    const isConfirm = window.confirm("Are you sure want to delete Room ?");
+    if(isConfirm){
+      dispatch(deleteRoom(roomNumber))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
 
-  const handleUpdate = (index: number) => {
-    // const room = roomList[index];
-    // setRoomNumber(room.roomNumber);
-    // setRoomType(room.roomType);
-    // setSelectedImage(room.selectedImage);
-    // setHallFloor(room.hallFloor);
-    // setPrice(room.price);
-    // setStatus(room.status);
+  const handleUpdate = (index: number,e) => {
+    e.preventDefault();
+
+    if (
+        formData.roomNumber &&
+        formData.roomType &&
+        formData.status &&
+        formData.hallFloor &&
+        formData.price
+    ){
+      const roomData = new FormData();
+      roomData.append("roomNumber", formData.roomNumber);
+      roomData.append("roomType", formData.roomType);
+      roomData.append("status", formData.status);
+      roomData.append("hallFloor", formData.hallFloor);
+      roomData.append("price", formData.price);
+
+      if (formData.image){
+        roomData.append("image", formData.image);
+      }
+      console.log("Awa")
+      dispatch(updateRoom(roomData));
+    }else {
+      alert("Please fill all fields.");
+    }
     setEditIndex(index);
   };
 

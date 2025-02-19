@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Room} from "../model/Room.ts";
 import axios from "axios";
+import { log } from 'console';
 
 const initialState:Room[] = [];
 
@@ -22,6 +23,45 @@ export const saveRooms = createAsyncThunk(
         console.log(error);
       }
     }
+)
+export const updateRoom = createAsyncThunk(
+  'room/updateRoom',
+  async(roomData)=>{
+    try{
+      const roomNumber = roomData.get("roomNumber");
+      console.log("Updating room with room :",roomNumber);
+
+      const response = await api.put(`/api/room/updateRoom/${roomNumber}`,roomData,{
+        headers:{
+          "Content-Type" : "multipart/form-data"
+        },
+      });
+      return response.data;
+    }catch(err){
+      console.log("Update Room with error :", err);
+    }
+  }
+)
+
+export const deleteRoom = createAsyncThunk(
+  'room/deleteRoom',
+  async(roomNumber:string)=>{
+    console.log(roomNumber)
+    try{
+      await api.delete(`/api/room/deleteRoom/${roomNumber}`);
+      return roomNumber;
+    }catch(err){
+      console.log(err)
+    }
+  }
+)
+
+export const getAllRoom = createAsyncThunk(
+  'room/getAllRoom',
+  async()=>{
+    const response = await api.get('/api/room/getAllRoom');
+    return response.data;
+  }
 )
 const roomSlice = createSlice({
   name: 'rooms',
@@ -54,6 +94,40 @@ const roomSlice = createSlice({
         })
         .addCase(saveRooms.pending,()=>{
           console.log("Room saving pending")
+        })
+
+        builder
+        .addCase(updateRoom.fulfilled,(state,action)=>{
+          const index = state.findIndex(room => room.roomNumber === action.payload.roomNumber);
+          if(index !== -1){
+            state[index] = action.payload;
+          }
+          console.log("Room Updated");
+        })
+        .addCase(updateRoom.rejected,(state,action)=>{
+          console.log("Failed to Update Room :",action.payload)
+        })
+        .addCase(updateRoom.pending,()=>{
+          console.log("Room Updating Pending")
+        })
+
+        builder
+        .addCase(deleteRoom.fulfilled,(state,action)=>{
+          return state.filter(room => room.roomNumber !== action.payload);
+        })
+        .addCase(deleteRoom.rejected,(state,action)=>{
+          console.log("Failed to delete Room : ", action.payload)
+        })
+
+        builder
+        .addCase(getAllRoom.fulfilled,(state,action)=>{
+          return action.payload;
+        })
+        .addCase(getAllRoom.rejected,(state,action)=>{
+          console.log("Failed to get Room :", action.payload)
+        })
+        .addCase(getAllRoom.pending,()=>{
+          console.log("Fetching Room  ....")
         })
   }
 });

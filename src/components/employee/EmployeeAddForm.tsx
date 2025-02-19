@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import EmployeeTable from './EmployeeTable';
+import { useDispatch } from 'react-redux';
+import { saveEmployee } from '../../reducer/EmployeeSlice';
 
 const EmployeeAddForm: React.FC = () => {
   const [employeeID, setEmployeeID] = useState('');
@@ -11,6 +13,8 @@ const EmployeeAddForm: React.FC = () => {
   const [hireDate, setHireDate] = useState('');
   const [employeeList, setEmployeeList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +36,8 @@ const EmployeeAddForm: React.FC = () => {
       setEmployeeList(updatedList);
       setEditIndex(null);
     } else {
-      setEmployeeList([...employeeList, newEmployee]);
+      // setEmployeeList([...employeeList, newEmployee]);
+      dispatch(saveEmployee(newEmployee));
     }
 
     // Reset form
