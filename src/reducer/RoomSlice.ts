@@ -14,7 +14,7 @@ export const saveRooms = createAsyncThunk(
       try {
         const response = await api.post('/api/room/saveRoom',roomData,{
           headers:{
-            "Content-Type":"multipart/form-data"
+            "Content-Type" : "multipart/form-data"
           },
         });
         return response.data;

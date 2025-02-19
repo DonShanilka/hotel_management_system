@@ -5,6 +5,9 @@ import guestReducer from '../reducer/GuestSlice.ts'
 import houseReducer from '../reducer/HouseKeepingSlice.ts'
 import paymentReducer from '../reducer/PaymentSlice.ts'
 import accuReducer from '../reducer/AccusationSlice.ts'
+import employeeReducer from '../reducer/EmployeeSlice.ts'
+import accuReducer from '../reducer/AccusationSlice.ts'
+import accuReducer from '../reducer/AccusationSlice.ts'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +16,8 @@ export const store = configureStore({
         guests : guestReducer,
         houseKeepings : houseReducer,
         payments : paymentReducer,
-        accusations : accuReducer
+        accusations : accuReducer,
+        employees : employeeReducer
     }
 })
 
