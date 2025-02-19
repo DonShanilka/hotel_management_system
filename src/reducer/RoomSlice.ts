@@ -97,12 +97,13 @@ const roomSlice = createSlice({
         })
 
         builder
-        .addCase(updateRoom.fulfilled,(state,action)=>{
+        .addCase(updateRoom.fulfilled, (state, action) => {
           const index = state.findIndex(room => room.roomNumber === action.payload.roomNumber);
           if(index !== -1){
             state[index] = action.payload;
           }
           console.log("Room Updated");
+          
         })
         .addCase(updateRoom.rejected,(state,action)=>{
           console.log("Failed to Update Room :",action.payload)

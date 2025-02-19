@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import RoomCard from './RoomCard';
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteRoom, getAllRoom, saveRooms, updateRoom} from "../../reducer/RoomSlice.ts";
 
@@ -8,12 +7,13 @@ const RoomAddForm: React.FC = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const dispatch = useDispatch();
   const rooms = useSelector((state)=>state.rooms || []);
+  const [roomList, setRoomList] = useState<any[]>([]);
 
   const [formData, setFormData] = useState({
     roomNumber: "",
     roomType: "",
     image: null,
-    hallFloor: "",
+    hallFloor: 0,
     price: "",
     status: "",
   });
@@ -21,7 +21,8 @@ const RoomAddForm: React.FC = () => {
   useEffect(()=>{
     dispatch(getAllRoom())
   },[dispatch])
-  const handleSubmit =  (e : any) => {
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     if (
@@ -30,23 +31,42 @@ const RoomAddForm: React.FC = () => {
         formData.status &&
         formData.hallFloor &&
         formData.price
-    ){
-      const roomData = new FormData();
-      roomData.append("roomNumber", formData.roomNumber);
-      roomData.append("roomType", formData.roomType);
-      roomData.append("status", formData.status);
-      roomData.append("hallFloor", formData.hallFloor);
-      roomData.append("price", formData.price);
+    ) {
+        const roomData = new FormData();
+        roomData.append("roomNumber", formData.roomNumber);
+        roomData.append("roomType", formData.roomType);
+        roomData.append("status", formData.status);
+        roomData.append("hallFloor", formData.hallFloor);
+        roomData.append("price", formData.price);
 
-      if (formData.image){
-        roomData.append("image", formData.image);
-      }
-      console.log("Awa")
-      dispatch(saveRooms(roomData));
-    }else {
-      alert("Please fill all fields.");
+        if (formData.image) {
+            roomData.append("image", formData.image);
+        }
+
+        const roomNumber = Number(formData.roomNumber);
+        formData.hallFloor = Number(formData.hallFloor);
+
+        if (editIndex !== null) {
+          roomData.append("roomNumber", roomNumber); // Ensure roomNumber is included
+            dispatch(updateRoom(roomData));
+            setEditIndex(null);
+        } else {
+            dispatch(saveRooms(roomData)); // Add new room
+        }
+
+        setFormData({ 
+            roomNumber: "",
+            roomType: "",
+            image: null,
+            hallFloor: 0,
+            price: "",
+            status: ""
+        });
+    } else {
+        alert("Please fill all fields.");
     }
-  };
+};
+
 
   const handleChange = (e : any) => {
     const {name, value, files} = e.target;
@@ -72,33 +92,28 @@ const RoomAddForm: React.FC = () => {
     }
   };
 
-  const handleUpdate = (index: number,e) => {
-    e.preventDefault();
-
-    if (
-        formData.roomNumber &&
-        formData.roomType &&
-        formData.status &&
-        formData.hallFloor &&
-        formData.price
-    ){
-      const roomData = new FormData();
-      roomData.append("roomNumber", formData.roomNumber);
-      roomData.append("roomType", formData.roomType);
-      roomData.append("status", formData.status);
-      roomData.append("hallFloor", formData.hallFloor);
-      roomData.append("price", formData.price);
-
-      if (formData.image){
-        roomData.append("image", formData.image);
-      }
-      console.log("Awa")
-      dispatch(updateRoom(roomData));
-    }else {
-      alert("Please fill all fields.");
+  const handleUpdate = (index: number, room: any) => {
+    if (!room) {
+      console.error("Room data is undefined for index:", index);
+      return;
     }
+  
     setEditIndex(index);
-  };
+
+    const hallFloor = Number(room.hallFloor);
+  
+    setFormData({
+      roomNumber: room.roomNumber || "",
+      roomType: room.roomType || "",
+      image: null, // Reset image (avoid pre-filling due to file handling issues)
+      hallFloor: hallFloor || 0,
+      price: room.price || "",
+      status: room.status || "",
+    });
+};
+  
+  
+  
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">

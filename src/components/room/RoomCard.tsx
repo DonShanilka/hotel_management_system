@@ -4,7 +4,7 @@ type Room = {
   roomNumber: string;
   roomType: string;
   selectedImage?: string; // Made optional to prevent errors
-  hallFloor: string;
+  hallFloor: number;
   price: string;
   status: string;
 };
@@ -58,12 +58,13 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
 
                   {/* Buttons aligned to the right */}
                   <div className="flex space-x-2 mt-4">
-                    <button
-                        onClick={() => onUpdate(index)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-                    >
+                  <button
+                      onClick={() => onUpdate(index, room)} // Pass room data along with index
+                      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                  >
                       Update
-                    </button>
+                  </button>
+
                     <button
                         onClick={() => onDelete(index)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
