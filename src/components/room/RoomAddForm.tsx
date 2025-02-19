@@ -4,23 +4,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {saveRooms} from "../../reducer/RoomSlice.ts";
 
-// type Room = {
-//   roomNumber: string;
-//   roomType: string;
-//   selectedImage: string | null; // Fixed: Added selectedImage in Room type
-//   hallFloor: string;
-//   price: number;
-//   status: string;
-// };
-
 const RoomAddForm: React.FC = () => {
-  // const [roomNumber, setRoomNumber] = useState('');
-  // const [roomType, setRoomType] = useState('Single');
-  // const [image, setSelectedImage] = useState<string | null>(null);
-  // const [hallFloor, setHallFloor] = useState('');
-  // const [price, setPrice] = useState(0);
-  // const [status, setStatus] = useState('Available');
-  // const [roomList, setRoomList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const dispatch = useDispatch();
   const rooms = useSelector((state)=>state.rooms || []);

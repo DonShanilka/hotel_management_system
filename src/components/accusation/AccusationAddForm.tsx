@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import AccusationTable from "./AccusationTable";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAccusation } from "../../reducer/AccusationSlice";
 
 const AccusationAddForm: React.FC = () => {
   const [reportType, setReportType] = useState("Housekeeping");
@@ -7,6 +9,9 @@ const AccusationAddForm: React.FC = () => {
   const [description, setDescription] = useState("");
   const [reportList, setReportList] = useState<{ reportType: string; guestId: string; description: string }[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  const dispatch = useDispatch();
+  // const acc = useSelector((state)=>state.acc || []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,14 +25,10 @@ const AccusationAddForm: React.FC = () => {
       setReportList(updatedList);
       setEditIndex(null);
     } else {
-      // Add new report
       setReportList([...reportList, newReport]);
+      dispatch(saveAccusation(newReport));
+      console.log("Wade Goda", reportList);
     }
-
-    // Reset form after submission
-    setReportType("Housekeeping");
-    setGuestId("");
-    setDescription("");
   };
 
   const handleDelete = (index: number) => {
