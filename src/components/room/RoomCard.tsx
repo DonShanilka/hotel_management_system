@@ -49,8 +49,13 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
                     <strong>Price:</strong> ${price}
                   </p>
                   <p
-                      className={`text-white px-2 py-1 rounded-md w-max ${
-                          status === "Available" ? "bg-green-500" : "bg-red-500"
+                      className={`text-black px-2 py-1 rounded-md w-max ${
+                        status === "Available"
+                        ? "bg-green-300"
+                        : status === "Under Maintenance"
+                        ? "bg-yellow-200"
+                        : "bg-orange-300"
+                      
                       }`}
                   >
                     <strong>Status:</strong> {status}
@@ -76,11 +81,11 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
 
                 {/* Right side - Room Image */}
                 {selectedImage ? (
-                    <div className="ml-4">
+                    <div className="ml-2">
                       <img
                           src={selectedImage}
                           alt="Room"
-                          className="w-44 h-48 rounded-md border"
+                          className="w-28 h-28 rounded-md border"
                       />
                     </div>
                 ) : null}
