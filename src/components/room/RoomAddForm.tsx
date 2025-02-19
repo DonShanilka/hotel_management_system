@@ -1,86 +1,94 @@
 import React, { useState } from 'react';
 import RoomCard from './RoomCard';
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {saveRooms} from "../../reducer/RoomSlice.ts";
 
-type Room = {
-  roomNumber: string;
-  roomType: string;
-  selectedImage: string | null; // Fixed: Added selectedImage in Room type
-  hallFloor: string;
-  price: number;
-  status: string;
-};
+// type Room = {
+//   roomNumber: string;
+//   roomType: string;
+//   selectedImage: string | null; // Fixed: Added selectedImage in Room type
+//   hallFloor: string;
+//   price: number;
+//   status: string;
+// };
 
 const RoomAddForm: React.FC = () => {
-  const [roomNumber, setRoomNumber] = useState('');
-  const [roomType, setRoomType] = useState('Single');
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [hallFloor, setHallFloor] = useState('');
-  const [price, setPrice] = useState(0);
-  const [status, setStatus] = useState('Available');
-  const [roomList, setRoomList] = useState<any[]>([]);
+  // const [roomNumber, setRoomNumber] = useState('');
+  // const [roomType, setRoomType] = useState('Single');
+  // const [image, setSelectedImage] = useState<string | null>(null);
+  // const [hallFloor, setHallFloor] = useState('');
+  // const [price, setPrice] = useState(0);
+  // const [status, setStatus] = useState('Available');
+  // const [roomList, setRoomList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const dispatch = useDispatch();
+  const rooms = useSelector((state)=>state.rooms || []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    roomNumber: "",
+    roomType: "",
+    image: null,
+    hallFloor: "",
+    price: "",
+    status: "",
+  });
+
+  const handleSubmit =  (e) => {
     e.preventDefault();
 
-    const newRoom : Room = {
-      roomNumber,
-      roomType,
-      selectedImage, 
-      hallFloor,
-      price,
-      status,
-    };
+    if (
+        formData.roomNumber &&
+        formData.roomType &&
+        formData.status &&
+        formData.hallFloor &&
+        formData.price
+    ){
+      const roomData = new FormData();
+      roomData.append("roomNumber", formData.roomNumber);
+      roomData.append("roomType", formData.roomType);
+      roomData.append("status", formData.status);
+      roomData.append("hallFloor", formData.hallFloor);
+      roomData.append("price", formData.price);
 
-    try {
-      const response = await axios.post("http://localhost:3000/api/saveRoom", {
-        roomNumber: newRoom.roomNumber,
-        roomType: newRoom.roomType,
-        selectedImage: newRoom.selectedImage,
-        hallFloor: newRoom.hallFloor,
-        price: newRoom.price,
-        status: newRoom.status
-      });
-      alert("Data Save successful: " + response.data.message);
-      // navigate('/login')
-    } catch (error : any) {
-      console.error("Error during registration:", error);
-      alert("Save failed: " + (error.response?.data?.error || "Unknown error"));
+      if (formData.image){
+        roomData.append("image", formData.image);
+      }
+      console.log("Awa")
+      dispatch(saveRooms(roomData));
+    }else {
+      alert("Please fill all fields.");
     }
-
-    setRoomNumber('');
-    setRoomType('Single');
-    setHallFloor('');
-    setPrice(0);
-    setStatus('Available');
-    setSelectedImage(null); // Reset image selection
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // Fixed: Added optional chaining to prevent errors
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const handleChange = (e) => {
+    const {name, value, files} = e.target;
+    if (name === "image") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        image: files[0],
+      }));
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
     }
   };
 
   const handleDelete = (index: number) => {
-    const updatedList = roomList.filter((_, i) => i !== index);
-    setRoomList(updatedList);
+    // const updatedList = roomList.filter((_, i) => i !== index);
+    // setRoomList(updatedList);
   };
 
   const handleUpdate = (index: number) => {
-    const room = roomList[index];
-    setRoomNumber(room.roomNumber);
-    setRoomType(room.roomType);
-    setSelectedImage(room.selectedImage);
-    setHallFloor(room.hallFloor);
-    setPrice(room.price);
-    setStatus(room.status);
+    // const room = roomList[index];
+    // setRoomNumber(room.roomNumber);
+    // setRoomType(room.roomType);
+    // setSelectedImage(room.selectedImage);
+    // setHallFloor(room.hallFloor);
+    // setPrice(room.price);
+    // setStatus(room.status);
     setEditIndex(index);
   };
 
@@ -95,8 +103,9 @@ const RoomAddForm: React.FC = () => {
             <label className="block text-gray-700 font-medium mb-1">Room Number</label>
             <input
               type="text"
-              value={roomNumber}
-              onChange={(e) => setRoomNumber(e.target.value)}
+              name="roomNumber"
+              value={formData.roomNumber}
+              onChange={handleChange}
               className="w-full p-2 border rounded-lg"
               required
             />
@@ -105,8 +114,9 @@ const RoomAddForm: React.FC = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Type</label>
             <select
-              value={roomType}
-              onChange={(e) => setRoomType(e.target.value)}
+              value={formData.roomType}
+              name= "roomType"
+              onChange={handleChange}
               className="w-full p-2 border rounded-lg"
               required
             >
@@ -122,8 +132,9 @@ const RoomAddForm: React.FC = () => {
             <input
               className="w-full p-2 border rounded-lg"
               type="file"
+              name='image'
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -131,8 +142,9 @@ const RoomAddForm: React.FC = () => {
             <label className="block text-gray-700 font-medium mb-1">Hall Floor</label>
             <input
               type="text"
-              value={hallFloor}
-              onChange={(e) => setHallFloor(e.target.value)}
+              name={"hallFloor"}
+              value={formData.hallFloor}
+              onChange={handleChange}
               className="w-full p-2 border rounded-lg"
               required
             />
@@ -142,8 +154,9 @@ const RoomAddForm: React.FC = () => {
             <label className="block text-gray-700 font-medium mb-1">Price ($)</label>
             <input
               type="number"
-              value={price}
-              onChange={(e) => setPrice(parseFloat(e.target.value))}
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
               className="w-full p-2 border rounded-lg"
               required
             />
@@ -152,8 +165,9 @@ const RoomAddForm: React.FC = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-1">Status</label>
             <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              value={formData.status}
+              name={"status"}
+              onChange={handleChange}
               className="w-full p-2 border rounded-lg"
               required
             >
@@ -173,7 +187,7 @@ const RoomAddForm: React.FC = () => {
           {editIndex !== null ? "Update Room" : "Add Room"}
         </button>
       </form>
-      <RoomCard rooms = {roomList} onUpdate={handleUpdate} onDelete={handleDelete}/>
+      <RoomCard rooms={rooms || []} onUpdate={handleUpdate} onDelete={handleDelete} />
     </div>
   );
 };

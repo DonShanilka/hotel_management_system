@@ -1,7 +1,7 @@
 export class Room {
   roomNumber !: string;
   roomType !: string;
-  selectedImage !: string; 
+  image !: BinaryData;
   hallFloor !: number;
   price !: number;
   status !: string;
