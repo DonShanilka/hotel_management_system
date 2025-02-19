@@ -3,7 +3,7 @@ import { Employee } from "../model/Employee.ts";
 
 const initialState:Employee[] = [];
 
-const employeeSlice = createSlice({
+const serviceUsageSlice = createSlice({
   name: "employyes",
   initialState: initialState,
   reducers: {
@@ -25,4 +25,4 @@ const employeeSlice = createSlice({
   },
 });
 
-export default employeeSlice.reducer;
+export default serviceUsageSlice.reducer;
