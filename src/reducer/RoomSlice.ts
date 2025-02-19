@@ -6,7 +6,8 @@ const initialState:Room[] = [];
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
-})
+});
+
 export const saveRooms = createAsyncThunk(
     'room/saveRoom',
     async (roomData:Room)=>{

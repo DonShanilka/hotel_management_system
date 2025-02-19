@@ -34,7 +34,7 @@ const RoomAddForm: React.FC = () => {
     status: "",
   });
 
-  const handleSubmit =  (e) => {
+  const handleSubmit =  (e : any) => {
     e.preventDefault();
 
     if (
@@ -61,7 +61,7 @@ const RoomAddForm: React.FC = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e : any) => {
     const {name, value, files} = e.target;
     if (name === "image") {
       setFormData((prevFormData) => ({
