@@ -24,7 +24,7 @@ const RoomAddForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newRoom: Room = {
+    const newRoom : Room = {
       roomNumber,
       roomType,
       selectedImage, 
@@ -33,26 +33,16 @@ const RoomAddForm: React.FC = () => {
       status,
     };
 
-    // if (editIndex !== null) {
-    //   // Update existing report
-    //   const updatedList = [...roomList];
-    //   updatedList[editIndex] = newRoom;
-    //   setRoomList(updatedList);
-    //   setEditIndex(null);
-    // } else {
-    //   // Add new report
-    //   setRoomList([...roomList, newRoom]);
-    // }
-
-    const response = await axios.post("http://localhost:3000/api/saveRoom", {
-      roomNumber : roomNumber,
-      roomType : roomType,
-      selectedImage : selectedImage, 
-      hallFloor : hallFloor,
-      price : price,
-      status : status,
-    });
-    alert("Data Save successful: " + response.data.message);
+    if (editIndex !== null) {
+      // Update existing report
+      const updatedList = [...roomList];
+      updatedList[editIndex] = newRoom;
+      setRoomList(updatedList);
+      setEditIndex(null);
+    } else {
+      // Add new report
+      setRoomList([...roomList, newRoom]);
+    }
 
     setRoomNumber('');
     setRoomType('Single');
