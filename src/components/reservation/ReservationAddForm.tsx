@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReservationTable from './ReservationTable';
+import { useDispatch } from 'react-redux';
 
 const ReservationAddForm: React.FC = () => {
   const [guestName, setGuestName] = useState('');
@@ -10,6 +11,8 @@ const ReservationAddForm: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [reservationList, setReservationList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const dispatch = useDispatch();
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +32,8 @@ const ReservationAddForm: React.FC = () => {
       setReservationList(updatedList);
       setEditIndex(null);
     } else {
-      setReservationList([...reservationList, newReservation]);
+      // setReservationList([...reservationList, newReservation]);
+
     }
 
     // Reset form
