@@ -1,28 +1,60 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {HouseKeeping} from "../model/HouseKeeping.ts";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from "axios";
+import { Accusation } from '../model/Accusation.ts';
 
-const initialState:HouseKeeping[] = [];
+const initialState:Accusation[] = [];
 
-const accusationSlice = createSlice({
-  name: "accusation",
-  initialState: initialState,
-  reducers: {
-    // addAccusation(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateAccusation: (state, action) => {
-    //   const { id, accusation } = action.payload;
-    //   const accusationIndex = state.findIndex(
-    //     (accusation) => accusation.id === id
-    //   );
-    //   if (accusationIndex !== -1) {
-    //     state[accusationIndex] = accusation;
-    //   }
-    // },
-    // deleteAccusation: (state, action) => {
-    //   return state.filter((accusation) => accusation.id !== action.payload.id);
-    // },
-  },
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
 });
 
-export default accusationSlice.reducer;
+export const saveAccusation = createAsyncThunk(
+    'acc/saveAccusation',
+    async (accData:Accusation)=>{
+      try {
+        const response = await api.post('/api/acc/saveAccusation',accData,{
+          headers:{
+            "Content-Type" : "multipart/form-data"
+          },
+        });
+        return response.data;
+      }catch(error){
+        console.log(error);
+      }
+    }
+)
+const accusationsSlice = createSlice({
+  name: 'accusations',
+  initialState: initialState,
+  reducers: {
+    // addRoom(state, action) {
+    //   state.push(action.payload);
+    // },
+    // updateRoom: (state, action) => {
+    //   const {id, room} = action.payload;
+    //   const roomIndex = state.findIndex(
+    //     (room) => room.id === id
+    //   );
+    //   if (roomIndex !== -1) {
+    //     state[roomIndex] = room;
+    //   }
+    // },
+    // deleteRoom: (state, action) => {
+    //   return state.filter((room) => room.id !== action.payload.id);
+    // },
+  },
+  extraReducers:(builder)=>{
+    builder
+        .addCase(saveAccusation.fulfilled,(state,action)=>{
+          state.push(action.payload);
+          console.log("Acc saved")
+        })
+        .addCase(saveAccusation.rejected,(state,action)=>{
+          console.log("Acc Saved Rejected :",action.payload)
+        })
+        .addCase(saveAccusation.pending,()=>{
+          console.log("Acc saving pending")
+        })
+  }
+});
+export default accusationsSlice.reducer;
