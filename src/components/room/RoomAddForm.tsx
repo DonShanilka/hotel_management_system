@@ -7,7 +7,8 @@ const RoomAddForm: React.FC = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const dispatch = useDispatch();
   const rooms = useSelector((state)=>state.rooms || []);
-  const [roomList, setRoomList] = useState<any[]>([]);
+
+  console.log("Rooms Data Eka", rooms)
 
   const [formData, setFormData] = useState({
     roomNumber: "",

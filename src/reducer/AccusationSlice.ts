@@ -61,6 +61,7 @@ export const getallAccusation = createAsyncThunk(
   'acc/getAllAccusation',
   async() => {
     const response = await api.get('/api/acc/getAllAccusation');
+    console.log("This is Slice data ",response.data)
     return response.data;
   }
 );

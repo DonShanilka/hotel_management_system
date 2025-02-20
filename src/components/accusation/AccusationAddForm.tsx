@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccusationTable from "./AccusationTable";
 import { useDispatch, useSelector } from "react-redux";
-import { saveAccusation } from "../../reducer/AccusationSlice";
+import { getallAccusation, saveAccusation } from "../../reducer/AccusationSlice.ts";
 
 const AccusationAddForm: React.FC = () => {
   const [reportType, setReportType] = useState("Housekeeping");
@@ -9,9 +9,14 @@ const AccusationAddForm: React.FC = () => {
   const [description, setDescription] = useState("");
   const [reportList, setReportList] = useState<{ reportType: string; guestId: string; description: string }[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
-
   const dispatch = useDispatch();
-  // const acc = useSelector((state)=>state.acc || []);
+  const accusations = useSelector((state)=>state.accusations || []);
+
+  useEffect(() => {
+    dispatch(getallAccusation())
+  },[dispatch])
+
+  console.log("Meka Acc ", accusations);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +102,7 @@ const AccusationAddForm: React.FC = () => {
       </form>
 
       {/* Pass the reportList data to the Table Component */}
-      <AccusationTable reports={reportList} onDelete={handleDelete} onUpdate={handleUpdate} />
+      <AccusationTable acc={accusations} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };

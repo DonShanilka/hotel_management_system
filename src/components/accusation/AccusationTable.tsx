@@ -1,18 +1,22 @@
 import React from "react";
 
 type Report = {
+  accusationId : number;
   reportType: string;
   guestId: string;
   description: string;
 };
 
 interface ReportTableProps {
-  reports: Report[];
+  acc: Report[];
   onDelete: (index: number) => void;
   onUpdate: (index: number) => void;
 }
 
-const AccusationTable: React.FC<ReportTableProps> = ({ reports, onDelete, onUpdate }) => {
+
+const AccusationTable: React.FC<ReportTableProps> = ({ acc, onDelete, onUpdate }) => {
+
+
   return (
     <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold text-gray-800 mb-4"></h2>
@@ -20,6 +24,7 @@ const AccusationTable: React.FC<ReportTableProps> = ({ reports, onDelete, onUpda
       <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-blue-900 text-white">
+          <th className="border p-3 text-left">Accusation Id</th>
             <th className="border p-3 text-left">Guest ID</th>
             <th className="border p-3 text-left">Report Type</th>
             <th className="border p-3 text-left">Description</th>
@@ -27,12 +32,13 @@ const AccusationTable: React.FC<ReportTableProps> = ({ reports, onDelete, onUpda
           </tr>
         </thead>
         <tbody>
-          {reports.length > 0 ? (
-            reports.map((report, index) => (
+          {acc.length > 0 ? (
+            acc.map((acc, index) => (
               <tr key={index} className="hover:bg-gray-100 transition duration-300">
-                <td className="p-3 text-gray-700">{report.guestId}</td>
-                <td className="p-3 text-gray-700">{report.reportType}</td>
-                <td className="p-3 text-gray-700">{report.description || "No description"}</td>
+                <td className="p-3 text-gray-700">{acc.accusationId}</td>
+                <td className="p-3 text-gray-700">{acc.guestId}</td>
+                <td className="p-3 text-gray-700">{acc.reportType}</td>
+                <td className="p-3 text-gray-700">{acc.description || "No description"}</td>
                 <td className="p-3 text-center flex justify-center space-x-2">
                   <button
                     onClick={() => onUpdate(index)}
