@@ -1,7 +1,7 @@
 import React from "react";
 
 type Room = {
-  roomNumber: string;
+  roomNumber: number;
   roomType: string;
   selectedImage?: string; // Made optional to prevent errors
   hallFloor: number;
@@ -12,7 +12,7 @@ type Room = {
 interface RoomCardProps {
   rooms: Room[];
   onUpdate: (index: number) => void;
-  onDelete: (index: number) => void;
+  onDelete: (roomNumber: number) => void;
 }
 
 const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) => {
@@ -71,7 +71,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
                   </button>
 
                     <button
-                        onClick={() => onDelete(index)}
+                        onClick={() => onDelete(roomNumber)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
                     >
                       Delete

@@ -83,7 +83,7 @@ const RoomAddForm: React.FC = () => {
     }
   };
 
-  const handleDelete = (index: number,roomNumber:string) => {
+  const handleDelete = (roomNumber:string) => {
     const isConfirm = window.confirm("Are you sure want to delete Room ?");
     if(isConfirm){
       dispatch(deleteRoom(roomNumber))
@@ -110,11 +110,10 @@ const RoomAddForm: React.FC = () => {
       price: room.price || "",
       status: room.status || "",
     });
-};
+  };
   
   
   
-
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Room Management</h1>
@@ -149,7 +148,7 @@ const RoomAddForm: React.FC = () => {
             </select>
           </div>
 
-          {/* Image Chooser */}
+          {/*Image Chooser*/}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Image</label>
             <input
