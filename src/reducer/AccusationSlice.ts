@@ -26,23 +26,22 @@ export const saveAccusation = createAsyncThunk(
 );
 
 export const updateAccusation = createAsyncThunk(
-    'acc/updateAccusation',
-    async(accData) => {
-      try {
-        const accusationId = accData.get("accusationId");
-        console.log("Updating Acc with AccId: ",accusationId);
+  'acc/updateAccusation',
+  async (updateData) => {
+    const id = updateData.accusationId;  // Fix: Use direct property access
+    console.log("Updating Acc with AccId :", id, updateData);
 
-        const response = await api.put(`/api/acc/updateAccusation/${accusationId}`, accData, {
-          headers : {
-            "Content-Type" : "multipart/form-data"
-          },
-        });
-        return response.data;
-      } catch (err) {
-        console.log("Acc Update Erro: ", err);
-      }
+    try {
+      const response = await api.put(`/api/acc/updateAccusation/${id}`, updateData);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating accusation:", error);
+      throw error; // Ensure error propagates to rejected case
     }
+  }
 );
+
+
 
 export const deteleAccusation = createAsyncThunk(
   'acc/deleteAccusation',
@@ -99,20 +98,17 @@ const accusationsSlice = createSlice({
           console.log("Acc saving pending")
         })
 
-    builder
+        builder
         .addCase(updateAccusation.fulfilled, (state, action) => {
-          const index = state.findIndex(acc => acc.accusationId === action.payload.accusationId);
-          if (index !== -1) {
-            state[index] = action.payload;
-          }
-          console.log("Acc Updated");
+            const index = state.findIndex(acc => acc.accusationId === action.payload.accusationId);
+            if (index !== -1) {
+                state[index] = action.payload;
+            }
+            console.log("Accusation Updated");
         })
-        .addCase(updateAccusation.rejected, (satet, action) => {
-          console.log("Failed to Update Acc", action.payload);
-        })
-        .addCase(updateAccusation.pending, (satate, action) => {
-          console.log("Acc Updating Pending")
-        })
+        .addCase(updateAccusation.rejected, (state, action) => {
+            console.log("Failed to update Accusation: ", action.error);
+        });
 
     builder
         .addCase(deteleAccusation.fulfilled,(state,action)=>{

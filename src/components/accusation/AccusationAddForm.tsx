@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AccusationTable from "./AccusationTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getallAccusation, saveAccusation } from "../../reducer/AccusationSlice.ts";
+import { getallAccusation, saveAccusation, updateAccusation } from "../../reducer/AccusationSlice.ts";
 
 const AccusationAddForm: React.FC = () => {
   const [reportType, setReportType] = useState("Housekeeping");
+  const [accusationId, setAccusationId] = useState("");
   const [guestId, setGuestId] = useState("");
   const [description, setDescription] = useState("");
   const [reportList, setReportList] = useState<{ reportType: string; guestId: string; description: string }[]>([]);
@@ -16,12 +17,11 @@ const AccusationAddForm: React.FC = () => {
     dispatch(getallAccusation())
   },[dispatch])
 
-  console.log("Meka Acc ", accusations);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const newReport = { reportType, guestId, description };
+    const updateData = {accusationId,reportType , guestId, description};
 
     if (editIndex !== null) {
       // Update existing report
@@ -29,8 +29,9 @@ const AccusationAddForm: React.FC = () => {
       updatedList[editIndex] = newReport;
       setReportList(updatedList);
       setEditIndex(null);
+      dispatch(updateAccusation(updateData));
     } else {
-      setReportList([...reportList, newReport]);
+      // setReportList([...reportList, newReport]);
       dispatch(saveAccusation(newReport));
       console.log("Wade Goda", reportList);
     }
@@ -40,14 +41,27 @@ const AccusationAddForm: React.FC = () => {
     const updatedList = reportList.filter((_, i) => i !== index);
     setReportList(updatedList);
   };
-
-  const handleUpdate = (index: number) => {
-    const report = reportList[index];
+  const handleUpdate = (index: number, accId: string) => {
+    console.log("Accusations list:", accusations); // Debugging line
+    console.log("Looking for accusationId:", accId);
+  
+    // Ensure accusations exist and find the matching accusation
+    const report = accusations?.find((acc: any) => acc.accusationId === accId);
+  
+    if (!report) {
+      console.error("Accusation not found for ID:", accId);
+      return;
+    }
+  
+    // Set the input fields with the existing data
+    setAccusationId(report.accusationId.toString());
     setReportType(report.reportType);
     setGuestId(report.guestId);
     setDescription(report.description);
+    // Set the index for editing
     setEditIndex(index);
-  };
+  };  
+  
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">

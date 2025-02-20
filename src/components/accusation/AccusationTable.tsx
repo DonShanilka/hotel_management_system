@@ -40,12 +40,13 @@ const AccusationTable: React.FC<ReportTableProps> = ({ acc, onDelete, onUpdate }
                 <td className="p-3 text-gray-700">{acc.reportType}</td>
                 <td className="p-3 text-gray-700">{acc.description || "No description"}</td>
                 <td className="p-3 text-center flex justify-center space-x-2">
-                  <button
-                    onClick={() => onUpdate(index)}
-                    className="bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500 transition shadow-md"
-                  >
-                    Update
-                  </button>
+                <button
+  onClick={() => onUpdate(index, acc.accusationId)}
+  className="bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500 transition shadow-md"
+>
+  Update
+</button>
+
                   <button
                     onClick={() => onDelete(index)}
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition shadow-md"
