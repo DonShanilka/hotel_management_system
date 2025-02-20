@@ -22,7 +22,27 @@ export const saveAccusation = createAsyncThunk(
         console.log(error);
       }
     }
-)
+);
+
+export const updateAccusation = createAsyncThunk(
+    'acc/updateAccusation',
+    async(accData) => {
+      try {
+        const accId = accData.get("AccId");
+        console.log("Updating Acc with AccId: ",accId);
+
+        const response = await api.put(`/api/acc/updateAccusation/${accId}`, accData, {
+          headers : {
+            "Content-Type" : "multipart/form-data"
+          },
+        });
+        return response.data;
+      } catch (err) {
+        console.log("Acc Update Erro: ", err);
+      }
+    }
+);
+
 const accusationsSlice = createSlice({
   name: 'accusations',
   initialState: initialState,

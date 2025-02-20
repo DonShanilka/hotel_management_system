@@ -23,7 +23,7 @@ export const saveRooms = createAsyncThunk(
         console.log(error);
       }
     }
-)
+);
 export const updateRoom = createAsyncThunk(
   'room/updateRoom',
   async(roomData)=>{
