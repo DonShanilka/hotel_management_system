@@ -56,6 +56,14 @@ export const deteleAcc = createAsyncThunk(
   }
 );
 
+export const getallAcc = createAsyncThunk(
+  'acc/getAllAccusation',
+  async() => {
+    const response = await api.get('/api/acc/getAllAccusation');
+    return response.data;
+  }
+);
+
 const accusationsSlice = createSlice({
   name: 'accusations',
   initialState: initialState,
