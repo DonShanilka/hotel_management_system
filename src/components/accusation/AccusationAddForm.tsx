@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AccusationTable from "./AccusationTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getallAccusation, saveAccusation, updateAccusation } from "../../reducer/AccusationSlice.ts";
+import { getallAccusation, saveAccusation, updateAccusation, deteleAccusation } from "../../reducer/AccusationSlice.ts";
 
 const AccusationAddForm: React.FC = () => {
   const [reportType, setReportType] = useState("Housekeeping");
@@ -37,10 +37,15 @@ const AccusationAddForm: React.FC = () => {
     }
   };
 
-  const handleDelete = (index: number) => {
-    const updatedList = reportList.filter((_, i) => i !== index);
-    setReportList(updatedList);
+  const handleDelete = (accId: string) => {
+    const isConfirm = window.confirm("Are you sure want to delete Acc ?");
+    if(isConfirm){
+      dispatch(deteleAccusation(accId))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
+
   const handleUpdate = (index: number, accId: string) => {
     console.log("Accusations list:", accusations); // Debugging line
     console.log("Looking for accusationId:", accId);

@@ -48,7 +48,7 @@ const AccusationTable: React.FC<ReportTableProps> = ({ acc, onDelete, onUpdate }
 </button>
 
                   <button
-                    onClick={() => onDelete(index)}
+                    onClick={() => onDelete(acc.accusationId)}
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition shadow-md"
                   >
                     Delete
