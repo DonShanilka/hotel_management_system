@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from "axios";
 import { Accusation } from '../model/Accusation.ts';
+import { updateReservation } from './ReservationSlice.ts';
 
 const initialState:Accusation[] = [];
 
@@ -28,10 +29,10 @@ export const updateAccusation = createAsyncThunk(
     'acc/updateAccusation',
     async(accData) => {
       try {
-        const accId = accData.get("AccId");
-        console.log("Updating Acc with AccId: ",accId);
+        const accusationId = accData.get("accusationId");
+        console.log("Updating Acc with AccId: ",accusationId);
 
-        const response = await api.put(`/api/acc/updateAccusation/${accId}`, accData, {
+        const response = await api.put(`/api/acc/updateAccusation/${accusationId}`, accData, {
           headers : {
             "Content-Type" : "multipart/form-data"
           },
@@ -43,7 +44,7 @@ export const updateAccusation = createAsyncThunk(
     }
 );
 
-export const deteleAcc = createAsyncThunk(
+export const deteleAccusation = createAsyncThunk(
   'acc/deleteAccusation',
   async(accId : number) => {
     console.log("deleting AccId: ", accId);
@@ -56,7 +57,7 @@ export const deteleAcc = createAsyncThunk(
   }
 );
 
-export const getallAcc = createAsyncThunk(
+export const getallAccusation = createAsyncThunk(
   'acc/getAllAccusation',
   async() => {
     const response = await api.get('/api/acc/getAllAccusation');
@@ -95,6 +96,40 @@ const accusationsSlice = createSlice({
         })
         .addCase(saveAccusation.pending,()=>{
           console.log("Acc saving pending")
+        })
+
+    builder
+        .addCase(updateAccusation.fulfilled, (state, action) => {
+          const index = state.findIndex(acc => acc.accusationId === action.payload.accusationId);
+          if (index !== -1) {
+            state[index] = action.payload;
+          }
+          console.log("Acc Updated");
+        })
+        .addCase(updateAccusation.rejected, (satet, action) => {
+          console.log("Failed to Update Acc", action.payload);
+        })
+        .addCase(updateAccusation.pending, (satate, action) => {
+          console.log("Acc Updating Pending")
+        })
+
+    builder
+        .addCase(deteleAccusation.fulfilled,(state,action)=>{
+          return state.filter(acc => acc.accusationId !== action.payload);
+        })
+        .addCase(deteleAccusation.rejected,(state,action)=>{
+          console.log("Failed to delete Acc : ", action.payload)
+        })
+
+    builder
+        .addCase(getallAccusation.fulfilled,(state,action)=>{
+          return action.payload;
+        })
+        .addCase(getallAccusation.rejected,(state,action)=>{
+          console.log("Failed to get Acc :", action.payload)
+        })
+        .addCase(getallAccusation.pending,()=>{
+          console.log("Fetching Acc  ....")
         })
   }
 });
