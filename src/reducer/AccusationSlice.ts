@@ -43,6 +43,19 @@ export const updateAccusation = createAsyncThunk(
     }
 );
 
+export const deteleAcc = createAsyncThunk(
+  'acc/deleteAccusation',
+  async(accId : number) => {
+    console.log("deleting AccId: ", accId);
+    try {
+      await api.delete(`/api/acc/deleteAccusation/${accId}`);
+      return accId;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+);
+
 const accusationsSlice = createSlice({
   name: 'accusations',
   initialState: initialState,
