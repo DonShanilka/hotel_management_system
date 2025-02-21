@@ -24,17 +24,17 @@ export const saveBooking = createAsyncThunk(
   }
 );
 
-export const updateAccusation = createAsyncThunk(
-'acc/updateAccusation',
+export const updateBooking = createAsyncThunk(
+'bo/updateBooking',
 async (updateData) => {
-  const id = updateData.accusationId;  // Fix: Use direct property access
-  console.log("Updating Acc with AccId :", id, updateData);
+  const id = updateData.bookingID;  // Fix: Use direct property access
+  console.log("Updating Booking with bookingID :", id, updateData);
 
   try {
-    const response = await api.put(`/api/acc/updateAccusation/${id}`, updateData);
+    const response = await api.put(`/api/bo/updateBooking/${id}`, updateData);
     return response.data;
   } catch (error) {
-    console.error("Error updating accusation:", error);
+    console.error("Error updating Booking:", error);
     throw error; // Ensure error propagates to rejected case
   }
 }
