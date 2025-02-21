@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from "axios";
 import { Accusation } from '../model/Accusation.ts';
-import { updateReservation } from './ReservationSlice.ts';
 
 const initialState:Accusation[] = [];
 
