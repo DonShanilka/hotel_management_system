@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReservationTable from './ReservationTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { getallBooking, saveBooking, updateBooking } from '../../reducer/ReservationSlice';
+import { deteleBooking, getallBooking, saveBooking, updateBooking } from '../../reducer/ReservationSlice';
 
 const ReservationAddForm: React.FC = () => {
   const [bookingID, setBookingID] = useState<number | null>(null);
@@ -89,6 +89,15 @@ const ReservationAddForm: React.FC = () => {
     // setCreatedAt();
     // Set the index for editing
     setEditIndex(index);
+  };
+
+  const handleDelete = (boId: string) => {
+    const isConfirm = window.confirm("Are you sure want to delete Booking ?");
+    if(isConfirm){
+      dispatch(deteleBooking(boId))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
 
   return (
