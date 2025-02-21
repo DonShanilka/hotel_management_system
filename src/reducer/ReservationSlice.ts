@@ -54,10 +54,10 @@ async(boId : number) => {
 }
 );
 
-export const getallAccusation = createAsyncThunk(
-'acc/getAllAccusation',
+export const getallBooking = createAsyncThunk(
+'bo/getAllBooking',
 async() => {
-  const response = await api.get('/api/acc/getAllAccusation');
+  const response = await api.get('/api/bo/getAllBooking');
   console.log("This is Slice data ",response.data)
   return response.data;
 }
