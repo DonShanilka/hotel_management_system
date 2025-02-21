@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GuestTable from './GuestTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { getallGuest, saveGuest, updateGuest } from '../../reducer/GuestSlice';
+import { deteleGuest, getallGuest, saveGuest, updateGuest } from '../../reducer/GuestSlice';
 
 const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
@@ -73,8 +73,13 @@ const GuestAddForm: React.FC = () => {
     setNation("Local");
   };
 
-  const handleDelete = (index: number) => {
-    setGuestList(guestList.filter((_, i) => i !== index));
+  const handleDelete = (guId: string) => {
+    const isConfirm = window.confirm("Are you sure want to delete Guest ?");
+    if(isConfirm){
+      dispatch(deteleGuest(guId))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
 
   const handleUpdate = (index: number, guestID : string) => {
