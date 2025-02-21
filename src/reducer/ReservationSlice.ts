@@ -46,7 +46,7 @@ export const deteleBooking = createAsyncThunk(
 async(boId : number) => {
   console.log("deleting boId: ", boId);
   try {
-    await api.delete(`/api/bo/deleteBookingn/${boId}`);
+    await api.delete(`/api/bo/deleteBooking/${boId}`);
     return boId;
   } catch(err) {
     console.log(err);

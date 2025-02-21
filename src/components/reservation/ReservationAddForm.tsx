@@ -145,7 +145,7 @@ const ReservationAddForm: React.FC = () => {
           {editIndex !== null ? 'Update Reservation' : 'Add Reservation'}
         </button>
       </form>
-      <ReservationTable reservations={booking} onDelete={() => {}} onUpdate={handleUpdate} />
+      <ReservationTable reservations={booking} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };
