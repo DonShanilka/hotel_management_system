@@ -50,13 +50,13 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onDelete, onUpdate }) =
                 <td className="p-3 text-gray-700">{guest.nation}</td>
                 <td className="p-3 text-center flex justify-center space-x-2">
                   <button
-                    onClick={() => onUpdate(index)}
+                    onClick={() => onUpdate(index, guest.guestId)}
                     className="bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500 transition shadow-md"
                   >
                     Update
                   </button>
                   <button
-                    onClick={() => onDelete(index)}
+                    onClick={() => onDelete(guest.guestId)}
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition shadow-md"
                   >
                     Delete

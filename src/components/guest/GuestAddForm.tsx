@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GuestTable from './GuestTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { getallGuest, saveGuest } from '../../reducer/GuestSlice';
+import { getallGuest, saveGuest, updateGuest } from '../../reducer/GuestSlice';
 
 const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
@@ -52,7 +52,8 @@ const GuestAddForm: React.FC = () => {
     if (editIndex !== null) {
       const updatedList = [...guestList];
       updatedList[editIndex] = newGuest;
-      setGuestList(updatedList);
+      // setGuestList(updatedList);
+      dispatch(updateGuest(updateData))
       setEditIndex(null);
       // dispatch()
     } else {
@@ -76,8 +77,16 @@ const GuestAddForm: React.FC = () => {
     setGuestList(guestList.filter((_, i) => i !== index));
   };
 
-  const handleUpdate = (index: number) => {
-    const guestToUpdate = guestList[index];
+  const handleUpdate = (index: number, guestID : string) => {
+    // const guestToUpdate = guestList[index];
+
+    const guestToUpdate = guests?.find((gu: any) => gu.guestId === guestID);
+  
+    if (!guestToUpdate) {
+      console.error("Guest not found for ID:", guestID);
+      return;
+    }
+
     setGuestId(guestToUpdate.guestId);
     setGuestName(guestToUpdate.guestName);
     setContactNumber(guestToUpdate.contactNumber);
