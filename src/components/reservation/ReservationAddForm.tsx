@@ -36,8 +36,20 @@ const ReservationAddForm: React.FC = () => {
       createdAt: new Date().toISOString(),
     };
 
+    const updateData = {
+      bookingID,
+      guestID,
+      roomNumber,
+      checkInDate,
+      checkOutDate,
+      totalAmount,
+      totalNight,
+      bookingStatus,
+      createdAt: new Date().toISOString(),
+    };
+
     if (editIndex !== null) {
-      dispatch(updateBooking(newReservation));
+      dispatch(updateBooking(updateData));
       setEditIndex(null);
     } else {
       dispatch(saveBooking(newReservation));
@@ -66,7 +78,7 @@ const ReservationAddForm: React.FC = () => {
       return;
     }
 
-    // setBookingID(null);
+    setBookingID(boId);
     setGuestID(report.guestID);
     setRoomNumber(report.roomNumber);
     setCheckInDate(report.checkInDate);
