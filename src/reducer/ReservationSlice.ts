@@ -83,6 +83,50 @@ const reservationSlice = createSlice({
     //   return state.filter((reservation) => reservation.id !== action.payload.id);
     // },
   },
+  extraReducers:(builder)=>{
+    builder
+        .addCase(saveBooking.fulfilled,(state,action)=>{
+          state.push(action.payload);
+          console.log("Bo saved")
+        })
+        .addCase(saveBooking.rejected,(state,action)=>{
+          console.log("Bo Saved Rejected :",action.payload)
+        })
+        .addCase(saveBooking.pending,()=>{
+          console.log("Bo saving pending")
+        })
+
+        builder
+        .addCase(updateBooking.fulfilled, (state, action) => {
+            const index = state.findIndex(bo => bo.bookingID === action.payload.bookingID);
+            if (index !== -1) {
+                state[index] = action.payload;
+            }
+            console.log("Bo Updated");
+        })
+        .addCase(updateBooking.rejected, (state, action) => {
+            console.log("Failed to update Bo: ", action.error);
+        });
+
+    builder
+        .addCase(deteleBooking.fulfilled,(state,action)=>{
+          return state.filter(bo => bo.bookingID !== action.payload);
+        })
+        .addCase(deteleBooking.rejected,(state,action)=>{
+          console.log("Failed to delete Bo : ", action.payload)
+        })
+
+    builder
+        .addCase(getallBooking.fulfilled,(state,action)=>{
+          return action.payload;
+        })
+        .addCase(getallBooking.rejected,(state,action)=>{
+          console.log("Failed to get Bo :", action.payload)
+        })
+        .addCase(getallBooking.pending,()=>{
+          console.log("Fetching Bo ....")
+        })
+  }
 });
 
 export default reservationSlice.reducer;

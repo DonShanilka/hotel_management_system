@@ -1,5 +1,5 @@
 export class Reservation {
-  reservationId !: string;
+  bookingID !: number;
   guestId !: string;
   roomNumber !: string;
   checkInDate !: string;
