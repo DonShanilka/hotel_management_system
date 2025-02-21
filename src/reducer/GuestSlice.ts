@@ -58,7 +58,7 @@ export const getallGuest = createAsyncThunk(
 'gu/getAllGuest',
 async() => {
   const response = await api.get('/api/gu/getAllGuest');
-  console.log("This is Slice data ",response.data)
+  console.log("Get All Guest Data ",response.data)
   return response.data;
 }
 );

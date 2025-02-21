@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GuestTable from './GuestTable';
+import { useDispatch, useSelector } from 'react-redux';
+import { getallGuest, saveGuest } from '../../reducer/GuestSlice';
 
 const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
@@ -12,6 +14,15 @@ const GuestAddForm: React.FC = () => {
   const [guestList, setGuestList] = useState<any[]>([]);
   const [nation, setNation] = useState("Local");
   const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  const dispatch = useDispatch();
+  const guests = useSelector((state) => state.guests || []);
+
+  // console.log(guests)
+
+  useEffect(() => {
+    dispatch(getallGuest());
+  }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,13 +38,26 @@ const GuestAddForm: React.FC = () => {
       nation
     };
 
+    const updateData = {
+      guestId,
+      guestName,
+      contactNumber,
+      email,
+      roomNumber,
+      checkInDate,
+      checkOutDate,
+      nation
+    };
+
     if (editIndex !== null) {
       const updatedList = [...guestList];
       updatedList[editIndex] = newGuest;
       setGuestList(updatedList);
       setEditIndex(null);
+      // dispatch()
     } else {
-      setGuestList([...guestList, newGuest]);
+      // setGuestList([...guestList, newGuest]);
+      dispatch(saveGuest(newGuest));
     }
 
     // setGuestList([...guestList, newGuest]);
@@ -172,7 +196,7 @@ const GuestAddForm: React.FC = () => {
           {editIndex !== null ? "Update Guest" : "Add Guest"}
         </button>
       </form>
-      <GuestTable guests={guestList} onDelete={handleDelete} onUpdate={handleUpdate} />
+      <GuestTable guests={guests} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };
