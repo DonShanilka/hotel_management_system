@@ -41,14 +41,13 @@ async (updateData) => {
 );
 
 
-
-export const deteleAccusation = createAsyncThunk(
-'acc/deleteAccusation',
-async(accId : number) => {
-  console.log("deleting AccId: ", accId);
+export const deteleBooking = createAsyncThunk(
+'bo/deleteBooking',
+async(boId : number) => {
+  console.log("deleting boId: ", boId);
   try {
-    await api.delete(`/api/acc/deleteAccusation/${accId}`);
-    return accId;
+    await api.delete(`/api/bo/deleteBookingn/${boId}`);
+    return boId;
   } catch(err) {
     console.log(err);
   }
@@ -65,7 +64,7 @@ async() => {
 );
 
 const reservationSlice = createSlice({
-  name: 'reservation',
+  name: 'reservations',
   initialState: initialState,
   reducers: {
     // addReservation(state, action) {
