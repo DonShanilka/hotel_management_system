@@ -84,7 +84,8 @@ const ReservationAddForm: React.FC = () => {
             <label className="block text-gray-700 font-medium mb-1">Total Nights</label>
             <input type="number" value={totalNight || ''} onChange={(e) => setTotalNight(Number(e.target.value))} className="w-full p-2 border rounded-lg" required />
           </div>
-          <div>
+        </div>
+        <div>
             <label className="block text-gray-700 font-medium mb-1">Booking Status</label>
             <select value={bookingStatus} onChange={(e) => setBookingStatus(e.target.value)} className="w-full p-2 border rounded-lg">
               <option value="Confirmed">Confirmed</option>
@@ -92,7 +93,6 @@ const ReservationAddForm: React.FC = () => {
               <option value="CheckedOut">CheckedOut</option>
             </select>
           </div>
-        </div>
         <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
           {editIndex !== null ? 'Update Reservation' : 'Add Reservation'}
         </button>
