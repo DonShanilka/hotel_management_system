@@ -55,6 +55,30 @@ const ReservationAddForm: React.FC = () => {
     setCreatedAt('');
   };
 
+  const handleUpdate = (index: number, boId: string) => {
+    console.log("Booking list:", booking); // Debugging line
+    console.log("Looking for BookingId:", boId);
+  
+    const report = booking?.find((bo: any) => bo.bookingID === boId);
+  
+    if (!report) {
+      console.error("Booking not found for ID:", boId);
+      return;
+    }
+
+    // setBookingID(null);
+    setGuestID(report.guestID);
+    setRoomNumber(report.roomNumber);
+    setCheckInDate(report.checkInDate);
+    setCheckOutDate(report.checkOutDate);
+    setTotalAmount(report.totalAmount);
+    setTotalNight(report.totalNight);
+    setBookingStatus(report.bookingStatus);
+    // setCreatedAt();
+    // Set the index for editing
+    setEditIndex(index);
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Reservation Form</h1>
@@ -92,12 +116,15 @@ const ReservationAddForm: React.FC = () => {
               <option value="Cancelled">Cancelled</option>
               <option value="CheckedOut">CheckedOut</option>
             </select>
-          </div>
-        <button type="submit" className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+        </div>
+        <button type="submit"
+          className={`mt-4 w-full py-2 rounded-lg text-white transition ${
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+          }`}>
           {editIndex !== null ? 'Update Reservation' : 'Add Reservation'}
         </button>
       </form>
-      <ReservationTable reservations={booking} onDelete={() => {}} onUpdate={() => {}} />
+      <ReservationTable reservations={booking} onDelete={() => {}} onUpdate={handleUpdate} />
     </div>
   );
 };

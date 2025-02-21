@@ -38,7 +38,7 @@ const ReservationTable: React.FC<ReservationTableProps> = ({ reservations, onDel
           </tr>
         </thead>
         <tbody>
-          {reservations.map((reservation) => (
+          {reservations.map((reservation, index) => (
             <tr key={reservation.bookingID} className="border-b">
               <td className="p-3 text-center">{reservation.bookingID}</td>
               <td className="p-3 text-center">{reservation.guestID}</td>
@@ -51,7 +51,7 @@ const ReservationTable: React.FC<ReservationTableProps> = ({ reservations, onDel
               <td className="p-3 text-center">{new Date(reservation.createdAt).toLocaleDateString()}</td>
               <td className="p-3 text-center">
                 <button
-                  onClick={() => onUpdate(reservation)}
+                  onClick={() => onUpdate(index, reservation.bookingID)}
                   className="mr-2 bg-yellow-500 text-white px-3 py-1 rounded-lg"
                 >
                   Update
