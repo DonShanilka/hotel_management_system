@@ -42,12 +42,12 @@ export const updateHouseKeeping = createAsyncThunk(
 
 
 export const deteleHouseKeeping = createAsyncThunk(
-    'gu/deleteHouseKeeping',
-    async(boId : string) => {
-      console.log("deleting HouseKeeping Id: ", boId);
+    'hk/deleteHouseKeeping',
+    async(hkId : string) => {
+      console.log("deleting HouseKeeping Id: ", hkId);
       try {
-        await api.delete(`/api/gu/deleteHouseKeeping/${boId}`);
-        return boId;
+        await api.delete(`/api/hk/deleteHouseKeeping/${hkId}`);
+        return hkId;
       } catch(err) {
         console.log(err);
       }
@@ -55,9 +55,9 @@ export const deteleHouseKeeping = createAsyncThunk(
 );
 
 export const getallHouseKeeping = createAsyncThunk(
-    'gu/getAllHouseKeeping',
+    'hk/getAllHouseKeeping',
     async() => {
-      const response = await api.get('/api/gu/getAllHouseKeeping');
+      const response = await api.get('/api/hk/getAllHouseKeeping');
       console.log("Get All HouseKeeping Data ",response.data)
       return response.data;
     }
