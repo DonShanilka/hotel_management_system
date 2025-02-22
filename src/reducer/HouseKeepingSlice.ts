@@ -17,6 +17,7 @@ export const saveHouseKeeping = createAsyncThunk(
             "Content-Type" : "multipart/form-data"
           },
         });
+        console.log(response.data);
         return response.data;
       }catch(error){
         console.log(error);
@@ -117,8 +118,8 @@ const houseKeepingSlice = createSlice({
         })
 
     builder
-        .addCase(getallHouseKeeping.fulfilled,(state,action)=>{
-          return action.payload;
+        .addCase(getallHouseKeeping.fulfilled, (state, action) => {
+              return action.payload || []; // Ensure it always returns an array
         })
         .addCase(getallHouseKeeping.rejected,(state,action)=>{
           console.log("Failed to get HouseKeeping :", action.payload)

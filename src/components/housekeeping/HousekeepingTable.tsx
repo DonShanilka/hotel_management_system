@@ -22,7 +22,7 @@ const HousekeepingTable: React.FC<HousekeepingTableProps> = ({
 }) => {
   return (
     <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Housekeeping Status</h2>
+      {/*<h2 className="text-xl font-semibold text-gray-800 mb-4">Housekeeping Status</h2>*/}
 
       <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead>

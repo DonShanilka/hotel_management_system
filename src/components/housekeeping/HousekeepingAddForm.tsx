@@ -9,12 +9,13 @@ const HousekeepingAddForm: React.FC = () => {
   const [cleaningDate, setCleaningDate] = useState('');
   const [status, setStatus] = useState('Not Cleaned');
   const [specialTasks, setSpecialTasks] = useState('');
-  const [employeeId, setEmployeeId] = useState('');  // New state for Employee ID
+  const [empId, setEmployeeId] = useState('');
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const dispatch = useDispatch();
   const houseKeeping = useSelector((state: any) => state.houseKeeping || []);
 
-  console.log("Front End House Data: ", houseKeeping);
+  console.log("Emp Id",empId)
 
   useEffect(() => {
     dispatch(getallHouseKeeping());
@@ -24,16 +25,28 @@ const HousekeepingAddForm: React.FC = () => {
     e.preventDefault();
 
     const housekeepingData = {
+      roomNumber,
+      cleaningDate,
+      status,
+      specialTasks,
+      empId,
+    };
+
+    console.log(housekeepingData);
+
+    const updateData = {
       houseKeepingId,
       roomNumber,
       cleaningDate,
       status,
       specialTasks,
-      employeeId, // Include employeeId in submission
+      empId,
     };
 
-    if (houseKeepingId !== null) {
-      dispatch(updateHouseKeeping(housekeepingData));
+    if (editIndex !== null) {
+      const updatedList = [];
+      updatedList[editIndex] = housekeepingData;
+      dispatch(updateHouseKeeping(updateData));
       setHouseKeepingId(null);
     } else {
       dispatch(saveHouseKeeping(housekeepingData));
@@ -61,6 +74,8 @@ const HousekeepingAddForm: React.FC = () => {
     setStatus(houseKeepingToUpdate.status);
     setSpecialTasks(houseKeepingToUpdate.specialTasks);
     setEmployeeId(houseKeepingToUpdate.employeeId || ''); // Set employeeId
+
+    setEditIndex(index);
   };
 
   return (
@@ -104,27 +119,25 @@ const HousekeepingAddForm: React.FC = () => {
                 <option value="Under Maintenance">Under Maintenance</option>
               </select>
             </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Special Tasks</label>
-              <textarea
-                  value={specialTasks}
-                  onChange={(e) => setSpecialTasks(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
-                  placeholder="Any special tasks (e.g. restock minibar, change sheets)"
-              />
-            </div>
-
             <div>
               <label className="block text-gray-700 font-medium mb-1">Employee ID</label>
               <input
                   type="text"
-                  value={employeeId}
+                  value={empId}
                   onChange={(e) => setEmployeeId(e.target.value)}
                   className="w-full p-2 border rounded-lg"
                   required
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Special Tasks</label>
+            <textarea
+                value={specialTasks}
+                onChange={(e) => setSpecialTasks(e.target.value)}
+                className="w-full p-2 border rounded-lg h-32"
+                placeholder="Any special tasks (e.g. restock minibar, change sheets)"
+            />
           </div>
 
           <button
