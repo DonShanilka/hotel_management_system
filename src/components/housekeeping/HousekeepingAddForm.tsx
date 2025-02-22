@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import HousekeepingTable from './HousekeepingTable';
+import { useDispatch, useSelector } from 'react-redux';
+import {getallHouseKeeping} from "../../reducer/HouseKeepingSlice.ts";
 
 const HousekeepingAddForm: React.FC = () => {
   const [roomNumber, setRoomNumber] = useState('');
@@ -7,6 +9,15 @@ const HousekeepingAddForm: React.FC = () => {
   const [status, setStatus] = useState('Not Cleaned');
   const [specialTasks, setSpecialTasks] = useState('');
   const [housekeepingList, setHousekeepingList] = useState<any[]>([]);
+
+  const dispatch = useDispatch();
+  const houseKeeping = useSelector((state) => state.houseKeeping || []);
+
+  console.log("Front End House Data: ",houseKeeping);
+
+  useEffect(() => {
+    dispatch(getallHouseKeeping());
+  }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +111,7 @@ const HousekeepingAddForm: React.FC = () => {
       </form>
 
       <HousekeepingTable
-        housekeepingList={housekeepingList}
+        housekeepingList={houseKeeping}
         onDelete={handleDelete}
         onUpdate={handleUpdate}
       />

@@ -41,9 +41,9 @@ export const updateHouseKeeping = createAsyncThunk(
 );
 
 
-export const deteleHouseKeeping = createAsyncThunk(
+export const deleteHouseKeeping = createAsyncThunk(
     'hk/deleteHouseKeeping',
-    async(hkId : string) => {
+    async(hkId : number) => {
       console.log("deleting HouseKeeping Id: ", hkId);
       try {
         await api.delete(`/api/hk/deleteHouseKeeping/${hkId}`);
@@ -83,6 +83,50 @@ const houseKeepingSlice = createSlice({
     //   return state.filter((houseKeeping) => houseKeeping.id !== action.payload.id);
     // },
   },
+  extraReducers:(builder)=>{
+    builder
+        .addCase(saveHouseKeeping.fulfilled,(state,action)=>{
+          state.push(action.payload);
+          console.log("HouseKeeping saved")
+        })
+        .addCase(saveHouseKeeping.rejected,(_state,action)=>{
+          console.log("HouseKeeping Saved Rejected :",action.payload)
+        })
+        .addCase(saveHouseKeeping.pending,()=>{
+          console.log("HouseKeeping saving pending")
+        })
+
+    builder
+        .addCase(updateHouseKeeping.fulfilled, (state, action) => {
+          const index = state.findIndex(houseKeeping => houseKeeping.houseKeepingId === action.payload.houseKeepingId);
+          if (index !== -1) {
+            state[index] = action.payload;
+          }
+          console.log("HouseKeeping Updated");
+        })
+        .addCase(updateHouseKeeping.rejected, (_state, action) => {
+          console.log("Failed to update HouseKeeping: ", action.error);
+        });
+
+    builder
+        .addCase(deleteHouseKeeping.fulfilled,(state,action)=>{
+          return state.filter(houseKeeping => houseKeeping.houseKeepingId !== action.payload);
+        })
+        .addCase(deleteHouseKeeping.rejected,(_state,action)=>{
+          console.log("Failed to delete HouseKeeping : ", action.payload)
+        })
+
+    builder
+        .addCase(getallHouseKeeping.fulfilled,(_state,action)=>{
+          return action.payload;
+        })
+        .addCase(getallHouseKeeping.rejected,(_state,action)=>{
+          console.log("Failed to get HouseKeeping :", action.payload)
+        })
+        .addCase(getallHouseKeeping.pending,()=>{
+          console.log("Fetching HouseKeeping ....")
+        })
+  }
 });
 
 export default houseKeepingSlice.reducer;
