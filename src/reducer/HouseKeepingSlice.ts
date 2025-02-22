@@ -25,13 +25,13 @@ export const saveHouseKeeping = createAsyncThunk(
 );
 
 export const updateHouseKeeping = createAsyncThunk(
-    'gu/updateHouseKeeping',
+    'hk/updateHouseKeeping',
     async (updateData) => {
-      const id = updateData.guestId;  // Fix: Use direct property access
+      const id = updateData.houseKeepingId;  // Fix: Use direct property access
       console.log("Updating HouseKeeping with HouseKeepingId :", id, updateData);
 
       try {
-        const response = await api.put(`/api/gu/updateHouseKeeping/${id}`, updateData);
+        const response = await api.put(`/api/hk/updateHouseKeeping/${id}`, updateData);
         return response.data;
       } catch (error) {
         console.error("Error updating HouseKeeping:", error);
