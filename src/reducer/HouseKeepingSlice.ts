@@ -64,7 +64,7 @@ export const getallHouseKeeping = createAsyncThunk(
 );
 
 const houseKeepingSlice = createSlice({
-  name: "houseKeeping",
+  name: 'houseKeeping',
   initialState: initialState,
   reducers: {
     // addHouseKeeping(state, action) {
@@ -89,7 +89,7 @@ const houseKeepingSlice = createSlice({
           state.push(action.payload);
           console.log("HouseKeeping saved")
         })
-        .addCase(saveHouseKeeping.rejected,(_state,action)=>{
+        .addCase(saveHouseKeeping.rejected,(state,action)=>{
           console.log("HouseKeeping Saved Rejected :",action.payload)
         })
         .addCase(saveHouseKeeping.pending,()=>{
@@ -104,7 +104,7 @@ const houseKeepingSlice = createSlice({
           }
           console.log("HouseKeeping Updated");
         })
-        .addCase(updateHouseKeeping.rejected, (_state, action) => {
+        .addCase(updateHouseKeeping.rejected, (state, action) => {
           console.log("Failed to update HouseKeeping: ", action.error);
         });
 
@@ -117,10 +117,10 @@ const houseKeepingSlice = createSlice({
         })
 
     builder
-        .addCase(getallHouseKeeping.fulfilled,(_state,action)=>{
+        .addCase(getallHouseKeeping.fulfilled,(state,action)=>{
           return action.payload;
         })
-        .addCase(getallHouseKeeping.rejected,(_state,action)=>{
+        .addCase(getallHouseKeeping.rejected,(state,action)=>{
           console.log("Failed to get HouseKeeping :", action.payload)
         })
         .addCase(getallHouseKeeping.pending,()=>{

@@ -14,7 +14,7 @@ export const store = configureStore({
         rooms: roomReducer,
         reservations : resReducer,
         guests : guestReducer,
-        houseKeepings : houseReducer,
+        houseKeeping : houseReducer,
         payments : paymentReducer,
         accusations : accuReducer,
         employyes : employeeReducer,
