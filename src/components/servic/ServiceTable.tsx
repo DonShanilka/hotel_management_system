@@ -29,8 +29,8 @@ const ServiceTable: React.FC<ServiceTableProps> = ({ services, onDelete, onUpdat
               <td className="border p-2">${service.servicePrice}</td>
               <td className="border p-2">{service.description}</td>
               <td className="border p-2 flex justify-center gap-2">
-                <button onClick={() => onUpdate(index)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-                <button onClick={() => onDelete(index)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                <button onClick={() => onUpdate(index, service.serviceID)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+                <button onClick={() => onDelete(service.serviceID)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
               </td>
             </tr>
           ))}

@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { Service } from "../model/Service.ts";
 import axios from "axios";
-import {saveEmployee, updateEmployee} from "./EmployeeSlice.ts";
 
 const initialState:Service[] = [];
 
@@ -41,7 +40,7 @@ export const updateService = createAsyncThunk(
     }
 );
 
-export const deleteEmployee = createAsyncThunk(
+export const deleteService = createAsyncThunk(
     'service/deleteService',
     async(serviceId : number) => {
       console.log("deleting empId: ", serviceId);
@@ -54,7 +53,7 @@ export const deleteEmployee = createAsyncThunk(
     }
 );
 
-export const getallEmployee = createAsyncThunk(
+export const getAllService = createAsyncThunk(
     'service/getAllService',
     async() => {
       const response = await api.get('/api/service/getAllService');
@@ -109,21 +108,21 @@ const serviceSlice = createSlice({
         })
 
     builder
-        .addCase(deleteEmployee.fulfilled,(state,action)=>{
+        .addCase(deleteService.fulfilled,(state,action)=>{
           return state.filter(service => service.serviceID !== action.payload);
         })
-        .addCase(deleteEmployee.rejected,(state,action)=>{
+        .addCase(deleteService.rejected,(state,action)=>{
           console.log("Failed to delete Service : ", action.payload)
         })
 
     builder
-        .addCase(getallEmployee.fulfilled,(state,action)=>{
+        .addCase(getAllService.fulfilled,(state,action)=>{
           return action.payload;
         })
-        .addCase(getallEmployee.rejected,(state,action)=>{
+        .addCase(getAllService.rejected,(state,action)=>{
           console.log("Failed to get Service :", action.payload)
         })
-        .addCase(getallEmployee.pending,()=>{
+        .addCase(getAllService.pending,()=>{
           console.log("Fetching Service ....")
         })
   }

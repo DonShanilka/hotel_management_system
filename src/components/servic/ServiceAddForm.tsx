@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ServiceTable from './ServiceTable';
+import {useDispatch, useSelector} from "react-redux";
+import {deleteService, getAllService, saveService, updateService} from "../../reducer/ServiceSlice.ts";
 
 const ServiceAddForm: React.FC = () => {
   const [serviceID, setServiceID] = useState('');
@@ -9,10 +11,25 @@ const ServiceAddForm: React.FC = () => {
   const [serviceList, setServiceList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
+  const dispatch = useDispatch();
+  const service = useSelector((state) => state.service || []);
+
+  useEffect(() => {
+    dispatch(getAllService());
+  }, [dispatch]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const newService = {
+      // serviceID,
+      serviceName,
+      servicePrice,
+      description,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updateData = {
       serviceID,
       serviceName,
       servicePrice,
@@ -21,12 +38,12 @@ const ServiceAddForm: React.FC = () => {
     };
 
     if (editIndex !== null) {
-      const updatedList = [...serviceList];
+      const updatedList = [];
       updatedList[editIndex] = newService;
-      setServiceList(updatedList);
+      dispatch(updateService(updateData));
       setEditIndex(null);
     } else {
-      setServiceList([...serviceList, newService]);
+      dispatch(saveService(newService));
     }
 
     // Reset form
@@ -36,12 +53,22 @@ const ServiceAddForm: React.FC = () => {
     setDescription('');
   };
 
-  const handleDelete = (index: number) => {
-    setServiceList(serviceList.filter((_, i) => i !== index));
+  const handleDelete = (serviceId: number) => {
+    const isConfirm = window.confirm("Are you sure want to delete Service ?");
+    if(isConfirm){
+      dispatch(deleteService(serviceId))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
 
-  const handleUpdate = (index: number) => {
-    const serviceToUpdate = serviceList[index];
+  const handleUpdate = (index: number, serviceID : number) => {
+    const serviceToUpdate = service?.find((service: any) => service.serviceID === serviceID);
+
+    if (!serviceToUpdate) {
+      console.error("Service not found for ID:", serviceID);
+      return;
+    }
     setServiceID(serviceToUpdate.serviceID);
     setServiceName(serviceToUpdate.serviceName);
     setServicePrice(serviceToUpdate.servicePrice);
@@ -103,14 +130,14 @@ const ServiceAddForm: React.FC = () => {
         <button
           type="submit"
           className={`mt-4 w-full text-white py-2 rounded-lg transition ${
-            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-green-700 hover:bg-green-800"
           }`}
         >
           {editIndex !== null ? "Update Service" : "Add Service"}
         </button>
       </form>
 
-      <ServiceTable services={serviceList} onDelete={handleDelete} onUpdate={handleUpdate} />
+      <ServiceTable services={service} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };
