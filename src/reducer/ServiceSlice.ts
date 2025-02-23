@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { Service } from "../model/Service.ts";
 import axios from "axios";
+import {saveEmployee, updateEmployee} from "./EmployeeSlice.ts";
 
 const initialState:Service[] = [];
 
@@ -42,7 +43,7 @@ export const updateService = createAsyncThunk(
 
 export const deleteEmployee = createAsyncThunk(
     'service/deleteService',
-    async(serviceId : string) => {
+    async(serviceId : number) => {
       console.log("deleting empId: ", serviceId);
       try {
         await api.delete(`/api/service/deleteService/${serviceId}`);
@@ -82,6 +83,50 @@ const serviceSlice = createSlice({
     //   return state.filter((accusation) => accusation.id !== action.payload.id);
     // },
   },
+  extraReducers:(builder)=>{
+    builder
+        .addCase(saveService.fulfilled,(state,action)=>{
+          state.push(action.payload);
+          console.log("Service saved")
+        })
+        .addCase(saveService.rejected,(state,action)=>{
+          console.log("Service Saved Rejected :",action.payload)
+        })
+        .addCase(saveService.pending,()=>{
+          console.log("Service saving pending")
+        })
+
+    builder
+        .addCase(updateService.fulfilled, (state, action) => {
+          const index = state.findIndex(service => service.serviceID === action.payload.serviceID);
+          if (index !== -1) {
+            state[index] = action.payload;
+          }
+          console.log("Service Updated");
+        })
+        .addCase(updateService.rejected, (state, action) => {
+          console.log("Failed to update Service: ", action.error);
+        })
+
+    builder
+        .addCase(deleteEmployee.fulfilled,(state,action)=>{
+          return state.filter(service => service.serviceID !== action.payload);
+        })
+        .addCase(deleteEmployee.rejected,(state,action)=>{
+          console.log("Failed to delete Service : ", action.payload)
+        })
+
+    builder
+        .addCase(getallEmployee.fulfilled,(state,action)=>{
+          return action.payload;
+        })
+        .addCase(getallEmployee.rejected,(state,action)=>{
+          console.log("Failed to get Service :", action.payload)
+        })
+        .addCase(getallEmployee.pending,()=>{
+          console.log("Fetching Service ....")
+        })
+  }
 });
 
 export default serviceSlice.reducer;
