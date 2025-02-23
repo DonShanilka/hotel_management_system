@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 export const saveService = createAsyncThunk(
-    '/service/saveService',
+    'service/saveService',
     async (serviceData:Service)=>{
       try {
         const response = await api.post('/api/service/saveService', serviceData,{
@@ -20,6 +20,22 @@ export const saveService = createAsyncThunk(
         return response.data;
       }catch(error){
         console.log(error);
+      }
+    }
+);
+
+export const updateService = createAsyncThunk(
+    'service/updateService',
+    async (updateData) => {
+      const id = updateData.serviceID;  // Fix: Use direct property access
+      console.log("Updating Service with serviceID :", id, updateData);
+
+      try {
+        const response = await api.put(`/api/service/updateService/${id}`, updateData);
+        return response.data;
+      } catch (error) {
+        console.error("Error updating guest:", error);
+        throw error; // Ensure error propagates to rejected case
       }
     }
 );
