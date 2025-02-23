@@ -7,7 +7,6 @@ import {
   saveHouseKeeping,
   updateHouseKeeping
 } from "../../reducer/HouseKeepingSlice.ts";
-import {deteleGuest} from "../../reducer/GuestSlice.ts";
 
 const HousekeepingAddForm: React.FC = () => {
   const [houseKeepingId, setHouseKeepingId] = useState<number | null>(null);

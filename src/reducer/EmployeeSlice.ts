@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from "axios";
-import { Accusation } from '../model/Accusation.ts';
 import { Employee } from '../model/Employee.ts';
 
 const initialState:Employee[] = [];
@@ -23,7 +22,24 @@ export const saveEmployee = createAsyncThunk(
         console.log(error);
       }
     }
-)
+);
+
+export const updateGuest = createAsyncThunk(
+    'epm/updateEmployee',
+    async (updateData) => {
+        const id = updateData.employeeID;  // Fix: Use direct property access
+        console.log("Updating guest with employeeID :", id, updateData);
+
+        try {
+            const response = await api.put(`/api/emp/updateEmployee/${id}`, updateData);
+            return response.data;
+        } catch (error) {
+            console.error("Error updating guest:", error);
+            throw error; // Ensure error propagates to rejected case
+        }
+    }
+);
+
 const employeeSlice = createSlice({
   name: 'employees',
   initialState: initialState,
@@ -58,4 +74,5 @@ const employeeSlice = createSlice({
         })
   }
 });
+
 export default employeeSlice.reducer;
