@@ -1,7 +1,6 @@
 import { ServiceUsage } from "../model/ServiceUsage.ts";
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from "axios";
-import {deleteEmployee, getallEmployee, saveEmployee, updateEmployee} from "./EmployeeSlice.ts";
 
 const initialState:ServiceUsage[] = [];
 

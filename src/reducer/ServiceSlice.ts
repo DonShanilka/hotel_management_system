@@ -1,7 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { Service } from "../model/Service.ts";
+import axios from "axios";
 
 const initialState:Service[] = [];
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+});
+
+export const saveService = createAsyncThunk(
+    '/service/saveService',
+    async (serviceData:Service)=>{
+      try {
+        const response = await api.post('/api/service/saveService', serviceData,{
+          headers:{
+            "Content-Type" : "multipart/form-data"
+          },
+        });
+        return response.data;
+      }catch(error){
+        console.log(error);
+      }
+    }
+);
 
 const serviceSlice = createSlice({
   name: "service",
