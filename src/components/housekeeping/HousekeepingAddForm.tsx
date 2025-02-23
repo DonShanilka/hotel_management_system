@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import HousekeepingTable from './HousekeepingTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { getallHouseKeeping, saveHouseKeeping, updateHouseKeeping } from "../../reducer/HouseKeepingSlice.ts";
+import {
+  deleteHouseKeeping,
+  getallHouseKeeping,
+  saveHouseKeeping,
+  updateHouseKeeping
+} from "../../reducer/HouseKeepingSlice.ts";
+import {deteleGuest} from "../../reducer/GuestSlice.ts";
 
 const HousekeepingAddForm: React.FC = () => {
   const [houseKeepingId, setHouseKeepingId] = useState<number | null>(null);
@@ -78,6 +84,15 @@ const HousekeepingAddForm: React.FC = () => {
     setEditIndex(index);
   };
 
+  const handleDelete = (hkId: string) => {
+    const isConfirm = window.confirm("Are you sure want to delete HouseKeeping ?");
+    if(isConfirm){
+      dispatch(deleteHouseKeeping(hkId))
+    }else{
+      alert("Delete Failed, try again!")
+    }
+  };
+
   return (
       <div className="p-6 bg-gray-100 min-h-screen">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Housekeeping Management</h1>
@@ -150,7 +165,7 @@ const HousekeepingAddForm: React.FC = () => {
           </button>
         </form>
 
-        <HousekeepingTable housekeepingList={houseKeeping} onUpdate={handleUpdate} />
+        <HousekeepingTable housekeepingList={houseKeeping} onUpdate={handleUpdate} onDelete={handleDelete}/>
       </div>
   );
 };
