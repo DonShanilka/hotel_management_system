@@ -24,7 +24,7 @@ export const saveEmployee = createAsyncThunk(
     }
 );
 
-export const updateGuest = createAsyncThunk(
+export const updateEmployee = createAsyncThunk(
     'epm/updateEmployee',
     async (updateData) => {
         const id = updateData.employeeID;  // Fix: Use direct property access
@@ -94,6 +94,17 @@ const employeeSlice = createSlice({
         .addCase(saveEmployee.pending,()=>{
           console.log("Emp saving pending")
         })
+      builder
+          .addCase(updateEmployee.fulfilled, (state, action) => {
+              const index = state.findIndex(emp => emp.employeeID === action.payload.employeeID);
+              if (index !== -1) {
+                  state[index] = action.payload;
+              }
+              console.log("Employee Updated");
+          })
+          .addCase(updateEmployee.rejected, (state, action) => {
+              console.log("Failed to update Employee: ", action.error);
+          })
   }
 });
 

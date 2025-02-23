@@ -96,7 +96,7 @@ const guestSlice = createSlice({
           console.log("Guest saving pending")
         })
 
-        builder
+      builder
         .addCase(updateGuest.fulfilled, (state, action) => {
             const index = state.findIndex(guest => guest.guestId === action.payload.guestId);
             if (index !== -1) {
@@ -106,7 +106,7 @@ const guestSlice = createSlice({
         })
         .addCase(updateGuest.rejected, (state, action) => {
             console.log("Failed to update Guest: ", action.error);
-        });
+        })
 
     builder
         .addCase(deteleGuest.fulfilled,(state,action)=>{
