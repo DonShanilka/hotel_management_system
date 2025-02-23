@@ -7,7 +7,7 @@ import paymentReducer from '../reducer/PaymentSlice.ts'
 import accuReducer from '../reducer/AccusationSlice.ts'
 import employeeReducer from '../reducer/EmployeeSlice.ts'
 import serviceReducer from '../reducer/ServiceSlice.ts'
-import usageReducer from '../reducer/ServiceUsage.ts'
+import usageReducer from '../reducer/ServiceUsageSlice.ts'
 
 export const store = configureStore({
     reducer: {

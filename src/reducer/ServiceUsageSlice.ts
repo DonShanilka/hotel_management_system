@@ -1,7 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { ServiceUsage } from "../model/ServiceUsage.ts";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from "axios";
+import {Employee} from "../model/Employee.ts";
 
 const initialState:ServiceUsage[] = [];
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+});
+
+export const saveServiceUsage = createAsyncThunk(
+    '/sU/saveUsage',
+    async (usageData:ServiceUsage)=>{
+      try {
+        const response = await api.post('/api/sU/saveUsage',usageData,{
+          headers:{
+            "Content-Type" : "multipart/form-data"
+          },
+        });
+        return response.data;
+      }catch(error){
+        console.log(error);
+      }
+    }
+);
 
 const serviceUsageSlice = createSlice({
   name: "serviceUsages",
