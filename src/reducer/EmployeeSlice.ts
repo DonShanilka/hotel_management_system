@@ -41,11 +41,11 @@ export const updateEmployee = createAsyncThunk(
 );
 
 export const deleteEmployee = createAsyncThunk(
-    'emp/deteleEmployee',
+    'emp/deleteEmployee',
     async(empId : string) => {
         console.log("deleting empId: ", empId);
         try {
-            await api.delete(`/api/emp/deteleEmployee/${empId}`);
+            await api.delete(`/api/emp/deleteEmployee/${empId}`);
             return empId;
         } catch(err) {
             console.log(err);
