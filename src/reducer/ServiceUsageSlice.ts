@@ -53,6 +53,15 @@ export const deleteUsage = createAsyncThunk(
     }
 );
 
+export const getallUsage = createAsyncThunk(
+    'sU/getAllUsage',
+    async() => {
+      const response = await api.get('/api/sU/getAllUsage');
+      console.log("Get All Usage Data ",response.data)
+      return response.data;
+    }
+);
+
 const serviceUsageSlice = createSlice({
   name: "serviceUsages",
   initialState: initialState,
