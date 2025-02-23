@@ -43,13 +43,22 @@ export const updateGuest = createAsyncThunk(
 export const deteleEmployee = createAsyncThunk(
     'emp/deteleEmployee',
     async(empId : string) => {
-        console.log("deleting boId: ", empId);
+        console.log("deleting empId: ", empId);
         try {
             await api.delete(`/api/emp/deteleEmployee/${empId}`);
             return empId;
         } catch(err) {
             console.log(err);
         }
+    }
+);
+
+export const getallEmployee = createAsyncThunk(
+    'emp/getallEmployee',
+    async() => {
+        const response = await api.get('/api/emp/getallEmployee');
+        console.log("Get All Employee Data ",response.data)
+        return response.data;
     }
 );
 
