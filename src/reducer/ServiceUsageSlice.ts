@@ -40,6 +40,19 @@ export const updateUsage = createAsyncThunk(
     }
 );
 
+export const deleteUsage = createAsyncThunk(
+    'sU/deleteUsage',
+    async(uId : number) => {
+      console.log("deleting uId: ", uId);
+      try {
+        await api.delete(`/api/sU/deleteUsage/${uId}`);
+        return uId;
+      } catch(err) {
+        console.log(err);
+      }
+    }
+);
+
 const serviceUsageSlice = createSlice({
   name: "serviceUsages",
   initialState: initialState,
