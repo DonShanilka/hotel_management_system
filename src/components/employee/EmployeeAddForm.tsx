@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import EmployeeTable from './EmployeeTable';
 import {useDispatch, useSelector} from 'react-redux';
-import {getallEmployee, saveEmployee} from '../../reducer/EmployeeSlice';
-import {getallGuest} from "../../reducer/GuestSlice.ts";
+import {deleteEmployee, getallEmployee, saveEmployee, updateEmployee} from '../../reducer/EmployeeSlice';
 
 const EmployeeAddForm: React.FC = () => {
   const [employeeID, setEmployeeID] = useState('');
@@ -12,13 +11,10 @@ const EmployeeAddForm: React.FC = () => {
   const [role, setRole] = useState('');
   const [salary, setSalary] = useState('');
   const [hireDate, setHireDate] = useState('');
-  const [employeeList, setEmployeeList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees || []);
-
-  // console.log("Employee AddForm Emp Data ", employees);
 
   useEffect(() => {
     dispatch(getallEmployee());
@@ -41,14 +37,12 @@ const EmployeeAddForm: React.FC = () => {
     if (editIndex !== null) {
       const updatedList = [];
       updatedList[editIndex] = employees;
-      setEmployeeList(updatedList);
+      dispatch(updateEmployee(newEmployee));
       setEditIndex(null);
     } else {
-      // setEmployeeList([...employeeList, newEmployee]);
       dispatch(saveEmployee(newEmployee));
     }
 
-    // Reset form
     setEmployeeID('');
     setFullName('');
     setEmail('');
@@ -58,12 +52,24 @@ const EmployeeAddForm: React.FC = () => {
     setHireDate('');
   };
 
-  const handleDelete = (index: number) => {
-    setEmployeeList(employeeList.filter((_, i) => i !== index));
+  const handleDelete = (empID: string) => {
+    const isConfirm = window.confirm("Are you sure want to delete Employee ?");
+    if(isConfirm){
+      dispatch(deleteEmployee(empID))
+    }else{
+      alert("Delete Failed, try again!")
+    }
   };
 
-  const handleUpdate = (index: number) => {
-    const employeeToUpdate = employeeList[index];
+  const handleUpdate = (index: number , employeeID : string) => {
+
+    const employeeToUpdate = employees?.find((emp : any) => emp.employeeID === employeeID);
+
+    if (!employeeToUpdate) {
+      console.error("Employee not found for ID:", employeeID);
+      return;
+    }
+
     setEmployeeID(employeeToUpdate.employeeID);
     setFullName(employeeToUpdate.fullName);
     setEmail(employeeToUpdate.email);

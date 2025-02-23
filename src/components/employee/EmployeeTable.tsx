@@ -50,8 +50,8 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ employees, onDelete, onUp
               <td className="border p-2">${employee.salary}</td>
               <td className="border p-2">{employee.hireDate}</td>
               <td className="border p-2 flex justify-center gap-2">
-                <button onClick={() => onUpdate(index)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-                <button onClick={() => onDelete(index)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                <button onClick={() => onUpdate(index, employee.employeeID)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+                <button onClick={() => onDelete(employee.employeeID)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
               </td>
             </tr>
           ))}
