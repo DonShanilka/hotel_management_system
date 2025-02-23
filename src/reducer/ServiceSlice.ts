@@ -40,6 +40,19 @@ export const updateService = createAsyncThunk(
     }
 );
 
+export const deleteEmployee = createAsyncThunk(
+    'service/deleteService',
+    async(serviceId : string) => {
+      console.log("deleting empId: ", serviceId);
+      try {
+        await api.delete(`/api/service/deleteService/${serviceId}`);
+        return serviceId;
+      } catch(err) {
+        console.log(err);
+      }
+    }
+);
+
 const serviceSlice = createSlice({
   name: "service",
   initialState: initialState,
