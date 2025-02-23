@@ -40,6 +40,19 @@ export const updateGuest = createAsyncThunk(
     }
 );
 
+export const deteleEmployee = createAsyncThunk(
+    'emp/deteleEmployee',
+    async(empId : string) => {
+        console.log("deleting boId: ", empId);
+        try {
+            await api.delete(`/api/emp/deteleEmployee/${empId}`);
+            return empId;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+);
+
 const employeeSlice = createSlice({
   name: 'employees',
   initialState: initialState,
