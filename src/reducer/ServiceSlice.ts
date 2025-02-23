@@ -53,6 +53,15 @@ export const deleteEmployee = createAsyncThunk(
     }
 );
 
+export const getallEmployee = createAsyncThunk(
+    'service/getAllService',
+    async() => {
+      const response = await api.get('/api/service/getAllService');
+      console.log("Get All Service Data ",response.data)
+      return response.data;
+    }
+);
+
 const serviceSlice = createSlice({
   name: "service",
   initialState: initialState,
