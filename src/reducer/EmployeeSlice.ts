@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from "axios";
 import { Employee } from '../model/Employee.ts';
-import {deteleGuest, getallGuest} from "./GuestSlice.ts";
 
 const initialState:Employee[] = [];
 
@@ -10,10 +9,10 @@ const api = axios.create({
 });
 
 export const saveEmployee = createAsyncThunk(
-    '/epm/saveEmployee',
+    '/emp/saveEmployee',
     async (empData:Employee)=>{
       try {
-        const response = await api.post('/api/epm/saveEmployee',empData,{
+        const response = await api.post('/api/emp/saveEmployee',empData,{
           headers:{
             "Content-Type" : "multipart/form-data"
           },
@@ -26,7 +25,7 @@ export const saveEmployee = createAsyncThunk(
 );
 
 export const updateEmployee = createAsyncThunk(
-    'epm/updateEmployee',
+    'emp/updateEmployee',
     async (updateData) => {
         const id = updateData.employeeID;  // Fix: Use direct property access
         console.log("Updating guest with employeeID :", id, updateData);
@@ -55,9 +54,9 @@ export const deleteEmployee = createAsyncThunk(
 );
 
 export const getallEmployee = createAsyncThunk(
-    'emp/getallEmployee',
+    'emp/getAllEmployee',
     async() => {
-        const response = await api.get('/api/emp/getallEmployee');
+        const response = await api.get('/api/emp/getAllEmployee');
         console.log("Get All Employee Data ",response.data)
         return response.data;
     }

@@ -1,7 +1,22 @@
 import React from 'react';
 
+type Employee = {
+  employeeID : string;
+  fullName : string;
+  email : string;
+  phoneNumber : string;
+  role : string;
+  salary : number;
+  hireDate : string;
+  createdAt : Date;
+
+  reportType : string;
+  guestId : string;
+  description : string;
+};
+
 interface EmployeeTableProps {
-  employees: any[];
+  employees: Employee[];
   onDelete: (index: number) => void;
   onUpdate: (index: number) => void;
 }

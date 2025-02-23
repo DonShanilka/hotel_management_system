@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import EmployeeTable from './EmployeeTable';
-import { useDispatch } from 'react-redux';
-import { saveEmployee } from '../../reducer/EmployeeSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getallEmployee, saveEmployee} from '../../reducer/EmployeeSlice';
+import {getallGuest} from "../../reducer/GuestSlice.ts";
 
 const EmployeeAddForm: React.FC = () => {
   const [employeeID, setEmployeeID] = useState('');
@@ -15,6 +16,13 @@ const EmployeeAddForm: React.FC = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees || []);
+
+  // console.log("Employee AddForm Emp Data ", employees);
+
+  useEffect(() => {
+    dispatch(getallEmployee());
+  }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,8 +39,8 @@ const EmployeeAddForm: React.FC = () => {
     };
 
     if (editIndex !== null) {
-      const updatedList = [...employeeList];
-      updatedList[editIndex] = newEmployee;
+      const updatedList = [];
+      updatedList[editIndex] = employees;
       setEmployeeList(updatedList);
       setEditIndex(null);
     } else {
@@ -158,7 +166,7 @@ const EmployeeAddForm: React.FC = () => {
         </button>
       </form>
 
-      <EmployeeTable employees={employeeList} onDelete={handleDelete} onUpdate={handleUpdate} />
+      <EmployeeTable employees={employees} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );
 };

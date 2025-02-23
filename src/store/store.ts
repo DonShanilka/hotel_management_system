@@ -17,7 +17,7 @@ export const store = configureStore({
         houseKeeping : houseReducer,
         payments : paymentReducer,
         accusations : accuReducer,
-        employyes : employeeReducer,
+        employees : employeeReducer,
         service : serviceReducer,
         serviceUsages : usageReducer
     }
