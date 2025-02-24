@@ -25,6 +25,22 @@ export const savePayment = createAsyncThunk(
     }
 );
 
+export const updatePayment = createAsyncThunk(
+    'payment/updatePayment',
+    async (updateData) => {
+      const id = updateData.serviceID;  // Fix: Use direct property access
+      console.log("Updating Payment with serviceID :", id, updateData);
+
+      try {
+        const response = await api.put(`/api/payment/updatePayment/${id}`, updateData);
+        return response.data;
+      } catch (error) {
+        console.error("Error updating guest:", error);
+        throw error; // Ensure error propagates to rejected case
+      }
+    }
+);
+
 const paymentSlice = createSlice({
   name: 'payment',
   initialState: initialState,
