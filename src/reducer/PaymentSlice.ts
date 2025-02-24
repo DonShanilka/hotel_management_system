@@ -41,6 +41,19 @@ export const updatePayment = createAsyncThunk(
     }
 );
 
+export const deletePayment = createAsyncThunk(
+    'payment/deletePayment',
+    async(paymentId : number) => {
+      console.log("deleting empId: ", paymentId);
+      try {
+        await api.delete(`/api/payment/deletePayment/${paymentId}`);
+        return paymentId;
+      } catch(err) {
+        console.log(err);
+      }
+    }
+);
+
 const paymentSlice = createSlice({
   name: 'payment',
   initialState: initialState,
