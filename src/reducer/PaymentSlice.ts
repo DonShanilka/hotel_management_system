@@ -120,10 +120,10 @@ const paymentSlice = createSlice({
           return action.payload;
         })
         .addCase(getAllPayment.rejected,(state,action)=>{
-          console.log("Failed to get Service :", action.payload)
+          console.log("Failed to get Payment :", action.payload)
         })
         .addCase(getAllPayment.pending,()=>{
-          console.log("Fetching Service ....")
+          console.log("Fetching Payment ....")
         })
   }
 });
