@@ -34,7 +34,7 @@ export const updateService = createAsyncThunk(
         const response = await api.put(`/api/service/updateService/${id}`, updateData);
         return response.data;
       } catch (error) {
-        console.error("Error updating guest:", error);
+        console.error("Error updating Service:", error);
         throw error; // Ensure error propagates to rejected case
       }
     }

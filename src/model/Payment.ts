@@ -1,4 +1,5 @@
 export class Payment {
+  paymentId !: number;
   roomNumber !: string;
   guestName !: string;
   checkInDate !: string;
