@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoom } from "../../reducer/RoomSlice.ts";
+import {deletePayment, getAllPayment, savePayment} from "../../reducer/PaymentSlice.ts";
+import PaymentTable from "./PaymentTable.tsx";
 
 const PaymentAddForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const rooms = useSelector((state) => state.rooms || []);
+  const payment = useSelector((state) => state.payment || []);
+
+  console.log(payment)
 
   useEffect(() => {
     dispatch(getAllRoom());
+    dispatch(getAllPayment());
   }, [dispatch]);
 
   const [paymentDetails, setPaymentDetails] = useState({
@@ -53,7 +59,7 @@ const PaymentAddForm: React.FC = () => {
         paymentDetails.bookingBookingID
     ) {
       // Here you would typically dispatch an action or call an API to save paymentDetails
-
+      dispatch(savePayment(paymentDetails))
       // Reset the form
       setPaymentDetails({
         guestId: "",
@@ -72,6 +78,32 @@ const PaymentAddForm: React.FC = () => {
       setIsModalOpen(false);
     } else {
       alert("Please fill in all fields");
+    }
+  };
+
+  const handleUpdate = (index: number, houseKeepingId: number) => {
+    setPaymentDetails({
+      guestId: "",
+      roomNumber: "",
+      guestName: "",
+      checkInDate: "",
+      checkOutDate: "",
+      totalNight: "",
+      roomPerNight: "",
+      additionalCharges: "",
+      paymentMethod: "",
+      cashReceived: "",
+      createdAt: "",
+      bookingBookingID: "",
+    });
+  };
+
+  const handleDelete = (paymentId: number) => {
+    const isConfirm = window.confirm("Are you sure want to delete HouseKeeping ?");
+    if(isConfirm){
+      dispatch(deletePayment(paymentId))
+    }else{
+      alert("Delete Failed, try again!")
     }
   };
 
@@ -340,6 +372,7 @@ const PaymentAddForm: React.FC = () => {
               </div>
             </div>
         )}
+        <PaymentTable paymentList={payment} onDelete={handleDelete} onUpdate={handleUpdate}/>
       </div>
   );
 };
