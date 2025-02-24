@@ -1,9 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Payment} from "../model/Payment.ts";
 import axios from "axios";
-import {Service} from "../model/Service.ts";
 
-const initialState : Payment = [];
+const initialState : Payment[] = [];
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -11,9 +10,9 @@ const api = axios.create({
 
 export const savePayment = createAsyncThunk(
     'payment/savePayment',
-    async (serviceData:Service)=>{
+    async (paymentData:Payment)=>{
       try {
-        const response = await api.post('/api/payment/savePayment', serviceData,{
+        const response = await api.post('/api/payment/savePayment', paymentData,{
           headers:{
             "Content-Type" : "multipart/form-data"
           },
@@ -83,6 +82,50 @@ const paymentSlice = createSlice({
     //   return state.filter((payment) => payment.id !== action.payload.id);
     // },
   },
+  extraReducers:(builder)=>{
+    builder
+        .addCase(savePayment.fulfilled,(state,action)=>{
+          state.push(action.payload);
+          console.log("Payment saved")
+        })
+        .addCase(savePayment.rejected,(state,action)=>{
+          console.log("Payment Saved Rejected :",action.payload)
+        })
+        .addCase(savePayment.pending,()=>{
+          console.log("Payment saving pending")
+        })
+
+    builder
+        .addCase(updatePayment.fulfilled, (state, action) => {
+          const index = state.findIndex(payment => payment.paymentId === action.payload.paymentId);
+          if (index !== -1) {
+            state[index] = action.payload;
+          }
+          console.log("Payment Updated");
+        })
+        .addCase(updatePayment.rejected, (state, action) => {
+          console.log("Failed to update Payment: ", action.error);
+        })
+
+    builder
+        .addCase(deletePayment.fulfilled,(state,action)=>{
+          return state.filter(payment => payment.paymentId !== action.payload);
+        })
+        .addCase(deletePayment.rejected,(state,action)=>{
+          console.log("Failed to delete Payment : ", action.payload)
+        })
+
+    builder
+        .addCase(getAllPayment.fulfilled,(state,action)=>{
+          return action.payload;
+        })
+        .addCase(getAllPayment.rejected,(state,action)=>{
+          console.log("Failed to get Service :", action.payload)
+        })
+        .addCase(getAllPayment.pending,()=>{
+          console.log("Fetching Service ....")
+        })
+  }
 });
 
 export default paymentSlice.reducer;
