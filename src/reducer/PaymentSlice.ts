@@ -54,6 +54,15 @@ export const deletePayment = createAsyncThunk(
     }
 );
 
+export const getAllPayment = createAsyncThunk(
+    'payment/getAllPayment',
+    async() => {
+      const response = await api.get('/api/payment/getAllPayment');
+      console.log("Get All Service Data ",response.data)
+      return response.data;
+    }
+);
+
 const paymentSlice = createSlice({
   name: 'payment',
   initialState: initialState,
