@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ReservationTable from './ReservationTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { deteleBooking, getallBooking, saveBooking, updateBooking } from '../../reducer/ReservationSlice';
+import {getAllRoom} from "../../reducer/RoomSlice.ts";
+import {getallGuest} from "../../reducer/GuestSlice.ts";
 
 const ReservationAddForm: React.FC = () => {
   const [bookingID, setBookingID] = useState<number | null>(null);
@@ -17,9 +19,13 @@ const ReservationAddForm: React.FC = () => {
   
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.reservations || []);
+  const rooms = useSelector((state)=>state.rooms || []);
+  const guests = useSelector((state) => state.guests || []);
 
   useEffect(() => {
     dispatch(getallBooking());
+    dispatch(getAllRoom());
+    dispatch(getallGuest());
   }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -107,11 +113,35 @@ const ReservationAddForm: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
-            <input type="text" value={guestID} onChange={(e) => setGuestID(e.target.value)} className="w-full p-2 border rounded-lg" required />
+            <select
+                // value={empId}
+                onChange={(e) => setGuestID(e.target.value)}
+                className="w-full p-2 border rounded-lg"
+                required
+            >
+              <option value="">Select Guest Id</option>
+              {guests.map((guest : any) => (
+                  <option key={guest.guestId} value={guest.guestId}>
+                    {guest.guestId}
+                  </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Number</label>
-            <input type="text" value={roomNumber} onChange={(e) => setRoomNumber(e.target.value)} className="w-full p-2 border rounded-lg" required />
+            <select
+                // value={empId}
+                onChange={(e) => setRoomNumber(e.target.value)}
+                className="w-full p-2 border rounded-lg"
+                required
+            >
+              <option value="">Select Room Number</option>
+              {rooms.map((room : any) => (
+                  <option key={room.roomNumber} value={room.roomNumber}>
+                    {room.roomNumber}
+                  </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Check-in Date</label>

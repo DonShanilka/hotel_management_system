@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GuestTable from './GuestTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { deteleGuest, getallGuest, saveGuest, updateGuest } from '../../reducer/GuestSlice';
+import {getAllRoom} from "../../reducer/RoomSlice.ts";
 
 const GuestAddForm: React.FC = () => {
   const [guestId, setGuestId] = useState('');
@@ -17,11 +18,12 @@ const GuestAddForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const guests = useSelector((state) => state.guests || []);
-
+  const rooms = useSelector((state)=>state.rooms || []);
   // console.log(guests)
 
   useEffect(() => {
     dispatch(getallGuest());
+    dispatch(getAllRoom());
   }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -156,13 +158,19 @@ const GuestAddForm: React.FC = () => {
 
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Number</label>
-            <input
-              type="text"
-              value={roomNumber}
-              onChange={(e) => setRoomNumber(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
+            <select
+                // value={empId}
+                onChange={(e) => setRoomNumber(e.target.value)}
+                className="w-full p-2 border rounded-lg"
+                required
+            >
+              <option value="">Select Room Number</option>
+              {rooms.map((room : any) => (
+                  <option key={room.roomNumber} value={room.roomNumber}>
+                    {room.roomNumber}
+                  </option>
+              ))}
+            </select>
           </div>
 
           <div>

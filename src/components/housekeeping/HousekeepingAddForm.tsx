@@ -29,7 +29,7 @@ const HousekeepingAddForm: React.FC = () => {
   useEffect(() => {
     dispatch(getallHouseKeeping());
     dispatch(getallEmployee());
-    dispatch(getAllRoom())
+    dispatch(getAllRoom());
   }, [dispatch]);
 
 
