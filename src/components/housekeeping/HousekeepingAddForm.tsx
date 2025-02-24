@@ -7,6 +7,8 @@ import {
   saveHouseKeeping,
   updateHouseKeeping
 } from "../../reducer/HouseKeepingSlice.ts";
+import {getallEmployee} from "../../reducer/EmployeeSlice.ts";
+import {getAllRoom} from "../../reducer/RoomSlice.ts";
 
 const HousekeepingAddForm: React.FC = () => {
   const [houseKeepingId, setHouseKeepingId] = useState<number | null>(null);
@@ -19,12 +21,17 @@ const HousekeepingAddForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const houseKeeping = useSelector((state: any) => state.houseKeeping || []);
+  const employees = useSelector((state) => state.employees || []);
+  const rooms = useSelector((state)=>state.rooms || []);
 
-  console.log("Emp Id",empId)
+  console.log("Emp Id ",employees.employeeID);
 
   useEffect(() => {
     dispatch(getallHouseKeeping());
+    dispatch(getallEmployee());
+    dispatch(getAllRoom())
   }, [dispatch]);
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,15 +107,20 @@ const HousekeepingAddForm: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-1">Room Number</label>
-              <input
-                  type="text"
-                  value={roomNumber}
+              <select
+                  // value={empId}
                   onChange={(e) => setRoomNumber(e.target.value)}
                   className="w-full p-2 border rounded-lg"
                   required
-              />
+              >
+                <option value="">Select Room Number</option>
+                {rooms.map((room : any) => (
+                    <option key={room.roomNumber} value={room.roomNumber}>
+                      {room.roomNumber}
+                    </option>
+                ))}
+              </select>
             </div>
-
             <div>
               <label className="block text-gray-700 font-medium mb-1">Cleaning Date</label>
               <input
@@ -133,15 +145,22 @@ const HousekeepingAddForm: React.FC = () => {
                 <option value="Under Maintenance">Under Maintenance</option>
               </select>
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">Employee ID</label>
-              <input
-                  type="text"
-                  value={empId}
+              <select
+                  // value={empId}
                   onChange={(e) => setEmployeeId(e.target.value)}
                   className="w-full p-2 border rounded-lg"
                   required
-              />
+              >
+                <option value="">Select Employee ID</option>
+                {employees.map((employee : any) => (
+                    <option key={employee.employeeID} value={employee.employeeID}>
+                      {employee.employeeID}
+                    </option>
+                ))}
+              </select>
             </div>
           </div>
           <div>
