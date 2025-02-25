@@ -16,17 +16,15 @@ type PaymentEntry = {
 interface PaymentTableProps {
   paymentList: PaymentEntry[];
   onDelete: (index: number) => void;
-  onUpdate: (index: number) => void;
 }
 
 const PaymentTable: React.FC<PaymentTableProps> = ({
                                                      paymentList,
                                                      onDelete,
-                                                     onUpdate,
                                                    }) => {
   return (
-      <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Records</h2>
+      <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md" style={{height : "87%"}}>
+        {/* <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Records</h2> */}
 
         <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead>
@@ -54,19 +52,13 @@ const PaymentTable: React.FC<PaymentTableProps> = ({
                     <td className="p-3 text-gray-700">{payment.checkInDate}</td>
                     <td className="p-3 text-gray-700">{payment.checkOutDate}</td>
                     <td className="p-3 text-gray-700">{payment.totalNight}</td>
-                    <td className="p-3 text-gray-700">${payment.roomPerNight}</td>
-                    <td className="p-3 text-gray-700">${payment.additionalCharges}</td>
+                    <td className="p-3 text-gray-700">RS: {payment.roomPerNight}</td>
+                    <td className="p-3 text-gray-700">RS: {payment.additionalCharges}</td>
                     <td className="p-3 text-gray-700">{payment.paymentMethod}</td>
-                    <td className="p-3 text-gray-700">${payment.cashReceive}</td>
+                    <td className="p-3 text-gray-700">Rs: {payment.cashReceive}</td>
                     <td className="p-3 text-center flex justify-center space-x-2">
                       <button
-                          onClick={() => onUpdate(index)}
-                          className="bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500 transition shadow-md"
-                      >
-                        Update
-                      </button>
-                      <button
-                          onClick={() => onDelete(index)}
+                          onClick={() => onDelete(payment.paymentId)}
                           className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition shadow-md"
                       >
                         Delete

@@ -92,24 +92,6 @@ const PaymentAddForm: React.FC = () => {
     }
   };
 
-
-  const handleUpdate = (index: number, houseKeepingId: number) => {
-    setPaymentDetails({
-      guestId: "",
-      roomNumber: "",
-      guestName: "",
-      checkInDate: "",
-      checkOutDate: "",
-      totalNight: "",
-      roomPerNight: "",
-      additionalCharges: "",
-      paymentMethod: "",
-      cashReceive: "",
-      createdAt: "",
-      bookingBookingID: "",
-    });
-  };
-
   const handleDelete = (paymentId: number) => {
     const isConfirm = window.confirm("Are you sure want to delete HouseKeeping ?");
     if(isConfirm){
@@ -120,7 +102,7 @@ const PaymentAddForm: React.FC = () => {
   };
 
   return (
-      <div className="w-full bg-amber-200 p-6">
+      <div className="w-full h-screen bg-gray-100 p-6">
         <h1 className="text-2xl font-bold text-center mb-4">Bill Payment</h1>
         <div className="flex justify-end">
           <button
@@ -384,7 +366,7 @@ const PaymentAddForm: React.FC = () => {
               </div>
             </div>
         )}
-        <PaymentTable paymentList={payment} onDelete={handleDelete} onUpdate={handleUpdate}/>
+        <PaymentTable paymentList={payment} onDelete={handleDelete}/>
       </div>
   );
 };
