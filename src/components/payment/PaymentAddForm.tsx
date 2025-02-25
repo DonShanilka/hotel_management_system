@@ -11,7 +11,7 @@ const PaymentAddForm: React.FC = () => {
   const rooms = useSelector((state) => state.rooms || []);
   const payment = useSelector((state) => state.payment || []);
 
-  console.log(payment)
+  // console.log(payment)
 
   useEffect(() => {
     dispatch(getAllRoom());
@@ -28,10 +28,11 @@ const PaymentAddForm: React.FC = () => {
     roomPerNight: "",
     additionalCharges: "",
     paymentMethod: "",
-    cashReceived: "",
+    cashReceive: "",
     createdAt: "",
     bookingBookingID: "",
   });
+
 
   // Calculate total amount
   const total =
@@ -40,10 +41,11 @@ const PaymentAddForm: React.FC = () => {
       (parseFloat(paymentDetails.additionalCharges) || 0);
 
   // Calculate balance: cash received minus total
-  const balance = (parseFloat(paymentDetails.cashReceived) || 0) - total;
+  const balance = (parseFloat(paymentDetails.cashReceive) || 0) - total;
 
   const handleSave = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (
         paymentDetails.guestId &&
         paymentDetails.roomNumber &&
@@ -54,12 +56,20 @@ const PaymentAddForm: React.FC = () => {
         paymentDetails.roomPerNight &&
         paymentDetails.additionalCharges &&
         paymentDetails.paymentMethod &&
-        paymentDetails.cashReceived &&
+        paymentDetails.cashReceive &&
         paymentDetails.createdAt &&
         paymentDetails.bookingBookingID
     ) {
-      // Here you would typically dispatch an action or call an API to save paymentDetails
-      dispatch(savePayment(paymentDetails))
+      // Convert to ISO Date format before dispatching
+      const formattedPayment = {
+        ...paymentDetails,
+        checkInDate: new Date(paymentDetails.checkInDate).toISOString(),
+        checkOutDate: new Date(paymentDetails.checkOutDate).toISOString(),
+        createdAt: new Date(paymentDetails.createdAt).toISOString(),
+      };
+
+      dispatch(savePayment(formattedPayment));
+
       // Reset the form
       setPaymentDetails({
         guestId: "",
@@ -71,15 +81,17 @@ const PaymentAddForm: React.FC = () => {
         roomPerNight: "",
         additionalCharges: "",
         paymentMethod: "",
-        cashReceived: "",
+        cashReceive: "",
         createdAt: "",
         bookingBookingID: "",
       });
+
       setIsModalOpen(false);
     } else {
       alert("Please fill in all fields");
     }
   };
+
 
   const handleUpdate = (index: number, houseKeepingId: number) => {
     setPaymentDetails({
@@ -92,7 +104,7 @@ const PaymentAddForm: React.FC = () => {
       roomPerNight: "",
       additionalCharges: "",
       paymentMethod: "",
-      cashReceived: "",
+      cashReceive: "",
       createdAt: "",
       bookingBookingID: "",
     });
@@ -313,11 +325,11 @@ const PaymentAddForm: React.FC = () => {
                         name="cashReceived"
                         required
                         className="w-full p-2 border rounded"
-                        value={paymentDetails.cashReceived}
+                        value={paymentDetails.cashReceive}
                         onChange={(e) =>
                             setPaymentDetails({
                               ...paymentDetails,
-                              cashReceived: e.target.value,
+                              cashReceive: e.target.value,
                             })
                         }
                     />
