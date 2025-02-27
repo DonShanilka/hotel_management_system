@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Hotel, BookOpen, Users, ScrollText, BarChart3, User, Briefcase, ClipboardList, DollarSign } from 'lucide-react';
 
@@ -13,9 +13,9 @@ const Sidebar = () => {
     { text: 'Guest Management', icon: Users, path: '/guest-management' },
     { text: 'Housekeeping', icon: ScrollText, path: '/housekeeping' },
     { text: 'Accusation', icon: BarChart3, path: '/accusation' },
-    { text: 'Employee', icon: User, path: '/employee' },  // Changed to 'User' for employees
-    { text: 'Service', icon: Briefcase, path: '/service' }, // 'Briefcase' for services
-    { text: 'Service Usage', icon: ClipboardList, path: '/serviceUsage' }, // 'ClipboardList' for usage tracking
+    { text: 'Employee', icon: User, path: '/employee' },  
+    { text: 'Service', icon: Briefcase, path: '/service' }, 
+    // { text: 'Service Usage', icon: ClipboardList, path: '/serviceUsage' },
     { text: 'Payment', icon: DollarSign, path: '/payment' }
 ];
 
