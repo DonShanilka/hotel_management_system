@@ -13,22 +13,22 @@ const ServiceTable: React.FC<ServiceTableProps> = ({ services, onDelete, onUpdat
 
       <table className="w-full border-collapse border border-gray-300">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">ID</th>
-            <th className="border p-2">Name</th>
-            <th className="border p-2">Price</th>
-            <th className="border p-2">Description</th>
-            <th className="border p-2">Actions</th>
+          <tr className="bg-blue-900 text-white">
+            <th className=" p-2">ID</th>
+            <th className=" p-2">Name</th>
+            <th className=" p-2">Price</th>
+            <th className=" p-2">Description</th>
+            <th className=" p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {services.map((service, index) => (
             <tr key={index} className="text-center">
-              <td className="border p-2">{service.serviceID}</td>
-              <td className="border p-2">{service.serviceName}</td>
-              <td className="border p-2">${service.servicePrice}</td>
-              <td className="border p-2">{service.description}</td>
-              <td className="border p-2 flex justify-center gap-2">
+              <td className=" p-2">{service.serviceID}</td>
+              <td className=" p-2">{service.serviceName}</td>
+              <td className=" p-2">${service.servicePrice}</td>
+              <td className=" p-2">{service.description}</td>
+              <td className=" p-2 flex justify-center gap-2">
                 <button onClick={() => onUpdate(index, service.serviceID)} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
                 <button onClick={() => onDelete(service.serviceID)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
               </td>

@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Hotel, BookOpen, Users, ScrollText, BarChart3, User, Briefcase, ClipboardList, DollarSign } from 'lucide-react';
 
@@ -15,51 +14,58 @@ const Sidebar = () => {
     { text: 'Accusation', icon: BarChart3, path: '/accusation' },
     { text: 'Employee', icon: User, path: '/employee' },  
     { text: 'Service', icon: Briefcase, path: '/service' }, 
-    // { text: 'Service Usage', icon: ClipboardList, path: '/serviceUsage' },
     { text: 'Payment', icon: DollarSign, path: '/payment' }
-];
+  ];
 
   return (
-    <div className="w-70 min-h-screen bg-blue-950 text-white flex flex-col">
-      <div className="h-16 flex items-center px-4">
-        <h1 className="text-lg font-semibold tracking-wide text-white">
-          Hotel Management
-        </h1>
-      </div>
+    <div className="flex">
+      {/* Sidebar */}
+      <div className="w-70 min-h-screen bg-blue-950 text-white flex flex-col fixed left-0 top-0 bottom-0">
+        <div className="h-16 flex items-center px-4">
+          <h1 className="text-lg font-semibold tracking-wide text-white">
+            Bule Beach Villa
+          </h1>
+        </div>
 
-      <nav className="flex-1 pt-4">
-        <ul className="space-y-1 px-4">
-          {menuItems.map(({ text, icon: Icon, path }) => (
-            <li key={path}>
-              <button
-                onClick={() => navigate(path)}
-                className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative
-                  ${location.pathname === path 
-                    ? 'bg-white/20 font-semibold' 
-                    : 'hover:bg-white/10 hover:translate-x-1'
-                  }`}
-              >
-                {location.pathname === path && (
-                  <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-orange-600 rounded-r" />
-                )}
-                <Icon 
-                  size={20} 
-                  className={`mr-3 ${location.pathname === path 
+        <nav className="flex-1 pt-4 overflow-y-auto">
+          <ul className="space-y-1 px-4">
+            {menuItems.map(({ text, icon: Icon, path }) => (
+              <li key={path}>
+                <button
+                  onClick={() => navigate(path)}
+                  className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative
+                    ${location.pathname === path 
+                      ? 'bg-white/20 font-semibold' 
+                      : 'hover:bg-white/10 hover:translate-x-1'
+                    }`}
+                >
+                  {location.pathname === path && (
+                    <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-orange-600 rounded-r" />
+                  )}
+                  <Icon 
+                    size={20} 
+                    className={`mr-3 ${location.pathname === path 
+                      ? 'text-orange-600' 
+                      : 'text-white/70 group-hover:text-white'
+                    }`}
+                  />
+                  <span className={`${location.pathname === path 
                     ? 'text-orange-600' 
                     : 'text-white/70 group-hover:text-white'
-                  }`}
-                />
-                <span className={`${location.pathname === path 
-                  ? 'text-orange-600' 
-                  : 'text-white/70 group-hover:text-white'
-                }`}>
-                  {text}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+                  }`}>
+                    {text}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {/* Main content area */}
+      <div className="flex-1 ml-70 overflow-y-auto">
+        
+      </div>
     </div>
   );
 };

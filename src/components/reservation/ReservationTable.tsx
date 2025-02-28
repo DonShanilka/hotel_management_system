@@ -24,7 +24,7 @@ const ReservationTable: React.FC<ReservationTableProps> = ({ reservations, onDel
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Reservations</h1>
       <table className="w-full bg-white rounded-lg shadow-md">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-blue-900 text-white">
             <th className="p-3">Booking ID</th>
             <th className="p-3">Guest ID</th>
             <th className="p-3">Room Number</th>

@@ -24,11 +24,11 @@ const AccusationTable: React.FC<ReportTableProps> = ({ acc, onDelete, onUpdate }
       <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-blue-900 text-white">
-          <th className="border p-3 text-left">Accusation Id</th>
-            <th className="border p-3 text-left">Guest ID</th>
-            <th className="border p-3 text-left">Report Type</th>
-            <th className="border p-3 text-left">Description</th>
-            <th className="border p-3 text-center">Actions</th>
+          <th className=" p-3 text-left">Accusation Id</th>
+            <th className=" p-3 text-left">Guest ID</th>
+            <th className=" p-3 text-left">Report Type</th>
+            <th className=" p-3 text-left">Description</th>
+            <th className=" p-3 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
