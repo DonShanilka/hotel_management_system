@@ -27,7 +27,7 @@ export const saveGuest = createAsyncThunk(
 export const updateGuest = createAsyncThunk(
 'gu/updateGuest',
 async (updateData) => {
-  const id = updateData.guestId;  // Fix: Use direct property access
+  const id = updateData.guestId; 
   console.log("Updating guest with guestId :", id, updateData);
 
   try {
@@ -35,7 +35,7 @@ async (updateData) => {
     return response.data;
   } catch (error) {
     console.error("Error updating guest:", error);
-    throw error; // Ensure error propagates to rejected case
+    throw error; 
   }
 }
 );
@@ -67,21 +67,7 @@ const guestSlice = createSlice({
   name: 'guest',
   initialState: initialState,
   reducers: {
-    // addGuest(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateGuest: (state, action) => {
-    //   const {id, guest} = action.payload;
-    //   const guestIndex = state.findIndex(
-    //     (guest) => guest.id === id
-    //   );
-    //   if (guestIndex !== -1) {
-    //     state[guestIndex] = guest;
-    //   }
-    // },
-    // deleteGuest: (state, action) => {
-    //   return state.filter((guest) => guest.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

@@ -27,7 +27,7 @@ export const saveBooking = createAsyncThunk(
 export const updateBooking = createAsyncThunk(
 'bo/updateBooking',
 async (updateData) => {
-  const id = updateData.bookingID;  // Fix: Use direct property access
+  const id = updateData.bookingID;  
   console.log("Updating Booking with bookingID :", id, updateData);
 
   try {
@@ -35,7 +35,7 @@ async (updateData) => {
     return response.data;
   } catch (error) {
     console.error("Error updating Booking:", error);
-    throw error; // Ensure error propagates to rejected case
+    throw error; 
   }
 }
 );
@@ -67,21 +67,7 @@ const reservationSlice = createSlice({
   name: 'reservations',
   initialState: initialState,
   reducers: {
-    // addReservation(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateReservation: (state, action) => {
-    //   const {id, reservation} = action.payload;
-    //   const reservationIndex = state.findIndex(
-    //     (reservation) => reservation.id === id
-    //   );
-    //   if (reservationIndex !== -1) {
-    //     state[reservationIndex] = reservation;
-    //   }
-    // },
-    // deleteReservation: (state, action) => {
-    //   return state.filter((reservation) => reservation.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

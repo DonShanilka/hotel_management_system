@@ -27,7 +27,7 @@ export const saveEmployee = createAsyncThunk(
 export const updateEmployee = createAsyncThunk(
     'emp/updateEmployee',
     async (updateData) => {
-        const id = updateData.employeeID;  // Fix: Use direct property access
+        const id = updateData.employeeID;  
         console.log("Updating guest with employeeID :", id, updateData);
 
         try {
@@ -35,7 +35,7 @@ export const updateEmployee = createAsyncThunk(
             return response.data;
         } catch (error) {
             console.error("Error updating guest:", error);
-            throw error; // Ensure error propagates to rejected case
+            throw error;
         }
     }
 );
@@ -66,21 +66,7 @@ const employeeSlice = createSlice({
   name: 'employees',
   initialState: initialState,
   reducers: {
-    // addRoom(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateRoom: (state, action) => {
-    //   const {id, room} = action.payload;
-    //   const roomIndex = state.findIndex(
-    //     (room) => room.id === id
-    //   );
-    //   if (roomIndex !== -1) {
-    //     state[roomIndex] = room;
-    //   }
-    // },
-    // deleteRoom: (state, action) => {
-    //   return state.filter((room) => room.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

@@ -46,7 +46,6 @@ const ServiceAddForm: React.FC = () => {
       dispatch(saveService(newService));
     }
 
-    // Reset form
     setServiceID('');
     setServiceName('');
     setServicePrice('');

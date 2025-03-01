@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Room} from "../model/Room.ts";
 import axios from "axios";
-import { log } from 'console';
 
 const initialState:Room[] = [];
 
@@ -67,21 +66,7 @@ const roomSlice = createSlice({
   name: 'rooms',
   initialState: initialState,
   reducers: {
-    // addRoom(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateRoom: (state, action) => {
-    //   const {id, room} = action.payload;
-    //   const roomIndex = state.findIndex(
-    //     (room) => room.id === id
-    //   );
-    //   if (roomIndex !== -1) {
-    //     state[roomIndex] = room;
-    //   }
-    // },
-    // deleteRoom: (state, action) => {
-    //   return state.filter((room) => room.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

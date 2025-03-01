@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar */}
+
       <div className="w-70 min-h-screen bg-blue-950 text-white flex flex-col fixed left-0 top-0 bottom-0">
         <div className="h-16 flex items-center px-4">
           <h1 className="text-lg font-semibold tracking-wide text-white">
@@ -62,7 +62,6 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Main content area */}
       <div className="flex-1 ml-70 overflow-y-auto">
         
       </div>

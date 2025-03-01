@@ -4,7 +4,7 @@ export class Service {
     servicePrice !: number;
     description?: string;
     createdAt !: Date;
-    serviceUsages !: ServiceUsage[]; // Relationship with ServiceUsage
+    serviceUsages !: ServiceUsage[]; 
   
   }
   

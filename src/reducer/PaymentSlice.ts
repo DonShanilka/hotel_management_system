@@ -27,7 +27,7 @@ export const savePayment = createAsyncThunk(
 export const updatePayment = createAsyncThunk(
     'payment/updatePayment',
     async (updateData) => {
-      const id = updateData.paymentId;  // Fix: Use direct property access
+      const id = updateData.paymentId; 
       console.log("Updating Payment with paymentId :", id, updateData);
 
       try {
@@ -35,7 +35,7 @@ export const updatePayment = createAsyncThunk(
         return response.data;
       } catch (error) {
         console.error("Error updating Payment:", error);
-        throw error; // Ensure error propagates to rejected case
+        throw error; 
       }
     }
 );
@@ -66,21 +66,7 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState: initialState,
   reducers: {
-    // addPayment(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updatePayment: (state, action) => {
-    //   const {id, payment} = action.payload;
-    //   const paymentIndex = state.findIndex(
-    //     (payment) => payment.id === id
-    //   );
-    //   if (paymentIndex !== -1) {
-    //     state[paymentIndex] = payment;
-    //   }
-    // },
-    // deletePayment: (state, action) => {
-    //   return state.filter((payment) => payment.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

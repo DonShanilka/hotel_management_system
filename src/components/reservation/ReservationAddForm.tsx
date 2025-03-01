@@ -74,7 +74,7 @@ const ReservationAddForm: React.FC = () => {
   };
 
   const handleUpdate = (index: number, boId: string) => {
-    console.log("Booking list:", booking); // Debugging line
+    console.log("Booking list:", booking); 
     console.log("Looking for BookingId:", boId);
   
     const report = booking?.find((bo: any) => bo.bookingID === boId);

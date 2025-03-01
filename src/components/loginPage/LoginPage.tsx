@@ -37,7 +37,7 @@ function LoginPage() {
             <div className="flex-1 bg-blue-800 text-white p-10 flex items-center justify-center">
                 <div className="max-w-lg space-y-4">
                     <h1 className="text-4xl font-bold leading-snug">
-                        Welcome Back to TuneGO
+                        Welcome Back to Hotel Villa
                     </h1>
                     <p className="text-lg">
                         Log in to manage your creative work, distribute your music, and collect your royalties.

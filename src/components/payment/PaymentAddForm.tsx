@@ -33,14 +33,11 @@ const PaymentAddForm: React.FC = () => {
     bookingBookingID: "",
   });
 
-
-  // Calculate total amount
   const total =
       (parseFloat(paymentDetails.totalNight) || 0) *
       (parseFloat(paymentDetails.roomPerNight) || 0) +
       (parseFloat(paymentDetails.additionalCharges) || 0);
 
-  // Calculate balance: cash received minus total
   const balance = (parseFloat(paymentDetails.cashReceive) || 0) - total;
 
   const handleSave = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -60,7 +57,6 @@ const PaymentAddForm: React.FC = () => {
         paymentDetails.createdAt &&
         paymentDetails.bookingBookingID
     ) {
-      // Convert to ISO Date format before dispatching
       const formattedPayment = {
         ...paymentDetails,
         checkInDate: new Date(paymentDetails.checkInDate).toISOString(),
@@ -70,7 +66,6 @@ const PaymentAddForm: React.FC = () => {
 
       dispatch(savePayment(formattedPayment));
 
-      // Reset the form
       setPaymentDetails({
         guestId: "",
         roomNumber: "",
@@ -118,7 +113,6 @@ const PaymentAddForm: React.FC = () => {
               <div className="bg-white p-6 rounded-lg shadow-lg w-2xl">
                 <h2 className="text-xl font-bold mb-4">Bill Payment Form</h2>
                 <form className="space-y-4">
-                  {/* Guest Details */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium">Guest ID</label>
@@ -333,8 +327,6 @@ const PaymentAddForm: React.FC = () => {
                         }
                     />
                   </div>
-
-                  {/* Total and Balance Display */}
                   <div className="text-left text-lg font-bold">
                     Total: ${total.toFixed(2)}
                   </div>

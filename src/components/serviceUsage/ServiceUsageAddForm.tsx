@@ -34,7 +34,6 @@ const ServiceUsageAddForm: React.FC = () => {
       setServiceUsageList([...serviceUsageList, newUsage]);
     }
 
-    // Reset form
     setUsageID('');
     setBookingID('');
     setGuestId('');

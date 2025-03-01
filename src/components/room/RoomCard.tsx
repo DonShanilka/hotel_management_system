@@ -3,7 +3,7 @@ import React from "react";
 type Room = {
   roomNumber: number;
   roomType: string;
-  selectedImage?: string; // Made optional to prevent errors
+  selectedImage?: string; 
   hallFloor: number;
   price: string;
   status: string;
@@ -34,7 +34,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
                   key={index}
                   className="h-52 bg-white p-4 rounded-lg shadow-md flex justify-between items-center relative"
               >
-                {/* Left side content */}
                 <div className="flex-1">
                   <h2 className="text-lg font-semibold text-gray-800">
                     Room {roomNumber}
@@ -61,10 +60,10 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
                     <strong>Status:</strong> {status}
                   </p>
 
-                  {/* Buttons aligned to the right */}
+                 
                   <div className="flex space-x-2 mt-4">
                   <button
-                      onClick={() => onUpdate(index, room)} // Pass room data along with index
+                      onClick={() => onUpdate(index, room)}
                       className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
                   >
                       Update
@@ -78,8 +77,6 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
                     </button>
                   </div>
                 </div>
-
-                {/* Right side - Room Image */}
                 {selectedImage ? (
                     <div className="ml-2">
                       <img

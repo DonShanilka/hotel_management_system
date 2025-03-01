@@ -64,7 +64,6 @@ const HousekeepingAddForm: React.FC = () => {
       dispatch(saveHouseKeeping(housekeepingData));
     }
 
-    // Reset form
     setRoomNumber('');
     setCleaningDate('');
     setStatus('Not Cleaned');
@@ -85,7 +84,7 @@ const HousekeepingAddForm: React.FC = () => {
     setCleaningDate(houseKeepingToUpdate.cleaningDate);
     setStatus(houseKeepingToUpdate.status);
     setSpecialTasks(houseKeepingToUpdate.specialTasks);
-    setEmployeeId(houseKeepingToUpdate.employeeId || ''); // Set employeeId
+    setEmployeeId(houseKeepingToUpdate.employeeId || ''); 
 
     setEditIndex(index);
   };
@@ -108,7 +107,7 @@ const HousekeepingAddForm: React.FC = () => {
             <div>
               <label className="block text-gray-700 font-medium mb-1">Room Number</label>
               <select
-                  // value={empId}
+                  
                   onChange={(e) => setRoomNumber(e.target.value)}
                   className="w-full p-2 border rounded-lg"
                   required

@@ -28,7 +28,7 @@ export const saveHouseKeeping = createAsyncThunk(
 export const updateHouseKeeping = createAsyncThunk(
     'hk/updateHouseKeeping',
     async (updateData) => {
-      const id = updateData.houseKeepingId;  // Fix: Use direct property access
+      const id = updateData.houseKeepingId;  
       console.log("Updating HouseKeeping with HouseKeepingId :", id, updateData);
 
       try {
@@ -36,7 +36,7 @@ export const updateHouseKeeping = createAsyncThunk(
         return response.data;
       } catch (error) {
         console.error("Error updating HouseKeeping:", error);
-        throw error; // Ensure error propagates to rejected case
+        throw error; 
       }
     }
 );
@@ -68,21 +68,7 @@ const houseKeepingSlice = createSlice({
   name: 'houseKeeping',
   initialState: initialState,
   reducers: {
-    // addHouseKeeping(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateHouseKeeping: (state, action) => {
-    //   const { id, houseKeeping } = action.payload;
-    //   const houseKeepingIndex = state.findIndex(
-    //     (houseKeeping) => houseKeeping.id === id
-    //   );
-    //   if (houseKeepingIndex !== -1) {
-    //     state[houseKeepingIndex] = houseKeeping;
-    //   }
-    // },
-    // deleteHouseKeeping: (state, action) => {
-    //   return state.filter((houseKeeping) => houseKeeping.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder
@@ -119,7 +105,7 @@ const houseKeepingSlice = createSlice({
 
     builder
         .addCase(getallHouseKeeping.fulfilled, (state, action) => {
-              return action.payload || []; // Ensure it always returns an array
+              return action.payload || []; 
         })
         .addCase(getallHouseKeeping.rejected,(state,action)=>{
           console.log("Failed to get HouseKeeping :", action.payload)

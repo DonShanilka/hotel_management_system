@@ -27,7 +27,7 @@ export const saveService = createAsyncThunk(
 export const updateService = createAsyncThunk(
     'service/updateService',
     async (updateData) => {
-      const id = updateData.serviceID;  // Fix: Use direct property access
+      const id = updateData.serviceID;  
       console.log("Updating Service with serviceID :", id, updateData);
 
       try {
@@ -35,7 +35,7 @@ export const updateService = createAsyncThunk(
         return response.data;
       } catch (error) {
         console.error("Error updating Service:", error);
-        throw error; // Ensure error propagates to rejected case
+        throw error; 
       }
     }
 );
@@ -66,21 +66,7 @@ const serviceSlice = createSlice({
   name: "service",
   initialState: initialState,
   reducers: {
-    // addAccusation(state, action) {
-    //   state.push(action.payload);
-    // },
-    // updateAccusation: (state, action) => {
-    //   const { id, accusation } = action.payload;
-    //   const accusationIndex = state.findIndex(
-    //     (accusation) => accusation.id === id
-    //   );
-    //   if (accusationIndex !== -1) {
-    //     state[accusationIndex] = accusation;
-    //   }
-    // },
-    // deleteAccusation: (state, action) => {
-    //   return state.filter((accusation) => accusation.id !== action.payload.id);
-    // },
+    
   },
   extraReducers:(builder)=>{
     builder

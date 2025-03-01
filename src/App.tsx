@@ -38,7 +38,7 @@ function App() {
                   <CssBaseline />
                   <Sidebar />
                   <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Toolbar /> {/* This is needed to push content below the AppBar */}
+                    <Toolbar /> 
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/dashboard" element={<Dashboard />} />
@@ -60,7 +60,7 @@ function App() {
             <>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="*" element={<LoginPage />} /> {/* Catch-all route */}
+              <Route path="*" element={<LoginPage />} /> 
             </>
           )}
         </Routes>

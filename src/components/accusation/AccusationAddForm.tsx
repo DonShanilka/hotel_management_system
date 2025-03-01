@@ -24,7 +24,7 @@ const AccusationAddForm: React.FC = () => {
     const updateData = {accusationId,reportType , guestId, description};
 
     if (editIndex !== null) {
-      // Update existing report
+      
       const updatedList = [...reportList];
       updatedList[editIndex] = newReport;
       setReportList(updatedList);
@@ -47,10 +47,9 @@ const AccusationAddForm: React.FC = () => {
   };
 
   const handleUpdate = (index: number, accId: string) => {
-    console.log("Accusations list:", accusations); // Debugging line
+    console.log("Accusations list:", accusations); 
     console.log("Looking for accusationId:", accId);
   
-    // Ensure accusations exist and find the matching accusation
     const report = accusations?.find((acc: any) => acc.accusationId === accId);
   
     if (!report) {
@@ -58,12 +57,10 @@ const AccusationAddForm: React.FC = () => {
       return;
     }
   
-    // Set the input fields with the existing data
     setAccusationId(report.accusationId.toString());
     setReportType(report.reportType);
     setGuestId(report.guestId);
     setDescription(report.description);
-    // Set the index for editing
     setEditIndex(index);
   };  
   
@@ -120,7 +117,6 @@ const AccusationAddForm: React.FC = () => {
         </button>
       </form>
 
-      {/* Pass the reportList data to the Table Component */}
       <AccusationTable acc={accusations} onDelete={handleDelete} onUpdate={handleUpdate} />
     </div>
   );

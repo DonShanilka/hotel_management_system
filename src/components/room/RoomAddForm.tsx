@@ -48,11 +48,11 @@ const RoomAddForm: React.FC = () => {
         formData.hallFloor = Number(formData.hallFloor);
 
         if (editIndex !== null) {
-          roomData.append("roomNumber", roomNumber); // Ensure roomNumber is included
+          roomData.append("roomNumber", roomNumber); 
             dispatch(updateRoom(roomData));
             setEditIndex(null);
         } else {
-            dispatch(saveRooms(roomData)); // Add new room
+            dispatch(saveRooms(roomData));
         }
 
         setFormData({ 
@@ -106,7 +106,7 @@ const RoomAddForm: React.FC = () => {
     setFormData({
       roomNumber: room.roomNumber || "",
       roomType: room.roomType || "",
-      image: null, // Reset image (avoid pre-filling due to file handling issues)
+      image: null, 
       hallFloor: hallFloor || 0,
       price: room.price || "",
       status: room.status || "",
@@ -118,8 +118,6 @@ const RoomAddForm: React.FC = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Room Management</h1>
-
-      {/* Room Form */}
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
@@ -148,8 +146,6 @@ const RoomAddForm: React.FC = () => {
               <option value="Suite">Suite</option>
             </select>
           </div>
-
-          {/*Image Chooser*/}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Image</label>
             <input
