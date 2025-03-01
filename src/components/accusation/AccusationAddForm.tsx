@@ -29,7 +29,7 @@ const AccusationAddForm: React.FC = () => {
       updatedList[editIndex] = newReport;
       setReportList(updatedList);
       setEditIndex(null);
-      dispatch(updateAccusation(updateData));
+      dispatch(updateAccusation(updateData)); // redux store ekata yanwa
     } else {
       // setReportList([...reportList, newReport]);
       dispatch(saveAccusation(newReport));

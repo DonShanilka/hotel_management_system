@@ -86,7 +86,7 @@ const accusationsSlice = createSlice({
   },
   extraReducers:(builder)=>{
     builder
-        .addCase(saveAccusation.fulfilled,(state,action)=>{
+        .addCase(saveAccusation.fulfilled,(state,action)=>{ // 
           state.push(action.payload);
           console.log("Acc saved")
         })

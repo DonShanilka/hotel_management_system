@@ -16,7 +16,7 @@ export const store = configureStore({
         guests : guestReducer,
         houseKeeping : houseReducer,
         payment : paymentReducer,
-        accusations : accuReducer,
+        accusations : accuReducer, // reducer ekata yanawa
         employees : employeeReducer,
         service : serviceReducer,
         serviceUsages : usageReducer
