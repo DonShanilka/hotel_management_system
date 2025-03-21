@@ -20,9 +20,9 @@ const Sidebar = () => {
   return (
     <div className="flex">
 
-      <div className="w-70 min-h-screen bg-blue-950 text-white flex flex-col fixed left-0 top-0 bottom-0">
+      <div className="w-70 min-h-screen bg-white text-black flex flex-col fixed left-0 top-0 bottom-0">
         <div className="h-16 flex items-center px-4">
-          <h1 className="text-lg font-semibold tracking-wide text-white">
+          <h1 className="text-lg font-semibold tracking-wide text-black">
             Bule Beach Villa
           </h1>
         </div>
@@ -33,25 +33,25 @@ const Sidebar = () => {
               <li key={path}>
                 <button
                   onClick={() => navigate(path)}
-                  className={`w-full flex items-center px-3 py-2 rounded-lg transition-all duration-200 group relative
+                  className={`w-full flex items-center px-3 py-2 rounded-sm transition-all duration-200 group relative
                     ${location.pathname === path 
-                      ? 'bg-white/20 font-semibold' 
-                      : 'hover:bg-white/10 hover:translate-x-1'
+                      ? 'bg-purple-100 font-semibold' 
+                      : 'hover:bg-gray-100 hover:translate-x-1'
                     }`}
                 >
                   {location.pathname === path && (
-                    <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-orange-600 rounded-r" />
+                    <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-purple-800 rounded-r" />
                   )}
                   <Icon 
                     size={20} 
                     className={`mr-3 ${location.pathname === path 
-                      ? 'text-orange-600' 
-                      : 'text-white/70 group-hover:text-white'
+                      ? 'text-purple-800' 
+                      : 'text-black/70 group-hover:text-black'
                     }`}
                   />
                   <span className={`${location.pathname === path 
-                    ? 'text-orange-600' 
-                    : 'text-white/70 group-hover:text-white'
+                    ? 'text-purple-800' 
+                    : 'text-black/70 group-hover:text-black'
                   }`}>
                     {text}
                   </span>
