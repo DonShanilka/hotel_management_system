@@ -129,7 +129,7 @@ const ServiceAddForm: React.FC = () => {
         <button
           type="submit"
           className={`mt-4 w-full text-white py-2 rounded-lg transition ${
-            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-green-700 hover:bg-green-800"
+            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-700 hover:bg-blue-800"
           }`}
         >
           {editIndex !== null ? "Update Service" : "Add Service"}
