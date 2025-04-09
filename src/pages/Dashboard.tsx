@@ -23,7 +23,9 @@ const Dashboard: React.FC = () => {
   const [bookingCount, setBookingCount] = useState<number>(0);
   const [paymentCount, setPaymentCount] = useState<number>(0);
 
-  console.log(paymentCount)
+  // let totalPrice;
+
+  console.log(paymentCount);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,15 +38,13 @@ const Dashboard: React.FC = () => {
           fetch("http://localhost:3000/api/payment/getAllPayment").then((res) => res.json()),
         ]);
   
-        // Setting counts for entities
         setRoomCount(rooms.length);
         setEmployeeCount(employees.length);
         setGuestCount(guests.length);
         setBookingCount(bookings.length);
   
-        // Calculating the total payment
-        const totalPayment = payments.reduce((acc, payment) => acc + payment.totalPayment, 0);
-        setPaymentCount(totalPayment);  // This will set the sum of all totalPayment values
+        const totalRevenue = payments.reduce((acc, payment) => acc + Number(payment.totalPayment), 0);
+        setPaymentCount(totalRevenue); 
   
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -109,8 +109,8 @@ const Dashboard: React.FC = () => {
             value={`${paymentCount}`}
             change="+3%"
             changeType="positive"
-            color="bg-purple-100"
-            textColor="text-purple-500"
+            color="bg-green-100"
+            textColor="text-green-500"
           />
           <StatCard
             title="Employees"
@@ -125,8 +125,8 @@ const Dashboard: React.FC = () => {
             value={`${guestCount}`}
             change="+2%"
             changeType="positive"
-            color="bg-green-100"
-            textColor="text-green-500"
+            color="bg-purple-100"
+            textColor="text-purple-500"
           />
           <StatCard
             title="Bookings"
