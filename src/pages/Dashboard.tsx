@@ -16,38 +16,6 @@ const monthlyData = [
   { name: "Nov", value: 9000 },
 ];
 
-interface InvoiceType {
-  id: string;
-  dateCreated: string;
-  client: string;
-  amount: string;
-  status: "PAID" | "OVERDUE" | "PENDING";
-}
-
-const invoices: InvoiceType[] = [
-  {
-    id: "PO-4391C",
-    dateCreated: "3 Jul, 2020",
-    client: "Daniel Padilla",
-    amount: "$2,450",
-    status: "PAID",
-  },
-  {
-    id: "IN-9971J",
-    dateCreated: "21 May, 2021",
-    client: "Christina Jacobs",
-    amount: "$14,900",
-    status: "OVERDUE",
-  },
-  {
-    id: "LV-2378A",
-    dateCreated: "14 Apr, 2020",
-    client: "Elizabeth Bailey",
-    amount: "$450",
-    status: "PENDING",
-  },
-];
-
 const Dashboard: React.FC = () => {
   const [roomCount, setRoomCount] = useState<number>(0);
   const [employeeCount, setEmployeeCount] = useState<number>(0);
@@ -55,40 +23,37 @@ const Dashboard: React.FC = () => {
   const [bookingCount, setBookingCount] = useState<number>(0);
   const [paymentCount, setPaymentCount] = useState<number>(0);
 
+  console.log(paymentCount)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [rooms, employees, guests, bookings, payments] =
-          await Promise.all([
-            fetch("http://localhost:3000/api/room/getAllRoom").then((res) =>
-              res.json()
-            ),
-            fetch("http://localhost:3000/api/employee/getAllEmployee").then(
-              (res) => res.json()
-            ),
-            fetch("http://localhost:3000/api/guest/getAll").then((res) =>
-              res.json()
-            ),
-            fetch("http://localhost:3000/api/booking/getAllBooking").then(
-              (res) => res.json()
-            ),
-            fetch("http://localhost:3000/api/payment/getAllPayment").then(
-              (res) => res.json()
-            ),
-          ]);
-
+        const [rooms, employees, guests, bookings, payments] = await Promise.all([
+          fetch("http://localhost:3000/api/room/getAllRoom").then((res) => res.json()),
+          fetch("http://localhost:3000/api/emp/getAllEmployee").then((res) => res.json()),
+          fetch("http://localhost:3000/api/gu/getAllGuest").then((res) => res.json()),
+          fetch("http://localhost:3000/api/bo/getAllBooking").then((res) => res.json()),
+          fetch("http://localhost:3000/api/payment/getAllPayment").then((res) => res.json()),
+        ]);
+  
+        // Setting counts for entities
         setRoomCount(rooms.length);
         setEmployeeCount(employees.length);
         setGuestCount(guests.length);
         setBookingCount(bookings.length);
-        setPaymentCount(payments.length);
+  
+        // Calculating the total payment
+        const totalPayment = payments.reduce((acc, payment) => acc + payment.totalPayment, 0);
+        setPaymentCount(totalPayment);  // This will set the sum of all totalPayment values
+  
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   return (
     <div className="flex min-h-screen bg-blue-50">

@@ -8,5 +8,6 @@ export class Payment {
   roomPerNight !: number;
   additionalCharges !: number;
   paymentMethod !: string;
+  totalPayment !: number;
   cashReceive !: number;
 }
