@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis } from "recharts";
 import { Bell } from "lucide-react";
-
-const monthlyData = [
-  { name: "Jan", value: 5000 },
-  { name: "Feb", value: 7000 },
-  { name: "Mar", value: 6000 },
-  { name: "Apr", value: 8000 },
-  { name: "May", value: 15000 },
-  { name: "Jun", value: 6000 },
-  { name: "Jul", value: 7000 },
-  { name: "Aug", value: 9000 },
-  { name: "Sep", value: 8000 },
-  { name: "Oct", value: 10000 },
-  { name: "Nov", value: 9000 },
-];
+import { parseISO, format } from "date-fns";
 
 const Dashboard: React.FC = () => {
   const [roomCount, setRoomCount] = useState<number>(0);
@@ -22,10 +9,7 @@ const Dashboard: React.FC = () => {
   const [guestCount, setGuestCount] = useState<number>(0);
   const [bookingCount, setBookingCount] = useState<number>(0);
   const [paymentCount, setPaymentCount] = useState<number>(0);
-
-  // let totalPrice;
-
-  console.log(paymentCount);
+  const [monthlyData, setMonthlyData] = useState<{ name: string; value: number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,28 +21,43 @@ const Dashboard: React.FC = () => {
           fetch("http://localhost:3000/api/bo/getAllBooking").then((res) => res.json()),
           fetch("http://localhost:3000/api/payment/getAllPayment").then((res) => res.json()),
         ]);
-  
+
         setRoomCount(rooms.length);
         setEmployeeCount(employees.length);
         setGuestCount(guests.length);
         setBookingCount(bookings.length);
-  
+
         const totalRevenue = payments.reduce((acc, payment) => acc + Number(payment.totalPayment), 0);
-        setPaymentCount(totalRevenue); 
-  
+        setPaymentCount(totalRevenue);
+
+        const monthlyRevenueMap: { [key: string]: number } = {};
+
+        payments.forEach((payment: any) => {
+          const month = format(parseISO(payment.createdAt), "MMM");
+          if (!monthlyRevenueMap[month]) {
+            monthlyRevenueMap[month] = 0;
+          }
+          monthlyRevenueMap[month] += Number(payment.totalPayment);
+        });
+
+        const orderedMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const sortedMonthlyData = orderedMonths.map((month) => ({
+          name: month,
+          value: monthlyRevenueMap[month] || 0,
+        }));
+
+        setMonthlyData(sortedMonthlyData);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   return (
-    <div className="flex min-h-screen bg-blue-50">
+    <div className="flex h-full bg-blue-50 w-full relative -top-20">
       <div className="flex-1 p-6">
-        {/* Header */}
         <header className="flex justify-between items-center mb-6">
           <div className="relative">
             <input
@@ -102,11 +101,10 @@ const Dashboard: React.FC = () => {
           </div>
         </header>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-5 gap-4 mb-6">
           <StatCard
             title="Total Revenue"
-            value={`${paymentCount}`}
+            value={`$${paymentCount}`}
             change="+3%"
             changeType="positive"
             color="bg-green-100"
@@ -146,23 +144,16 @@ const Dashboard: React.FC = () => {
           />
         </div>
 
-        {/* Revenue Chart & Template */}
-        <div className="grid grid-cols-3 gap-6">
-          <div className="col-span-2 bg-white rounded-xl p-6 shadow-sm">
+        <div className="w-2/5 gap-6">
+          <div className="col-span-2 bg-white rounded-xl p-2 shadow-sm">
             <div className="flex justify-between mb-6">
               <div>
                 <h2 className="text-lg font-medium mb-2">Monthly Revenue</h2>
-                <div className="text-2xl font-semibold">$15,000</div>
-              </div>
-              <div className="relative">
-                <div className="bg-black text-white p-2 rounded-lg text-sm">
-                  $15,000
-                  <div className="absolute w-3 h-3 bg-black rotate-45 -bottom-1 left-1/2 transform -translate-x-1/2"></div>
-                </div>
+                {/* <div className="text-2xl font-semibold">${paymentCount}</div> */}
               </div>
             </div>
 
-            <BarChart width={500} height={200} data={monthlyData} barSize={20}>
+            <BarChart width={600} height={200} data={monthlyData} barSize={20}>
               <XAxis dataKey="name" axisLine={false} tickLine={false} />
               <Bar
                 dataKey="value"
@@ -174,7 +165,7 @@ const Dashboard: React.FC = () => {
                       y={y}
                       width={width}
                       height={height}
-                      fill={index === 4 ? "#2563EB" : "#EEEEEE"}
+                      fill={index === 4 ? "#000080" : "#2563EB"}
                       rx={4}
                       ry={4}
                     />
@@ -182,23 +173,6 @@ const Dashboard: React.FC = () => {
                 }}
               />
             </BarChart>
-          </div>
-
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-            <div className="bg-blue-600 p-6 text-white">
-              <div className="inline-block bg-white text-blue-600 text-xs px-2 py-1 rounded-full mb-2">
-                NEW
-              </div>
-              <h2 className="text-xl font-semibold mb-2">
-                We have added new invoicing templates!
-              </h2>
-              <p className="text-sm mb-6">
-                New templates focused on helping you improve your business.
-              </p>
-              <button className="bg-white text-blue-600 py-2 px-4 rounded-lg font-medium">
-                Download Now
-              </button>
-            </div>
           </div>
         </div>
       </div>
