@@ -62,6 +62,7 @@ export const getAllRoom = createAsyncThunk(
     return response.data;
   }
 )
+
 const roomSlice = createSlice({
   name: 'rooms',
   initialState: initialState,

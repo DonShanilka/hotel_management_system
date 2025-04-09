@@ -35,22 +35,22 @@ const Sidebar = () => {
                   onClick={() => navigate(path)}
                   className={`w-full flex items-center px-3 py-2 rounded-sm transition-all duration-200 group relative
                     ${location.pathname === path 
-                      ? 'bg-purple-100 font-semibold' 
+                      ? 'bg-blue-50 font-semibold' 
                       : 'hover:bg-gray-100 hover:translate-x-1'
                     }`}
                 >
                   {location.pathname === path && (
-                    <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-purple-800 rounded-r" />
+                    <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r" />
                   )}
                   <Icon 
                     size={20} 
                     className={`mr-3 ${location.pathname === path 
-                      ? 'text-purple-800' 
+                      ? 'text-blue-600' 
                       : 'text-black/70 group-hover:text-black'
                     }`}
                   />
                   <span className={`${location.pathname === path 
-                    ? 'text-purple-800' 
+                    ? 'text-blue-600' 
                     : 'text-black/70 group-hover:text-black'
                   }`}>
                     {text}
