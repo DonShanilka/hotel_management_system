@@ -118,8 +118,8 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="flex gap-6">
-          <div className="bg-white rounded-xl p-4 shadow-sm w-1/2">
-            <h2 className="text-lg font-medium mb-4">Monthly Revenue</h2>
+          <div className="bg-white rounded-xl p-4 shadow-sm w-2/3">
+            <h2 className="text-lg font-medium mb-12">Monthly Revenue</h2>
             <BarChart width={600} height={200} data={monthlyData} barSize={20}>
               <XAxis dataKey="name" axisLine={false} tickLine={false} />
               <Bar dataKey="value">
