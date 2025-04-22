@@ -99,17 +99,17 @@ const HousekeepingAddForm: React.FC = () => {
   };
 
   return (
-      <div className="p-6 bg-gray-100 min-h-screen">
+      <div className="p-6 bg-white min-h-screen">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Housekeeping Management</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-1">Room Number</label>
               <select
                   
                   onChange={(e) => setRoomNumber(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                   required
               >
                 <option value="">Select Room Number</option>
@@ -126,7 +126,7 @@ const HousekeepingAddForm: React.FC = () => {
                   type="date"
                   value={cleaningDate}
                   onChange={(e) => setCleaningDate(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                   required
               />
             </div>
@@ -136,7 +136,7 @@ const HousekeepingAddForm: React.FC = () => {
               <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                   required
               >
                 <option value="Not Cleaned">Not Cleaned</option>
@@ -150,7 +150,7 @@ const HousekeepingAddForm: React.FC = () => {
               <select
                   // value={empId}
                   onChange={(e) => setEmployeeId(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
+                  className="w-full p-2 border border-gray-300 rounded-lg"
                   required
               >
                 <option value="">Select Employee ID</option>
@@ -167,7 +167,7 @@ const HousekeepingAddForm: React.FC = () => {
             <textarea
                 value={specialTasks}
                 onChange={(e) => setSpecialTasks(e.target.value)}
-                className="w-full p-2 border rounded-lg h-32"
+                className="w-full p-2 border border-gray-300 rounded-lg h-32"
                 placeholder="Any special tasks (e.g. restock minibar, change sheets)"
             />
           </div>

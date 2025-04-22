@@ -32,7 +32,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ rooms = [], onUpdate, onDelete }) =
           return (
               <div
                   key={index}
-                  className="h-52 bg-white p-4 rounded-lg shadow-md flex justify-between items-center relative"
+                  className="h-52 bg-white p-4 rounded-lg flex justify-between items-center relative border border-gray-300"
               >
                 <div className="flex-1">
                   <h2 className="text-lg font-semibold text-gray-800">

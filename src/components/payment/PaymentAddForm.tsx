@@ -99,7 +99,7 @@ const PaymentAddForm: React.FC = () => {
   };
 
   return (
-      <div className="w-full h-screen bg-gray-100 p-6">
+      <div className="w-full h-screen bg-white p-6">
         <h1 className="text-2xl font-bold text-center mb-4">Bill Payment</h1>
         <div className="flex justify-end">
           <button
@@ -115,13 +115,13 @@ const PaymentAddForm: React.FC = () => {
               <div className="bg-white p-6 rounded-lg shadow-lg w-2xl">
                 <h2 className="text-xl font-bold mb-4">Bill Payment Form</h2>
                 <form className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium">Guest ID</label>
                       <input
                           type="text"
                           name="guestId"
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.guestId}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -135,7 +135,7 @@ const PaymentAddForm: React.FC = () => {
                       <label className="block text-sm font-medium">Room Number</label>
                       <select
                           name="roomNumber"
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.roomNumber}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -153,15 +153,13 @@ const PaymentAddForm: React.FC = () => {
                         ))}
                       </select>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
+                  
                     <div>
                       <label className="block text-sm font-medium">Guest Name</label>
                       <input
                           type="text"
                           name="guestName"
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.guestName}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -176,7 +174,7 @@ const PaymentAddForm: React.FC = () => {
                       <input
                           type="number"
                           name="bookingBookingID"
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.bookingBookingID}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -186,16 +184,16 @@ const PaymentAddForm: React.FC = () => {
                           }
                       />
                     </div>
-                  </div>
+                  
 
-                  <div className="grid grid-cols-2 gap-4">
+                
                     <div>
                       <label className="block text-sm font-medium">Check-In Date</label>
                       <input
                           type="date"
                           name="checkInDate"
                           required
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.checkInDate}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -211,7 +209,7 @@ const PaymentAddForm: React.FC = () => {
                           type="date"
                           name="checkOutDate"
                           required
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.checkOutDate}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -221,16 +219,14 @@ const PaymentAddForm: React.FC = () => {
                           }
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
+                  
                     <div>
                       <label className="block text-sm font-medium">Total Nights</label>
                       <input
                           type="number"
                           name="totalNight"
                           required
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.totalNight}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -246,7 +242,7 @@ const PaymentAddForm: React.FC = () => {
                           type="number"
                           name="roomPerNight"
                           required
-                          className="w-full p-2 border rounded"
+                          className="w-full p-2 border border-gray-300 rounded-md"
                           value={paymentDetails.roomPerNight}
                           onChange={(e) =>
                               setPaymentDetails({
@@ -256,15 +252,13 @@ const PaymentAddForm: React.FC = () => {
                           }
                       />
                     </div>
-                  </div>
-
-                  <div>
+                    <div>
                     <label className="block text-sm font-medium">Additional Charges</label>
                     <input
                         type="number"
                         name="additionalCharges"
                         required
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         value={paymentDetails.additionalCharges}
                         onChange={(e) =>
                             setPaymentDetails({
@@ -274,12 +268,15 @@ const PaymentAddForm: React.FC = () => {
                         }
                     />
                   </div>
+                  </div>
+
+                  
 
                   <div>
                     <label className="block text-sm font-medium">Payment Method</label>
                     <select
                         name="paymentMethod"
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         value={paymentDetails.paymentMethod}
                         onChange={(e) =>
                             setPaymentDetails({
@@ -302,7 +299,7 @@ const PaymentAddForm: React.FC = () => {
                         type="number"
                         name="cashReceived"
                         required
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         value={paymentDetails.cashReceive}
                         onChange={(e) =>
                             setPaymentDetails({
@@ -319,7 +316,7 @@ const PaymentAddForm: React.FC = () => {
                         type="date"
                         name="createdAt"
                         required
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border border-gray-300 rounded-md"
                         value={paymentDetails.createdAt}
                         onChange={(e) =>
                             setPaymentDetails({
@@ -350,7 +347,7 @@ const PaymentAddForm: React.FC = () => {
                     </button>
                     <button
                         type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
                         onClick={handleSave}
                     >
                       Submit Payment
