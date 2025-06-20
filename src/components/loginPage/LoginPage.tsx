@@ -40,7 +40,7 @@ function LoginPage() {
                         Welcome Back to Hotel Villa
                     </h1>
                     <p className="text-lg">
-                        Log in to manage your creative work, distribute your music, and collect your royalties.
+                    Log in to manage your bookings, oversee room availability, handle guest check-ins, and streamline your hotel operations—all in one place.
                     </p>
                 </div>
             </div>
