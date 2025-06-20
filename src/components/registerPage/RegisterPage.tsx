@@ -1,8 +1,10 @@
 import { useState} from 'react';
 import { useDispatch } from 'react-redux';
 import{saveUser} from '../../reducer/UserSlice'
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -22,6 +24,8 @@ const RegisterPage = () => {
         }
         else{
             dispatch(saveUser(userdata));
+            alert("Registration successful");
+            navigate("/login");
         }
     };
 
@@ -30,10 +34,10 @@ const RegisterPage = () => {
             <div className="flex-1 bg-blue-800 text-white p-10 flex items-center justify-center">
                 <div className="max-w-lg space-y-4">
                     <h1 className="text-4xl font-bold leading-snug">
-                        You make the Tune. We make it GO.
+                    You manage the Guests. We manage the Rest.
                     </h1>
                     <p className="text-lg">
-                        Securely store your creative work, protect your rights, distribute your music, and collect your royalties worldwide with TuneGO.
+                    Simplify hotel operations, streamline reservations, manage staff and rooms, and deliver unforgettable guest experiences—all from one powerful platform with HotelEase.
                     </p>
                 </div>
             </div>
