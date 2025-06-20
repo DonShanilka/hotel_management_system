@@ -107,16 +107,16 @@ const ReservationAddForm: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-white min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Reservation Form</h1>
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 font-medium mb-1">Guest ID</label>
             <select
                 // value={empId}
                 onChange={(e) => setGuestID(e.target.value)}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 rounded-lg border border-gray-300"
                 required
             >
               <option value="">Select Guest Id</option>
@@ -132,7 +132,7 @@ const ReservationAddForm: React.FC = () => {
             <select
                 // value={empId}
                 onChange={(e) => setRoomNumber(e.target.value)}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border rounded-lg border-gray-300"
                 required
             >
               <option value="">Select Room Number</option>
@@ -145,24 +145,24 @@ const ReservationAddForm: React.FC = () => {
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Check-in Date</label>
-            <input type="date" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} className="w-full p-2 border rounded-lg" required />
+            <input type="date" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" required />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Check-out Date</label>
-            <input type="date" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} className="w-full p-2 border rounded-lg" required />
+            <input type="date" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" required />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Total Amount</label>
-            <input type="number" value={totalAmount || ''} onChange={(e) => setTotalAmount(Number(e.target.value))} className="w-full p-2 border rounded-lg" required />
+            <input type="number" value={totalAmount || ''} onChange={(e) => setTotalAmount(Number(e.target.value))} className="w-full p-2 border border-gray-300 rounded-lg" required />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-1">Total Nights</label>
-            <input type="number" value={totalNight || ''} onChange={(e) => setTotalNight(Number(e.target.value))} className="w-full p-2 border rounded-lg" required />
+            <input type="number" value={totalNight || ''} onChange={(e) => setTotalNight(Number(e.target.value))} className="w-full p-2 border border-gray-300 rounded-lg" required />
           </div>
         </div>
         <div>
             <label className="block text-gray-700 font-medium mb-1">Booking Status</label>
-            <select value={bookingStatus} onChange={(e) => setBookingStatus(e.target.value)} className="w-full p-2 border rounded-lg">
+            <select value={bookingStatus} onChange={(e) => setBookingStatus(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg">
               <option value="Confirmed">Confirmed</option>
               <option value="Cancelled">Cancelled</option>
               <option value="CheckedOut">CheckedOut</option>

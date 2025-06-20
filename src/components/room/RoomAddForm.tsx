@@ -6,7 +6,7 @@ import {deleteRoom, getAllRoom, saveRooms, updateRoom} from "../../reducer/RoomS
 const RoomAddForm: React.FC = () => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const dispatch = useDispatch();
-  const rooms = useSelector((state)=>state.rooms || []);
+  const rooms = useSelector((state) => state.rooms || []);
 
   console.log("Rooms Data Eka", rooms)
 
@@ -116,9 +116,9 @@ const RoomAddForm: React.FC = () => {
   
   
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-white min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Room Management</h1>
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Number</label>
@@ -127,7 +127,7 @@ const RoomAddForm: React.FC = () => {
               name="roomNumber"
               value={formData.roomNumber}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -138,7 +138,7 @@ const RoomAddForm: React.FC = () => {
               value={formData.roomType}
               name= "roomType"
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg border-gray-300"
               required
             >
               <option value="Single">Single</option>
@@ -149,7 +149,7 @@ const RoomAddForm: React.FC = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-1">Room Image</label>
             <input
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               type="file"
               name='image'
               accept="image/*"
@@ -164,7 +164,7 @@ const RoomAddForm: React.FC = () => {
               name={"hallFloor"}
               value={formData.hallFloor}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -176,7 +176,7 @@ const RoomAddForm: React.FC = () => {
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -187,7 +187,7 @@ const RoomAddForm: React.FC = () => {
               value={formData.status}
               name={"status"}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             >
               <option value="Available">Available</option>

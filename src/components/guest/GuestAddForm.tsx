@@ -107,10 +107,10 @@ const GuestAddForm: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-white min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Guest Management Form</h1>
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
             <label className="block text-gray-700 font-medium mb-1">Guest NIC/Passport ID</label>
@@ -118,7 +118,7 @@ const GuestAddForm: React.FC = () => {
               type="text"
               value={guestId}
               onChange={(e) => setGuestId(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -129,7 +129,7 @@ const GuestAddForm: React.FC = () => {
               type="text"
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -140,7 +140,7 @@ const GuestAddForm: React.FC = () => {
               type="text"
               value={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -151,7 +151,7 @@ const GuestAddForm: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -161,7 +161,7 @@ const GuestAddForm: React.FC = () => {
             <select
                 // value={empId}
                 onChange={(e) => setRoomNumber(e.target.value)}
-                className="w-full p-2 border rounded-lg"
+                className="w-full p-2 border border-gray-300 rounded-lg"
                 required
             >
               <option value="">Select Room Number</option>
@@ -179,7 +179,7 @@ const GuestAddForm: React.FC = () => {
               type="date"
               value={checkInDate}
               onChange={(e) => setCheckInDate(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -190,7 +190,7 @@ const GuestAddForm: React.FC = () => {
               type="date"
               value={checkOutDate}
               onChange={(e) => setCheckOutDate(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -200,7 +200,7 @@ const GuestAddForm: React.FC = () => {
             <select
               value={nation}
               onChange={(e) => setNation(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             >
               <option value="Local">Local</option>

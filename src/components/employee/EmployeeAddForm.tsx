@@ -82,10 +82,10 @@ const EmployeeAddForm: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-white min-h-screen">
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">Employee Management Form</h1>
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 font-medium mb-1">Employee ID</label>
@@ -93,7 +93,7 @@ const EmployeeAddForm: React.FC = () => {
               type="text"
               value={employeeID}
               onChange={(e) => setEmployeeID(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -104,7 +104,7 @@ const EmployeeAddForm: React.FC = () => {
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -115,7 +115,7 @@ const EmployeeAddForm: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -126,7 +126,7 @@ const EmployeeAddForm: React.FC = () => {
               type="text"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
             />
           </div>
 
@@ -136,7 +136,7 @@ const EmployeeAddForm: React.FC = () => {
               type="text"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -147,7 +147,7 @@ const EmployeeAddForm: React.FC = () => {
               type="number"
               value={salary}
               onChange={(e) => setSalary(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
             />
           </div>
 
@@ -157,7 +157,7 @@ const EmployeeAddForm: React.FC = () => {
               type="date"
               value={hireDate}
               onChange={(e) => setHireDate(e.target.value)}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg"
             />
           </div>
         </div>
