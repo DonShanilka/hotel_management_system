@@ -18,6 +18,7 @@ export const saveUser = createAsyncThunk(
       const response = await api.post('/api/auth/addUser', {
         userEmail: userData.userEmail,
         password: userData.password,
+        rolle: userData.rolle
     });
     return response.data;
     }catch(err){
@@ -33,7 +34,8 @@ export const loginAuth = createAsyncThunk(
     try{
       const response = await api.post('/api/auth/login',{
         userEmail:user.userEmail,
-        password:user.password
+        password:user.password,
+        rolle:user.rolle
       });
       return response.data;
     }catch(err){
