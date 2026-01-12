@@ -39,7 +39,7 @@ const RegisterPage = () => {
       rolle: userdata.rolle,
     };
 
-    dispatch(saveUser(payload));
+    dispatch(saveUser(payload as any) as any);
     alert("Registration successful");
     navigate("/login");
   };

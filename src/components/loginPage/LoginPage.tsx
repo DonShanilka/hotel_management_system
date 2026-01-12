@@ -24,24 +24,24 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const result = await dispatch(loginAuth(formdata)).unwrap();
+      const result = await dispatch(loginAuth(formdata as any) as any).unwrap();
 
       const { accessToken, rolle } = result;
 
       console.log("Access Token:", accessToken);
       console.log("Role:", rolle);
 
-      // ✅ Save token & role
       localStorage.setItem("token", accessToken);
       localStorage.setItem("rolle", rolle);
 
-      // ✅ Role-based navigation
+      window.location.reload();
+
       if (rolle === "HOUSEKEEPING") {
-        navigate("/admin/dashboard");
+        navigate("/dashboard");
       } else if (rolle === "MANAGER") {
-        navigate("/manager/dashboard");
+        navigate("/dashboard");
       } else if (rolle === "RECEPTIONIST") {
-        navigate("/reception/dashboard");
+        navigate("/dashboard");
       } else {
         navigate("/");
       }
