@@ -10,7 +10,7 @@ const api = axios.create({
 
 export const saveRooms = createAsyncThunk(
     'room/saveRoom',
-    async (roomData:Room)=>{
+    async (roomData: any)=>{
       try {
         const response = await api.post('/api/room/saveRoom',roomData,{
           headers:{
@@ -25,7 +25,7 @@ export const saveRooms = createAsyncThunk(
 );
 export const updateRoom = createAsyncThunk(
   'room/updateRoom',
-  async(roomData)=>{
+  async(roomData: any)=>{
     try{
       const roomNumber = roomData.get("roomNumber");
       console.log("Updating room with room :",roomNumber);

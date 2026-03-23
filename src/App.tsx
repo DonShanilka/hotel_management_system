@@ -37,8 +37,8 @@ function App() {
                 <Box sx={{ display: 'flex' }}>
                   <CssBaseline />
                   <Sidebar />
-                  <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    <Toolbar /> 
+                  <Box component="main" className="flex-grow bg-[#f8fafc] min-h-screen">
+                    <Toolbar />
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/dashboard" element={<Dashboard />} />
@@ -60,7 +60,7 @@ function App() {
             <>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="*" element={<LoginPage />} /> 
+              <Route path="*" element={<LoginPage />} />
             </>
           )}
         </Routes>
