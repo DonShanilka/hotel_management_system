@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import ServiceTable from './ServiceTable';
-import {useDispatch, useSelector} from "react-redux";
-import {deleteService, getAllService, saveService, updateService} from "../../reducer/ServiceSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllService, saveService, updateService, deleteService } from "../../reducer/ServiceSlice.ts";
+import { Package, Search, Sparkles } from "lucide-react";
 
 const ServiceAddForm: React.FC = () => {
   const [serviceID, setServiceID] = useState('');
   const [serviceName, setServiceName] = useState('');
   const [servicePrice, setServicePrice] = useState('');
   const [description, setDescription] = useState('');
-  const [serviceList, setServiceList] = useState<any[]>([]);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
   const dispatch = useDispatch();
-  const service = useSelector((state) => state.service || []);
+  const service = useSelector((state: any) => state.service || []);
 
   useEffect(() => {
     dispatch(getAllService());
@@ -21,29 +21,26 @@ const ServiceAddForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newService = {
-      // serviceID,
+    const serviceData = {
       serviceName,
-      servicePrice,
+      servicePrice: Number(servicePrice),
       description,
       createdAt: new Date().toISOString(),
     };
 
     const updateData = {
-      serviceID,
+      serviceID: Number(serviceID),
       serviceName,
-      servicePrice,
+      servicePrice: Number(servicePrice),
       description,
       createdAt: new Date().toISOString(),
     };
 
     if (editIndex !== null) {
-      const updatedList = [];
-      updatedList[editIndex] = newService;
       dispatch(updateService(updateData));
       setEditIndex(null);
     } else {
-      dispatch(saveService(newService));
+      dispatch(saveService(serviceData));
     }
 
     setServiceID('');
@@ -52,91 +49,110 @@ const ServiceAddForm: React.FC = () => {
     setDescription('');
   };
 
-  const handleDelete = (serviceId: number) => {
+  const handleDelete = (sId: number) => {
     const isConfirm = window.confirm("Are you sure want to delete Service ?");
-    if(isConfirm){
-      dispatch(deleteService(serviceId))
-    }else{
-      alert("Delete Failed, try again!")
+    if (isConfirm) {
+      dispatch(deleteService(sId))
     }
   };
 
-  const handleUpdate = (index: number, serviceID : number) => {
-    const serviceToUpdate = service?.find((service: any) => service.serviceID === serviceID);
+  const handleUpdate = (index: number, sID: number) => {
+    const serviceToUpdate = service?.find((s: any) => s.serviceID === sID);
 
     if (!serviceToUpdate) {
-      console.error("Service not found for ID:", serviceID);
+      console.error("Service not found for ID:", sID);
       return;
     }
-    setServiceID(serviceToUpdate.serviceID);
+    setServiceID(serviceToUpdate.serviceID.toString());
     setServiceName(serviceToUpdate.serviceName);
-    setServicePrice(serviceToUpdate.servicePrice);
+    setServicePrice(serviceToUpdate.servicePrice.toString());
     setDescription(serviceToUpdate.description);
-
     setEditIndex(index);
   };
 
   return (
-    <div className="p-6 bg-white min-h-screen">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Service Management Form</h1>
-
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* <div>
-            <label className="block text-gray-700 font-medium mb-1">Service ID</label>
+    <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        <h1 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          Service Repository
+          <span className="text-[10px] font-black bg-teal-50 text-teal-600 px-2 py-0.5 rounded-lg border border-teal-100">OFFERINGS</span>
+        </h1>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
             <input
               type="text"
-              value={serviceID}
-              onChange={(e) => setServiceID(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              required
-            />
-          </div> */}
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Service Name</label>
-            <input
-              type="text"
-              value={serviceName}
-              onChange={(e) => setServiceName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Service Price ($)</label>
-            <input
-              type="number"
-              value={servicePrice}
-              onChange={(e) => setServicePrice(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              required
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-1">Description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full h-28 p-2 border border-gray-300 rounded-lg"
-              required
+              placeholder="Search services..."
+              className="py-2 pl-9 pr-3 rounded-lg bg-white border border-slate-200 focus:outline-none focus:border-teal-500 transition-all text-xs w-48"
             />
           </div>
         </div>
+      </div>
 
-        <button
-          type="submit"
-          className={`mt-4 w-full text-white py-2 rounded-lg transition ${
-            editIndex !== null ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-700 hover:bg-blue-800"
-          }`}
-        >
-          {editIndex !== null ? "Update Service" : "Add Service"}
-        </button>
-      </form>
+      <div className="bg-white border border-slate-200 rounded-lg p-6 mb-8">
+        <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <Package size={14} className="text-teal-500" /> {editIndex !== null ? "Modify Catalog Item" : "New Service Definition"}
+        </h2>
 
-      <ServiceTable services={service} onDelete={handleDelete} onUpdate={handleUpdate} />
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-6">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Service Name</label>
+              <input
+                type="text"
+                value={serviceName}
+                onChange={(e) => setServiceName(e.target.value)}
+                placeholder="Cleaning, Meal, etc."
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Unit Price ($)</label>
+              <input
+                type="number"
+                value={servicePrice}
+                onChange={(e) => setServicePrice(e.target.value)}
+                placeholder="0.00"
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5 md:col-span-2 lg:col-span-1">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Catalog Description</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Brief service utility declaration..."
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mt-6 flex justify-end">
+            <button
+              type="submit"
+              className={`px-8 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all ${editIndex !== null
+                  ? "bg-amber-500 hover:bg-amber-600 text-white"
+                  : "bg-teal-500 hover:bg-teal-600 text-white"
+                }`}
+            >
+              {editIndex !== null ? "Update Defintion" : "Register offering"}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div className="bg-white border border-slate-200 rounded-lg p-6">
+        <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+          <Sparkles size={14} className="text-teal-500" /> Active Service Directory
+        </h2>
+        <ServiceTable services={service} onDelete={handleDelete} onUpdate={handleUpdate} />
+      </div>
     </div>
   );
 };
