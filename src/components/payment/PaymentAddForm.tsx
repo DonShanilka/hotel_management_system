@@ -43,7 +43,7 @@ const PaymentAddForm: React.FC = () => {
   useEffect(() => {
     if (paymentDetails.guestId.trim() !== "") {
       const guest = guests.find((g: any) => g.guestId === paymentDetails.guestId);
-      const reservation = reservations.find((r: any) => r.guestId === paymentDetails.guestId);
+      const reservation = reservations.find((r: any) => (r.guestID || r.guestId) === paymentDetails.guestId);
 
       if (guest || reservation) {
         const update: any = {};
@@ -53,19 +53,27 @@ const PaymentAddForm: React.FC = () => {
         if (reservation) {
           update.bookingBookingID = reservation.bookingID?.toString() || "";
           update.roomNumber = reservation.roomNumber || "";
+
+          // Get room price from room state if available
+          const room = rooms.find((r: any) => r.roomNumber === reservation.roomNumber);
+          if (room) {
+            update.roomPerNight = room.price?.toString() || "";
+          } else {
+            update.roomPerNight = (reservation.roomPerNight || reservation.pricePerNight)?.toString() || "";
+          }
+
           update.checkInDate = reservation.checkInDate ? reservation.checkInDate.split("T")[0] : "";
           update.checkOutDate = reservation.checkOutDate ? reservation.checkOutDate.split("T")[0] : "";
-          update.totalNight = reservation.totalNight?.toString() || "";
-          update.roomPerNight = reservation.roomPerNight?.toString() || "";
-          update.additionalCharges = reservation.additionalCharges?.toString() || "0";
+          update.totalNight = (reservation.totalNight || reservation.totalNights)?.toString() || "";
+          update.additionalCharges = (reservation.additionalCharges || 0).toString();
           update.paymentMethod = reservation.paymentMethod || "";
-          update.cashReceive = reservation.cashReceive?.toString() || "0";
+          update.cashReceive = (reservation.cashReceive || 0).toString();
           update.createdAt = new Date().toISOString().split("T")[0];
         }
         setPaymentDetails(prev => ({ ...prev, ...update }));
       }
     }
-  }, [paymentDetails.guestId, guests, reservations]);
+  }, [paymentDetails.guestId, guests, reservations, rooms]);
 
   const total =
     (parseFloat(paymentDetails.totalNight) || 0) *
@@ -93,6 +101,7 @@ const PaymentAddForm: React.FC = () => {
     ) {
       const formattedPayment = {
         ...paymentDetails,
+        totalPayment: total.toString(),
         checkInDate: new Date(paymentDetails.checkInDate).toISOString(),
         checkOutDate: new Date(paymentDetails.checkOutDate).toISOString(),
         createdAt: new Date(paymentDetails.createdAt).toISOString(),
@@ -190,6 +199,28 @@ const PaymentAddForm: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Entity Name</label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                    value={paymentDetails.guestName}
+                    onChange={(e) => setPaymentDetails({ ...paymentDetails, guestName: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Booking Serial (ID)</label>
+                  <input
+                    type="number"
+                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                    value={paymentDetails.bookingBookingID}
+                    onChange={(e) => setPaymentDetails({ ...paymentDetails, bookingBookingID: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Asset (Room)</label>
                   <select
                     className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
@@ -205,12 +236,23 @@ const PaymentAddForm: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Entity Name</label>
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Unit Value (Rate)</label>
                   <input
-                    type="text"
+                    type="number"
                     className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
-                    value={paymentDetails.guestName}
-                    onChange={(e) => setPaymentDetails({ ...paymentDetails, guestName: e.target.value })}
+                    value={paymentDetails.roomPerNight}
+                    onChange={(e) => setPaymentDetails({ ...paymentDetails, roomPerNight: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Duration (Nights)</label>
+                  <input
+                    type="number"
+                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
+                    value={paymentDetails.totalNight}
+                    onChange={(e) => setPaymentDetails({ ...paymentDetails, totalNight: e.target.value })}
                     required
                   />
                 </div>
@@ -238,28 +280,6 @@ const PaymentAddForm: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Duration (Nights)</label>
-                  <input
-                    type="number"
-                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
-                    value={paymentDetails.totalNight}
-                    onChange={(e) => setPaymentDetails({ ...paymentDetails, totalNight: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Unit Value (Rate)</label>
-                  <input
-                    type="number"
-                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
-                    value={paymentDetails.roomPerNight}
-                    onChange={(e) => setPaymentDetails({ ...paymentDetails, roomPerNight: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Extra Charges</label>
                   <input
                     type="number"
@@ -271,12 +291,22 @@ const PaymentAddForm: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Booking Serial (ID)</label>
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider font-bold text-teal-600">Gross Total (Actual)</label>
+                  <input
+                    type="text"
+                    readOnly
+                    className="w-full p-2 border border-teal-100 bg-teal-50/30 rounded-lg text-xs font-black text-teal-700 outline-none"
+                    value={`$${total.toFixed(2)}`}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Resource Recieved (Cash)</label>
                   <input
                     type="number"
                     className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
-                    value={paymentDetails.bookingBookingID}
-                    onChange={(e) => setPaymentDetails({ ...paymentDetails, bookingBookingID: e.target.value })}
+                    value={paymentDetails.cashReceive}
+                    onChange={(e) => setPaymentDetails({ ...paymentDetails, cashReceive: e.target.value })}
                     required
                   />
                 </div>
@@ -295,17 +325,6 @@ const PaymentAddForm: React.FC = () => {
                     <option value="cash">Cash Settlement</option>
                     <option value="bank">Bank Transfer</option>
                   </select>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Resource Recieved (Cash)</label>
-                  <input
-                    type="number"
-                    className="w-full p-2 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 focus:border-teal-500 transition-all"
-                    value={paymentDetails.cashReceive}
-                    onChange={(e) => setPaymentDetails({ ...paymentDetails, cashReceive: e.target.value })}
-                    required
-                  />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
