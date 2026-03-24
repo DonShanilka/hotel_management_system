@@ -103,45 +103,7 @@ const Dashboard: React.FC = () => {
     <div className="min-h-screen w-full bg-[#f8fafc] text-slate-800 pb-8 font-sans overflow-x-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
 
-        {/* CyberShield Style Header - Refined */}
-        {/* <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-          <div className="flex flex-col gap-1">
-            <h1 className="text-xl font-black tracking-tight text-slate-900 flex items-center gap-2">
-              Dashboard
-              <div className="flex bg-slate-100 p-0.5 rounded-lg gap-0.5 transform scale-75 ml-1 border border-slate-200">
-                <button className="px-2 py-0.5 rounded-lg bg-white text-[9px] font-bold">Expert Mode</button>
-                <button className="px-2 py-0.5 rounded-lg text-[9px] font-bold text-slate-400">Easy Mode</button>
-              </div>
-            </h1>
-          </div>
-
-          <div className="flex items-center gap-3 w-full lg:w-auto">
-            <div className="relative flex-1 lg:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-              <input
-                type="text"
-                placeholder="Search resources..."
-                className="w-full py-2 pl-9 pr-3 rounded-lg bg-white border border-slate-200 focus:outline-none focus:border-teal-500 transition-all text-xs"
-              />
-            </div>
-
-            <button className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg font-bold text-xs transition-all flex items-center gap-2">
-              <Plus size={16} /> Add Room
-            </button>
-
-            <div className="flex items-center gap-1 bg-white p-0.5 rounded-lg border border-slate-200">
-              <button className="p-2 hover:bg-slate-50 rounded-lg transition-colors relative">
-                <Bell size={18} className="text-slate-600" />
-                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-rose-500 rounded-full border border-white"></span>
-              </button>
-              <button className="p-2 hover:bg-slate-50 rounded-lg transition-colors">
-                <Settings size={18} className="text-slate-600" />
-              </button>
-            </div>
-          </div>
-        </header> */}
-
-        {/* Triple Stat Row - Refined */}
+        {/* Triple Stat Row - Refined Medium Size */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <StatCardWithTrend
             title="Total Revenue"
@@ -149,7 +111,7 @@ const Dashboard: React.FC = () => {
             trend="+12%"
             trendColor="text-teal-500"
             data={monthlyData.slice(-6)}
-            icon={<Activity size={16} />}
+            icon={<Activity size={14} />}
             color="#14b8a6"
           />
           <StatCardWithTrend
@@ -158,7 +120,7 @@ const Dashboard: React.FC = () => {
             trend="+5%"
             trendColor="text-teal-500"
             data={last7DaysData}
-            icon={<ShieldAlert size={16} />}
+            icon={<ShieldAlert size={14} />}
             color="#f43f5e"
           />
           <StatCardWithTrend
@@ -167,17 +129,17 @@ const Dashboard: React.FC = () => {
             trend="+8%"
             trendColor="text-teal-500"
             data={monthlyData.slice(-6).map(d => ({ ...d, value: d.value / 100 }))}
-            icon={<History size={16} />}
+            icon={<History size={14} />}
             color="#0ea5e9"
           />
         </div>
 
-        {/* Secondary Info Row - Refined */}
+        {/* Secondary Info Row - Medium View */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <SimpleStatCard title="Total Rooms" value={`${roomCount}`} icon={<LayoutGrid size={18} />} color="text-teal-600" bgColor="bg-teal-50" />
-          <SimpleStatCard title="Employees" value={`${employeeCount}`} icon={<Plus size={18} />} color="text-amber-600" bgColor="bg-amber-50" />
-          <SimpleStatCard title="Available Nodes" value="245" icon={<Globe size={18} />} color="text-sky-600" bgColor="bg-sky-50" />
-          <SimpleStatCard title="Bot Detection" value="1,450" icon={<Activity size={18} />} color="text-rose-600" bgColor="bg-rose-50" />
+          <SimpleStatCard title="Total Rooms" value={`${roomCount}`} icon={<LayoutGrid size={16} />} color="text-teal-600" bgColor="bg-teal-50" />
+          <SimpleStatCard title="Employees" value={`${employeeCount}`} icon={<Plus size={16} />} color="text-amber-600" bgColor="bg-amber-50" />
+          <SimpleStatCard title="Available Nodes" value="245" icon={<Globe size={16} />} color="text-sky-600" bgColor="bg-sky-50" />
+          <SimpleStatCard title="Bot Detection" value="1,450" icon={<Activity size={16} />} color="text-rose-600" bgColor="bg-rose-50" />
         </div>
 
         {/* Grid for Table and Charts - Refined Layout */}
@@ -306,25 +268,25 @@ const Dashboard: React.FC = () => {
   );
 };
 
-// --- Sub-components inspired by CyberShield - Refined ---
+// --- Sub-components inspired by CyberShield - Refined Medium Size ---
 
 const StatCardWithTrend = ({ title, value, trend, trendColor, data, icon, color }: any) => (
-  <div className="bg-white rounded-lg border border-slate-200 p-6 transition-all duration-300 relative overflow-hidden">
-    <div className="flex justify-between items-start mb-4">
+  <div className="bg-white rounded-lg border border-slate-200 p-4 transition-all duration-300 relative overflow-hidden group hover:border-teal-200">
+    <div className="flex justify-between items-start mb-2">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-[#14b8a6]">
+        <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-teal-500 group-hover:bg-teal-50 transition-colors">
           {icon}
         </div>
         <div>
-          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</h3>
-          <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-xl font-black text-slate-900">{value}</span>
-            <span className={`text-[9px] font-black bg-slate-50 px-1 py-0.5 rounded-lg ${trendColor}`}>{trend}</span>
+          <h3 className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{title}</h3>
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-black text-slate-900 tracking-tight">{value}</span>
+            <span className={`text-[8px] font-black bg-slate-50 px-1 py-0.5 rounded-lg ${trendColor}`}>{trend}</span>
           </div>
         </div>
       </div>
     </div>
-    <div className="h-12 w-full -mb-1">
+    <div className="h-10 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
           <defs>
@@ -337,18 +299,17 @@ const StatCardWithTrend = ({ title, value, trend, trendColor, data, icon, color 
         </AreaChart>
       </ResponsiveContainer>
     </div>
-    <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.1em] mt-1 block">vs Last 7 days</span>
   </div>
 );
 
 const SimpleStatCard = ({ title, value, icon, color, bgColor }: any) => (
-  <div className="bg-white rounded-lg border border-slate-200 p-4 flex items-center gap-3 hover:bg-slate-50 transition-colors">
-    <div className={`w-10 h-10 rounded-lg ${bgColor} ${color} flex items-center justify-center`}>
+  <div className="bg-white rounded-lg border border-slate-200 p-3 flex items-center gap-3 hover:border-teal-100 transition-all">
+    <div className={`w-8 h-8 rounded-lg ${bgColor} ${color} flex items-center justify-center`}>
       {icon}
     </div>
     <div>
-      <h3 className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{title}</h3>
-      <p className="text-lg font-black text-slate-900 tracking-tight">{value}</p>
+      <h3 className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{title}</h3>
+      <p className="text-md font-black text-slate-900 tracking-tight leading-none">{value}</p>
     </div>
   </div>
 );
