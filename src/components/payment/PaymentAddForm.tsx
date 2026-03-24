@@ -107,7 +107,7 @@ const PaymentAddForm: React.FC = () => {
         createdAt: new Date(paymentDetails.createdAt).toISOString(),
       };
 
-      dispatch(savePayment(formattedPayment));
+      dispatch(savePayment(formattedPayment as any));
 
       setPaymentDetails({
         guestId: "",
