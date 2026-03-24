@@ -7,6 +7,11 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
 } from "recharts";
 import {
   Bell,
@@ -21,6 +26,16 @@ import {
   ShieldAlert
 } from "lucide-react";
 import { parseISO, format, subDays, isSameDay } from "date-fns";
+
+const roomWeeklyData = [
+  { name: "Mon", occupied: 45, available: 55 },
+  { name: "Tue", occupied: 52, available: 48 },
+  { name: "Wed", occupied: 48, available: 52 },
+  { name: "Thu", occupied: 61, available: 39 },
+  { name: "Fri", occupied: 75, available: 25 },
+  { name: "Sat", occupied: 88, available: 12 },
+  { name: "Sun", occupied: 70, available: 30 },
+];
 
 const Dashboard: React.FC = () => {
   const [roomCount, setRoomCount] = useState<number>(0);
@@ -89,7 +104,7 @@ const Dashboard: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6">
 
         {/* CyberShield Style Header - Refined */}
-        <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        {/* <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-black tracking-tight text-slate-900 flex items-center gap-2">
               Dashboard
@@ -124,7 +139,7 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
-        </header>
+        </header> */}
 
         {/* Triple Stat Row - Refined */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -165,27 +180,93 @@ const Dashboard: React.FC = () => {
           <SimpleStatCard title="Bot Detection" value="1,450" icon={<Activity size={18} />} color="text-rose-600" bgColor="bg-rose-50" />
         </div>
 
-        {/* Grid for Table and Charts - Refined */}
+        {/* Grid for Table and Charts - Refined Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-          {/* Assessment Table List */}
-          <div className="lg:col-span-4 bg-white rounded-lg border border-slate-200 p-6">
+          {/* Room Status Analysis with Bar Chart */}
+          <div className="lg:col-span-8 bg-white rounded-lg border border-slate-200 p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-md font-bold text-slate-900 tracking-tight">Room Status Analysis</h2>
-              <button className="text-teal-600 text-[10px] font-black uppercase tracking-widest hover:underline">See Details</button>
+              <h2 className="text-md font-bold text-slate-900 tracking-tight">Weekly Room Status Analysis</h2>
+              <div className="flex gap-2">
+                <span className="flex items-center gap-1 text-[9px] font-black text-teal-600 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-100 uppercase">Occupied</span>
+                <span className="flex items-center gap-1 text-[9px] font-black text-slate-400 bg-slate-50 px-2 py-0.5 rounded-lg border border-slate-100 uppercase">Available</span>
+              </div>
             </div>
-            <div className="space-y-3">
-              <AssessmentRow label="Dirty (Urgent)" value={12} color="bg-rose-500" type="Critical" />
-              <AssessmentRow label="Pending Cleaning" value={45} color="bg-amber-500" type="High" />
-              <AssessmentRow label="Occupied" value={28} color="bg-[#14b8a6]" type="Medium" />
-              <AssessmentRow label="Clean & Available" value={110} color="bg-teal-500" type="Low" />
-              <AssessmentRow label="Maintenance" value={5} color="bg-slate-500" type="Potentials" />
-              <AssessmentRow label="Reserved" value={15} color="bg-sky-500" type="Compliant" />
+            <div className="h-64 mb-6">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={roomWeeklyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 9, fontWeight: 900, fill: '#64748b' }}
+                    dy={10}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 9, fontWeight: 900, fill: '#64748b' }}
+                  />
+                  <Tooltip
+                    cursor={{ fill: '#f8fafc' }}
+                    contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '10px', fontWeight: 'bold' }}
+                  />
+                  <Bar dataKey="occupied" stackId="a" fill="#14b8a6" radius={[0, 0, 0, 0]} barSize={32} />
+                  <Bar dataKey="available" stackId="a" fill="#f1f5f9" radius={[4, 4, 0, 0]} barSize={32} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-slate-50">
+              <AssessmentRow label="Dirty" value={12} color="bg-rose-500" type="Urgent" />
+              <AssessmentRow label="Occupied" value={28} color="bg-[#14b8a6]" type="Active" />
+              <AssessmentRow label="Available" value={110} color="bg-teal-500" type="Ready" />
+              <AssessmentRow label="Maintenance" value={5} color="bg-slate-500" type="Hold" />
             </div>
           </div>
 
-          {/* List of Transactions Table */}
-          <div className="lg:col-span-5 bg-white rounded-lg border border-slate-200 p-6">
+          {/* Donut Chart Section - Adjusted Place */}
+          <div className="lg:col-span-4 bg-white rounded-lg border border-slate-200 p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-md font-bold text-slate-900 tracking-tight">Vulnerability Report</h2>
+              <button className="text-teal-600 transition-colors"><MoreVertical size={14} /></button>
+            </div>
+            <div className="h-64 relative">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={monthlyData.slice(0, 4)}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={65}
+                    outerRadius={95}
+                    paddingAngle={5}
+                    stroke="none"
+                  >
+                    {monthlyData.slice(0, 4).map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span className="text-[9px] font-black text-slate-400 uppercase">Target</span>
+                <span className="text-2xl font-black text-slate-900">85%</span>
+              </div>
+            </div>
+            <div className="mt-8 grid grid-cols-2 gap-4">
+              <LegendItem color="#14b8a6" label="High" />
+              <LegendItem color="#0ea5e9" label="Medium" />
+              <LegendItem color="#f43f5e" label="Low" />
+              <LegendItem color="#f59e0b" label="Fixed" />
+            </div>
+          </div>
+
+          {/* List of Transactions Table - Full Width */}
+          <div className="lg:col-span-12 bg-white rounded-lg border border-slate-200 p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-md font-bold text-slate-900 tracking-tight">Recent Financial Activity</h2>
               <button className="text-teal-600 text-[10px] font-black uppercase tracking-widest hover:underline">See All</button>
@@ -216,46 +297,6 @@ const Dashboard: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          {/* Donut Chart Section */}
-          <div className="lg:col-span-3 bg-white rounded-lg border border-slate-200 p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-md font-bold text-slate-900 tracking-tight">Vulnerability Report</h2>
-              <button className="text-teal-600 transition-colors"><MoreVertical size={14} /></button>
-            </div>
-            <div className="h-56 relative">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={monthlyData.slice(0, 4)}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={85}
-                    paddingAngle={5}
-                    stroke="none"
-                  >
-                    {monthlyData.slice(0, 4).map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-[9px] font-black text-slate-400 uppercase">Target</span>
-                <span className="text-2xl font-black text-slate-900">85%</span>
-              </div>
-            </div>
-            <div className="mt-6 grid grid-cols-2 gap-2">
-              <LegendItem color="#14b8a6" label="High" />
-              <LegendItem color="#0ea5e9" label="Medium" />
-              <LegendItem color="#f43f5e" label="Low" />
-              <LegendItem color="#f59e0b" label="Fixed" />
             </div>
           </div>
 
