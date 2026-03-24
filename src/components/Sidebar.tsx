@@ -37,8 +37,8 @@ const Sidebar = () => {
       items: [
         { text: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
         { text: "Room Status", icon: Hotel, path: "/room-management" },
-        { text: "Reservations", icon: BookOpen, path: "/reservation" },
         { text: "Guest List", icon: Users, path: "/guest-management" },
+        { text: "Reservations", icon: BookOpen, path: "/reservation" },
       ],
     },
     {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoom } from "../../reducer/RoomSlice.ts";
 import { deletePayment, getAllPayment, savePayment } from "../../reducer/PaymentSlice.ts";
+import { getallGuest } from "../../reducer/GuestSlice.ts";
+import { getallBooking } from "../../reducer/ReservationSlice.ts";
 import PaymentTable from "./PaymentTable.tsx";
 import { Receipt, Search, Plus, X } from "lucide-react";
 
@@ -11,10 +13,14 @@ const PaymentAddForm: React.FC = () => {
   const dispatch = useDispatch();
   const rooms = useSelector((state: any) => state.rooms || []);
   const payment = useSelector((state: any) => state.payment || []);
+  const guests = useSelector((state: any) => state.guests || []);
+  const reservations = useSelector((state: any) => state.reservations || []);
 
   useEffect(() => {
     dispatch(getAllRoom());
     dispatch(getAllPayment());
+    dispatch(getallGuest());
+    dispatch(getallBooking());
   }, [dispatch]);
 
   const [paymentDetails, setPaymentDetails] = useState({
@@ -32,6 +38,34 @@ const PaymentAddForm: React.FC = () => {
     createdAt: "",
     bookingBookingID: "",
   });
+
+  // Auto-fill logic
+  useEffect(() => {
+    if (paymentDetails.guestId.trim() !== "") {
+      const guest = guests.find((g: any) => g.guestId === paymentDetails.guestId);
+      const reservation = reservations.find((r: any) => r.guestId === paymentDetails.guestId);
+
+      if (guest || reservation) {
+        const update: any = {};
+        if (guest) {
+          update.guestName = guest.guestName;
+        }
+        if (reservation) {
+          update.bookingBookingID = reservation.bookingID?.toString() || "";
+          update.roomNumber = reservation.roomNumber || "";
+          update.checkInDate = reservation.checkInDate ? reservation.checkInDate.split("T")[0] : "";
+          update.checkOutDate = reservation.checkOutDate ? reservation.checkOutDate.split("T")[0] : "";
+          update.totalNight = reservation.totalNight?.toString() || "";
+          update.roomPerNight = reservation.roomPerNight?.toString() || "";
+          update.additionalCharges = reservation.additionalCharges?.toString() || "0";
+          update.paymentMethod = reservation.paymentMethod || "";
+          update.cashReceive = reservation.cashReceive?.toString() || "0";
+          update.createdAt = new Date().toISOString().split("T")[0];
+        }
+        setPaymentDetails(prev => ({ ...prev, ...update }));
+      }
+    }
+  }, [paymentDetails.guestId, guests, reservations]);
 
   const total =
     (parseFloat(paymentDetails.totalNight) || 0) *

@@ -59,7 +59,7 @@ const ReservationTable: React.FC<ReservationTableProps> = ({ reservations, onDel
                     ? "bg-teal-50 text-teal-600 border-teal-100"
                     : reservation.bookingStatus === "Cancelled"
                       ? "bg-rose-50 text-rose-600 border-rose-100"
-                      : "bg-slate-50 text-slate-500 border-slate-100"
+                      : "bg-blue-50 text-blue-500 border-blue-100"
                   }`}>
                   {reservation.bookingStatus}
                 </span>
