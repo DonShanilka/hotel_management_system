@@ -14,7 +14,7 @@ import Service from './pages/Service';
 import Payment from './pages/Payment';
 import { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar.tsx';
-import { Box, CssBaseline, Toolbar } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -37,7 +37,6 @@ function App() {
                   <CssBaseline />
                   <Sidebar />
                   <Box component="main" className="flex-grow bg-[#f8fafc] min-h-screen">
-                    <Toolbar />
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/dashboard" element={<Dashboard />} />

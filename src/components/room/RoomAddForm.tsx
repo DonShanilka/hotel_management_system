@@ -111,7 +111,7 @@ const RoomAddForm: React.FC = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto">
+    <div className="p-2 sm:p-4 lg:p-6 max-w-[1600px] mx-auto">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
         <h1 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
           Room Management
