@@ -80,16 +80,16 @@ const RegisterPage = () => {
           </div>
           <h1 className="text-6xl font-black text-white tracking-tighter leading-tight mb-6">
             Join the <br />
-            <span className="text-teal-500">Elite Ops Team.</span>
+            <span className="text-teal-500">Hotel Villa Team.</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-md font-medium leading-relaxed">
-            Register your tactical profile to start managing global hospitality nodes.
+            Register your profile to start managing global hospitality nodes.
             Secure authentication and role-based clearance mandatory.
           </p>
         </div>
 
         <div className="relative z-10">
-          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Tactical Hospitality Management v1.0.4</p>
+          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Hotel Villa Management v1.0.4</p>
         </div>
       </div>
 

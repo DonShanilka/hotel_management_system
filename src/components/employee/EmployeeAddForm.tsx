@@ -18,7 +18,7 @@ const EmployeeAddForm: React.FC = () => {
   const employees = useSelector((state: any) => state.employees || []);
 
   useEffect(() => {
-    dispatch(getallEmployee());
+    dispatch(getallEmployee() as any);
   }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,10 +36,10 @@ const EmployeeAddForm: React.FC = () => {
     };
 
     if (editIndex !== null) {
-      dispatch(updateEmployee(employeeData));
+      dispatch(updateEmployee(employeeData) as any);
       setEditIndex(null);
     } else {
-      dispatch(saveEmployee(employeeData));
+      dispatch(saveEmployee(employeeData as any) as any);
     }
 
     setEmployeeID('');
@@ -54,7 +54,7 @@ const EmployeeAddForm: React.FC = () => {
   const handleDelete = (empID: string) => {
     const isConfirm = window.confirm("Are you sure want to delete Employee ?");
     if (isConfirm) {
-      dispatch(deleteEmployee(empID))
+      dispatch(deleteEmployee(empID) as any)
     }
   };
 

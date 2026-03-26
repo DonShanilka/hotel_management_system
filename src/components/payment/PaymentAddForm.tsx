@@ -17,10 +17,10 @@ const PaymentAddForm: React.FC = () => {
   const reservations = useSelector((state: any) => state.reservations || []);
 
   useEffect(() => {
-    dispatch(getAllRoom());
-    dispatch(getAllPayment());
-    dispatch(getallGuest());
-    dispatch(getallBooking());
+    dispatch(getAllRoom() as any);
+    dispatch(getAllPayment() as any);
+    dispatch(getallGuest() as any);
+    dispatch(getallBooking() as any);
   }, [dispatch]);
 
   const [paymentDetails, setPaymentDetails] = useState({
@@ -107,7 +107,7 @@ const PaymentAddForm: React.FC = () => {
         createdAt: new Date(paymentDetails.createdAt).toISOString(),
       };
 
-      dispatch(savePayment(formattedPayment as any));
+      dispatch(savePayment(formattedPayment as any) as any);
 
       setPaymentDetails({
         guestId: "",
@@ -134,7 +134,7 @@ const PaymentAddForm: React.FC = () => {
   const handleDelete = (paymentId: number) => {
     const isConfirm = window.confirm("Are you sure want to delete Payment?");
     if (isConfirm) {
-      dispatch(deletePayment(paymentId))
+      dispatch(deletePayment(paymentId) as any)
     }
   };
 

@@ -15,7 +15,7 @@ const AccusationAddForm: React.FC = () => {
   const accusations = useSelector((state: any) => state.accusations || []);
 
   useEffect(() => {
-    dispatch(getallAccusation())
+    dispatch(getallAccusation() as any)
   }, [dispatch])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,10 +25,10 @@ const AccusationAddForm: React.FC = () => {
     const updateData = { accusationId, reportType, guestId, description };
 
     if (editIndex !== null) {
-      dispatch(updateAccusation(updateData));
+      dispatch(updateAccusation(updateData) as any);
       setEditIndex(null);
     } else {
-      dispatch(saveAccusation(reportData));
+      dispatch(saveAccusation(reportData as any) as any);
     }
 
     setAccusationId("");
@@ -39,7 +39,7 @@ const AccusationAddForm: React.FC = () => {
   const handleDelete = (accId: string) => {
     const isConfirm = window.confirm("Are you sure want to delete this incident report?");
     if (isConfirm) {
-      dispatch(deteleAccusation(accId))
+      dispatch(deteleAccusation(accId as any) as any)
     }
   };
 
